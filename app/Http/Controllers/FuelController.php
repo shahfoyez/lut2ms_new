@@ -1,0 +1,152 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Carbon\Carbon;
+use App\Models\Fuel;
+use App\Models\Trip;
+use App\Models\Routex;
+use App\Models\Vehicle;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreFuelRequest;
+use App\Http\Requests\UpdateFuelRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\ValidationException;
+
+class FuelController extends Controller
+{
+    public function index()
+    {
+        $vehicles = Vehicle::withSum('fuels', 'quantity')
+            ->withCount('fuels')
+            ->withSum('fuels', 'cost')
+            ->withMax('fuels', 'date')
+            ->withMax('meterEntries', 'meter_entry')
+            ->get();
+
+        // $Vehicles = Vehicle::with(['fuels' => function ( $query) {
+        //         $query->where('quantity', '<', 6);
+        //     }])
+        //     ->with(['meterEntries' => function ($query) {
+        //         $query->where('meter_entry', '>', 1400);
+        //     }])
+        //     ->first();
+
+
+        // dd($Vehicles);
+        return view('fuelVehicles', [
+            'vehicles' => $vehicles
+        ]);
+    }
+    public function create(Vehicle $vehicle)
+    {
+        $vehicles = Vehicle::get();
+        return view('fuelAdd', [
+            'vehicles' => $vehicles,
+            'selVehicle' => $vehicle
+        ]);
+    }
+    public function store(Request $request)
+    {
+        $added_by= auth()->user()->id;
+        $fuel = Fuel::latest('date')->firstWhere('vid', $request->input('vid'));
+        $status = $request->input('status');
+        if($fuel){
+            $newEntry = $request->input('date');
+            $new = Carbon::createFromFormat('Y-m-d\TH:i', $newEntry)->format('Y-m-d H:i');
+            $prev =  $fuel->date->format('Y-m-d H:i');
+            $prefix = $status == 2 ? "before" : "after";
+            $attributes= $request->validate([
+                'vid'=> 'required',
+                'fuelType'=>  'nullable|string',
+                'quantity'=> 'required',
+                'cost'=> 'nullable',
+                'date' => 'required|date|'.$prefix.':'.$prev,
+                'status'=> 'required',
+                'note'=> 'nullable'
+            ],
+            [
+                'date.'.$prefix => 'Date should be '.$prefix." ".$prev
+            ]);
+            if ($status == 1) {
+                $update = $fuel->update([
+                    'status' => 0
+                ]);
+            }
+        }else{
+            $attributes= $request->validate([
+                'vid'=> 'required',
+                'fuelType'=>  'nullable|string',
+                'quantity'=> 'required|numeric',
+                'cost'=> 'nullable|numeric',
+                'date' => 'required|date',
+                'status'=> 'required',
+                'note'=> 'nullable|string'
+            ]);
+        }
+        $create= Fuel::create([
+            'vid'=> $request->input('vid'),
+            'fuelType'=> $request->input('fuelType'),
+            'quantity'=> $request->input('quantity'),
+            'cost' =>  $request->input('cost'),
+            'date'=> $request->input('date'),
+            'status'=> $request->input('status'),
+            'note' => $request->input('note'),
+            'added_by' => $added_by
+        ]);
+        return redirect('/fuel/fuelVehicles')->with('success', 'Fuel record has been added');
+    }
+    public function show()
+    {
+        $fuels = Fuel::latest()->with('vehicle')->paginate(20);
+        return view('fuelRecords', [
+                'fuels' => $fuels
+        ]);
+    }
+    public function vehicleFuels($vehicle){
+        $fuels = Fuel::latest('date')
+            ->where('vid', $vehicle)
+            ->get();
+        $vehicle = Vehicle::where('id', $vehicle)->first();
+        return view('vehicleFuels',[
+            'fuels' => $fuels,
+            'vehicle' => $vehicle
+        ]);
+    }
+
+    public function edit($fuel)
+    {
+        $fuel = Fuel::with('vehicle:id,id,codeName')->find($fuel);
+        // dd($fuel);
+        return view('fuelEdit', [
+            'fuel' => $fuel
+        ]);
+    }
+    public function update(Fuel $fuel)
+    {
+        $attributes= request()->validate([
+            'fuelType'=>  'nullable|string',
+            'quantity'=> 'required|numeric',
+            'cost'=> 'nullable|numeric',
+            'note'=> 'nullable|string'
+        ]);
+        $create=  $fuel->update([
+            'fuelType'=> request()->input('fuelType'),
+            'quantity'=> request()->input('quantity'),
+            'cost' =>  request()->input('cost'),
+            'note' => request()->input('note'),
+        ]);
+        return redirect('/fuel/fuelRecords')->with('success', 'Fuel record has been added');
+    }
+    public function destroy($fuel)
+    {
+        $data = Fuel::find($fuel);
+        // dd($data);
+        if($data){
+            $data->delete();
+            return back()->with('success', 'Fuel Record has been deleted.');
+        }else{
+            return back()->with('error', 'Something went wrong!');
+        }
+    }
+}

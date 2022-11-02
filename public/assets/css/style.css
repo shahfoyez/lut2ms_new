@@ -1,0 +1,55 @@
+.foy-mandatory{
+    color: red;
+}
+.menu-sub span.menu-title {
+    font-size: 12px;
+}
+h1.foy-404 {
+    font-size: 220px;
+    line-height: 200px;
+    margin: 0px;
+}
+h2.foy-em {
+    font-size: 38px;
+}
+.twoline{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.oneline{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.page-link {
+    background-color: #ffffff;
+    border: 1px solid #eff2f5;
+}
+table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, table.dataTable>thead .sorting_asc:after, table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_desc:after, table.dataTable>thead .sorting_desc:before {
+    display: inline-block !important;
+    right: auto !important;
+}
+table.dataTable>thead .sorting:before, table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorting_desc:before, table.dataTable>thead .sorting_desc_disabled:before {
+    right: 0;
+    content: "" !important;
+}
+table.dataTable>thead .sorting:after, table.dataTable>thead .sorting_asc:after, table.dataTable>thead .sorting_asc_disabled:after, table.dataTable>thead .sorting_desc:after, table.dataTable>thead .sorting_desc_disabled:after {
+    right: 0m;
+    content: "" !important;
+}
+table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, table.dataTable>thead .sorting_asc:after, table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_desc:after, table.dataTable>thead .sorting_desc:before {
+    width: 1rem;
+    height: 1rem;
+}
+.symbol.symbol-50px>img {
+    width: 40px;
+    height: 40px;
+}
+.btn.btn-bg-light {
+    border: 1px solid #e5e5e5 !important;
+    border-color: #f5f8fa;
+    background-color: #ffffff;
+}
