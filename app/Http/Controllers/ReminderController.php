@@ -73,31 +73,38 @@ class ReminderController extends Controller
      * @param  \App\Models\Reminder  $reminder
      * @return \Illuminate\Http\Response
      */
-    public function edit(Reminder $reminder)
+    public function edit($reminder)
     {
-        //
+        $reminder = Reminder::find($reminder);
+        return view('reminderEdit', [
+             'reminder' => $reminder
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateReminderRequest  $request
-     * @param  \App\Models\Reminder  $reminder
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateReminderRequest $request, Reminder $reminder)
+    public function update(Reminder $reminder)
     {
-        //
+        $attributes= request()->validate([
+            'title'=> 'required',
+            'desc'=>  'nullable',
+            'date' => 'required|date|after_or_equal:'.$reminder->date
+        ]);
+        $create= Reminder::where('id', $reminder->id)->update([
+            'title'=> request()->input('title'),
+            'desc'=> request()->input('desc'),
+            'date'=> request()->input('date'),
+        ]);
+        return redirect('/reminder/reminders')->with('success', 'Reminder has been Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Reminder  $reminder
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Reminder $reminder)
+    public function destroy($reminder)
     {
-        //
+        $data = Reminder::find($reminder);
+        // dd($data);
+        if($data){
+            $data->delete();
+            return back()->with('success', 'Reminder has been deleted.');
+        }else{
+            return back()->with('error', 'Something went wrong!');
+        }
     }
 }

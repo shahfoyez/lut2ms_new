@@ -20,10 +20,10 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'username' => 'foyez',
-            'idNumber' => $this->faker->numerify('##########'),
             'phone' => $this->faker->numerify('###-########'),
             'password' => '12345', // 123
             'role' => 'admin',
+            'status' => '1',
             'remember_token' => Str::random(10),
         ];
     }

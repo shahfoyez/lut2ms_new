@@ -50,10 +50,12 @@ Route::middleware(['auth'])->group(function () {
 
     // UserController Group
     Route::controller(UserController::class)->group(function () {
-        Route::get('/user/userAdd', 'create');
-        Route::post('/user/userAdd', 'userAdd');
-        Route::get('/profile/{user}', 'profile');
-        Route::post('/profileUpdate/{user}', 'profileUpdate');
+        Route::get('/user/users', 'show');
+        Route::get('/user/add', 'create');
+        Route::post('/user/add', 'store');
+        Route::get('/user/profile/{user}', 'profile');
+        Route::post('/user/update/{user}', 'Update');
+        Route::delete('/user/delete/{user}', 'destroy');
     });
 
     // EmployeeController Group
@@ -189,6 +191,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reminder/reminders', 'index');
         Route::get('/reminder/reminderAdd', 'create');
         Route::post('/reminder/reminderAdd', 'store');
+
+        // new added
+        Route::get('/reminder/edit/{reminder}', 'edit');
+        Route::post('/reminder/update/{reminder}', 'update');
+        Route::delete('/reminder/delete/{reminder}', 'destroy');
     });
 
     // logout
