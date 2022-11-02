@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -32,12 +33,17 @@ class UserController extends Controller
 
         return back()->with('success', 'User has been created');
     }
-    public function show(User $user)
+    public function show()
     {
-        $stopage = Stopage::all();
-        return view('profile', [
-            'user' => $user,
-            'stopage' => $stopage
+        $userId = auth()->user()->id;
+        $users = User::all();
+        // $users = User::query->without(['users' => function ($query) {
+        //     $query->select('id', $userId);
+        // }])->get();
+
+        // dd($users);
+        return view('users', [
+            'users' => $users
         ]);
     }
     public function update(User $user)

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FuelController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\MeterController;
 use App\Http\Controllers\RoutexController;
 use App\Http\Controllers\GeneralController;

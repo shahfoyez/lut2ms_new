@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('phone')->nullable();
             $table->string('password');
-            $table->string('role');
+            $table->boolean('role');
+            $table->string('image')->nullable();
             $table->boolean('status')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'username' => 'foyez',
             'phone' => $this->faker->numerify('###-########'),
             'password' => '12345', // 123
-            'role' => 'admin',
+            'role' => 1,
             'status' => '1',
             'remember_token' => Str::random(10),
         ];
