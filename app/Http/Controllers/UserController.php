@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -15,11 +16,12 @@ class UserController extends Controller
     {
         // dd(request()->all());
         $attributes=request()->validate([
-            'name'=> 'required | min:1 | max:255',
+            'name'=> 'required | min:3 | max:255',
             'username'=> ['required', 'min:3', 'max:255', Rule::unique('users', 'username')],
-            'phone'=> 'required',
-            'password'=> 'required',
-            'role' => 'required'
+            'phone'=> 'nullable|numeric',
+            'password'=> 'required|min:5|max:10',
+            'role' => 'required|numeric',
+            'status' => 'required|numeric'
         ]);
 
         // dd(request()->input('fname'));
@@ -29,9 +31,10 @@ class UserController extends Controller
             'phone'=> request()->input('phone'),
             'password'=> request()->input('password'),
             'role' => request()->input('role'),
+            'status' => request()->input('status'),
         ]);
 
-        return back()->with('success', 'User has been created');
+        return redirect('user/users')->with('success', 'User has been created');
     }
     public function show()
     {
@@ -44,6 +47,13 @@ class UserController extends Controller
         // dd($users);
         return view('users', [
             'users' => $users
+        ]);
+    }
+    public function edit(User $user)
+    {
+        // dd(bcrypt($user->password));
+        return view('userEdit', [
+            'user' => $user
         ]);
     }
     public function update(User $user)

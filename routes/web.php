@@ -54,9 +54,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/user/users', 'show');
         Route::get('/user/add', 'create');
         Route::post('/user/add', 'store');
-        Route::get('/user/profile/{user}', 'profile');
+        Route::get('/user/edit/{user}', 'edit');
         Route::post('/user/update/{user}', 'Update');
         Route::delete('/user/delete/{user}', 'destroy');
+
+        Route::get('/user/profile/{user}', 'profile');
     });
 
     // EmployeeController Group

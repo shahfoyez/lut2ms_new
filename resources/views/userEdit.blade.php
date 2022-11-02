@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Add User
+    Edit User
 @endsection
 @section('content')
     <!--begin::Content-->
@@ -21,9 +21,9 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/user/add" class="form mb-15" method="post" id="" >
+                                <form action="/user/update" class="form mb-15" method="post" id="" >
                                     @csrf
-                                    <h1 class="fw-bolder text-dark mb-9">Add User</h1>
+                                    <h1 class="fw-bolder text-dark mb-9">Edit User</h1>
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
@@ -33,7 +33,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="name" class="form-control mb-3 mb-lg-0" placeholder="Name" value="{{ old('name') ? old('name') : ''  }}" />
+                                            <input type="text" name="name" class="form-control mb-3 mb-lg-0" placeholder="Name" value="{{ old('name') ? old('name') : $user->name  }}" />
                                             @error('name')
                                                 @include('components.validation')
                                             @enderror
@@ -47,42 +47,8 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="username" class="form-control mb-3 mb-lg-0" placeholder="Username" value="{{ old('username') ? old('username') : '' }}" />
+                                            <input type="text" name="username" class="form-control mb-3 mb-lg-0" placeholder="Username" value="{{ old('username') ? old('username') : $user->username }}" />
                                             @error('username')
-                                                @include('components.validation')
-                                            @enderror
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6">
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="fw-bold fs-6 mb-2">Phone</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <input type="number" name="phone" class="form-control mb-3 mb-lg-0" placeholder="Phone" value="{{ old('phone') ? old('phone') : '' }}"/>
-                                            @error('phone')
-                                                @include('components.validation')
-                                            @enderror
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Password</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <input type="text" name="password" class="form-control mb-3 mb-lg-0" placeholder="Password" value="{{ old('password') ? old('password') : '' }}" />
-                                            @error('password')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
@@ -103,8 +69,8 @@
                                             <!--begin::Select2-->
                                             <select class="form-select" name="role" data-control="select2" data-placeholder="Select Role"  data-hide-search="true">
                                                 <option value="">Select Role</option>
-                                                <option value="1">Super Admin</option>
-                                                <option value="2">Admin</option>
+                                                <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Super Admin</option>
+                                                <option value="2" >Admin</option>
                                             </select>
                                             @error('role')
                                                 @include('components.validation')
@@ -133,11 +99,30 @@
                                     </div>
                                     <!--end::Input group-->
 
+                                     <!--begin::Input group-->
+                                     <div class="row mb-6">
+                                        <!--begin::Col-->
+                                        <div class="col-md-6 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="fw-bold fs-6 mb-2">Phone</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Input-->
+                                            <input type="number" name="phone" class="form-control mb-3 mb-lg-0" placeholder="Phone" value="{{ old('phone') ? old('phone') : $user->phone }}"/>
+                                            @error('phone')
+                                                @include('components.validation')
+                                            @enderror
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
 
                                     <!--begin::Submit-->
                                     <button type="submit" class="btn btn-primary mt-5">
                                         <!--begin::Indicator-->
-                                        <span class="indicator-label">Submit</span>
+                                        <span class="indicator-label">Update</span>
                                         {{-- <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> --}}
                                         <!--end::Indicator-->

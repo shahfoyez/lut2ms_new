@@ -22,6 +22,7 @@
 
             <!--begin::Tables Widget 11-->
             <div class="card mb-5 mb-xl-8">
+
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
@@ -29,6 +30,14 @@
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $users->count() }} Users</span>
                     </h3>
                     <div class="card-toolbar">
+                        <a href="/user/add" class="btn btn-sm btn-light-primary">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
+                                </svg>
+                            </span>
+                            New User</a>
                         <!--begin::Menu-->
                         <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
@@ -103,9 +112,6 @@
                                         <td>
                                             <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $user->username }}</p>
                                         </td>
-                                        {{-- <td>
-                                            <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $trip->rout->route }}</p>
-                                        </td> --}}
                                         <td>
                                             @php
                                                 if($user->role == 1){
