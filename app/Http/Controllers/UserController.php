@@ -58,20 +58,22 @@ class UserController extends Controller
     }
     public function update(User $user)
     {
+          // dd(request()->all());
+          $attributes=request()->validate([
+            'name'=> 'required | min:3 | max:255',
+            'username'=> ['required', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($user->username, 'username')],
+            'phone'=> 'nullable|numeric',
+            'role' => 'required|numeric',
+            'status' => 'required|numeric'
+        ]);
         // dd(request()->all());
         User::where('id', $user->id)->update([
             'name'=> request()->input('name'),
             'username'=> request()->input('username'),
-            'idNumber'=> request()->input('idNumber'),
             'phone'=> request()->input('phone'),
             'role'=> request()->input('role'),
-            'stoppage'=> request()->input('stoppage'),
-            'batch'=> request()->input('batch'),
-            'section'=> request()->input('section'),
-            'designation'=> request()->input('designation'),
-            'codename' => request()->input('codename')
+            'status'=> request()->input('status'),
         ]);
-
         return back()->with('success', 'Profile Updated');
     }
     public function destroy($user)
