@@ -21,7 +21,7 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/user/update" class="form mb-15" method="post" id="" >
+                                <form action="/user/update/{{ $user->id }}" class="form mb-15" method="post" id="" >
                                     @csrf
                                     <h1 class="fw-bolder text-dark mb-9">Edit User</h1>
                                     <!--begin::Input group-->
@@ -68,9 +68,12 @@
 
                                             <!--begin::Select2-->
                                             <select class="form-select" name="role" data-control="select2" data-placeholder="Select Role"  data-hide-search="true">
+                                                <?php
+                                                    $userRole = old('role') ? old('role') : $user->role;
+                                                ?>
                                                 <option value="">Select Role</option>
-                                                <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Super Admin</option>
-                                                <option value="2" >Admin</option>
+                                                <option value="1" {{ $userRole == 1 ? 'selected' : '' }}>Super Admin</option>
+                                                <option value="2" {{ $userRole == 2 ? 'selected' : '' }}>Admin</option>
                                             </select>
                                             @error('role')
                                                 @include('components.validation')
@@ -86,9 +89,12 @@
 
                                             <!--begin::Select2-->
                                             <select class="form-select" name="status" data-control="select2" data-placeholder="Select status"  data-hide-search="true">
+                                                <?php
+                                                    $userStatus = old('status') ? old('status') : $user->status;
+                                                ?>
                                                 <option value="">Select Status</option>
-                                                <option value="1">Active</option>
-                                                <option value="0">Deactive</option>
+                                                <option value="1" {{ $userStatus == 1 ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ $userStatus == 0 ? 'selected' : '' }}>Deactive</option>
                                             </select>
                                             @error('status')
                                                 @include('components.validation')

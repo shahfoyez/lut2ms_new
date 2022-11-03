@@ -74,7 +74,7 @@ class UserController extends Controller
             'role'=> request()->input('role'),
             'status'=> request()->input('status'),
         ]);
-        return back()->with('success', 'Profile Updated');
+        return redirect('/user/users')->with('success', 'Profile Updated');
     }
     public function destroy($user)
     {

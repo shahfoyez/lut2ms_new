@@ -345,6 +345,7 @@
                 {{-- end::Report --}}
 
                 {{-- start::User Management --}}
+                @if(auth()->user()->role == 1)
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'user') ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -366,6 +367,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 {{-- end::Route Management --}}
 
                 <div class="menu-item">

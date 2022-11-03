@@ -103,8 +103,8 @@
                                             <!--begin::Select2-->
                                             <select class="form-select" name="role" data-control="select2" data-placeholder="Select Role"  data-hide-search="true">
                                                 <option value="">Select Role</option>
-                                                <option value="1">Super Admin</option>
-                                                <option value="2">Admin</option>
+                                                <option value="1" {{ old('role') == 1 ? 'selected' : '' }}>Super Admin</option>
+                                                <option value="2" {{ old('role') == 2 ? 'selected' : '' }}>Admin</option>
                                             </select>
                                             @error('role')
                                                 @include('components.validation')
@@ -121,8 +121,8 @@
                                             <!--begin::Select2-->
                                             <select class="form-select" name="status" data-control="select2" data-placeholder="Select status"  data-hide-search="true">
                                                 <option value="">Select Status</option>
-                                                <option value="1">Active</option>
-                                                <option value="0">Deactive</option>
+                                                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ old('status') == 2 ? 'selected' : '' }}>Deactive</option>
                                             </select>
                                             @error('status')
                                                 @include('components.validation')
