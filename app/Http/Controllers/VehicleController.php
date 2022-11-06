@@ -281,5 +281,18 @@ class VehicleController extends Controller
             return back()->with('error', 'Something went wrong!');
         }
     }
+    public function filter()
+    {
+        // dd(request()->all());
+        $query = Vehicle::query();
+        if(request()->input('status')){
+            $vehicles = $query->where('status', request()->input('status'))
+            ->with('vehicleType:id,name')
+            ->get();
+        }
+        return view('vehicles', [
+            'lists' => $vehicles
+        ]);
+    }
 }
 

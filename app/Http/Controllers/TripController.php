@@ -184,6 +184,24 @@ class TripController extends Controller
         ]);
     }
 
+    public function filter()
+    {
+        // dd(request()->all());
+        $query = Vehicle::query();
+        if(request()->input('status')){
+            $vehicles = $query->where('status', request()->input('status'))
+            ->with(['activeTrip' => function ($query) {
+                $query->where('status', 0);
+            }])
+            ->with('vehicleType:id,name')
+            ->withCount('trips')
+            ->get();
+        }
+        return view('requisition', [
+            'lists' => $vehicles
+        ]);
+    }
+
     public function destroy($trip)
     {
         $data = Trip::find($trip);

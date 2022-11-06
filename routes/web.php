@@ -131,6 +131,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/vehicle/typeEdit/{type}', 'typeEdit');
         Route::post('/vehicle/typeUpdate/{type}', 'typeUpdate');
         Route::delete('/vehicle/typeDelete/{type}', 'typeDestroy');
+
+        // Filter
+        Route::get('/vehicle/vehicles/filter', 'filter');
     });
 
     // TripController Group
@@ -147,6 +150,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/requisition/edit/{trip}', 'edit');
         Route::post('/requisition/update/{trip}', 'update');
         Route::delete('/requisition/delete/{trip}', 'destroy');
+
+        // Filter
+        Route::get('/requisition/vehicles/filter', 'filter');
+
 
     });
 
