@@ -79,7 +79,6 @@
         @include('modals.logout')
         @yield('modals')
 		@include('components.scrolltop')
-        @yield('scripts')
 		<!--end::Main-->
 		<script>var hostUrl = "assets/";</script>
 		<!--begin::Global Javascript Bundle(used by all pages)-->
@@ -112,6 +111,7 @@
 		<script src="{{ asset('assets/js/custom/documentation/search.js') }}"></script>
 		<script src="{{ asset('assets/js/custom/documentation/general/datatables/advanced.js') }}"></script>
 		<!--end::Page Custom Javascript-->
+        @yield('scripts')
 	</body>
 	<!--end::Body-->
 </html

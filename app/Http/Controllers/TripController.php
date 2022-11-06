@@ -8,6 +8,7 @@ use App\Models\Vehicle;
 use App\Models\Employee;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
+use Carbon\Carbon;
 
 class TripController extends Controller
 {
@@ -199,6 +200,34 @@ class TripController extends Controller
         }
         return view('reqVehicles', [
             'lists' => $vehicles
+        ]);
+    }
+
+    public function tripFilter()
+    {
+        // dd(request()->all());
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d');
+
+        $query = Trip::query();
+        if(request()->input('date')){
+            $trips = $query->whereBetween('start', [$start, $end])
+                ->where('status', '!=', 0)
+                ->with('vehicle', 'rout', 'employee')
+                ->latest()
+                ->get();
+        }
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+        // dd($trips);
+        return view('tripHistory', [
+            'trips' => $trips,
+            'start' => $start,
+            'end' => $end
         ]);
     }
 

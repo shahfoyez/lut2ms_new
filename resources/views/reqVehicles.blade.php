@@ -91,7 +91,7 @@
                                             <!--end::Input group-->
                                             <!--begin::Actions-->
                                             <div class="d-flex justify-content-end">
-                                                <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">Reset</button>
+                                                <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">Cancel</button>
                                                 <button type="submit" class="btn btn-primary">Apply</button>
                                                 {{-- <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">Apply</button> --}}
 

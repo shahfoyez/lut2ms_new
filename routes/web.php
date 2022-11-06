@@ -30,6 +30,9 @@ Route::get('/landing', function(){
 Route::get('/location', function(){
     return view('location');
 });
+Route::get('/dateR', function(){
+    return view('daterangepicker');
+});
 
 // Route::get('/tests', function(){
 //     return view('tests');
@@ -153,6 +156,8 @@ Route::middleware(['auth'])->group(function () {
 
         // Filter
         Route::get('/requisition/vehicles/filter', 'filter');
+        // Route::get('/requisition/vehicles/filter', 'filter');
+        Route::get('/trip/history/filter', 'tripFilter');
 
 
     });
