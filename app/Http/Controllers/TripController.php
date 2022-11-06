@@ -197,7 +197,7 @@ class TripController extends Controller
             ->withCount('trips')
             ->get();
         }
-        return view('requisition', [
+        return view('reqVehicles', [
             'lists' => $vehicles
         ]);
     }
