@@ -156,7 +156,6 @@ Route::middleware(['auth'])->group(function () {
 
         // Filter
         Route::get('/requisition/vehicles/filter', 'filter');
-        // Route::get('/requisition/vehicles/filter', 'filter');
         Route::get('/trip/history/filter', 'tripFilter');
 
 
@@ -174,6 +173,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/fuel/edit/{fuel}', 'edit');
         Route::post('/fuel/fuelUpdate/{fuel}', 'update');
         Route::delete('/fuel/fuelDelete/{fuel}', 'destroy');
+
+        Route::get('/fuel/fuelVehicles/filter', 'filter');
+
+
+
 
     });
 
