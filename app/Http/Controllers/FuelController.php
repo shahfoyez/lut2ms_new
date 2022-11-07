@@ -22,15 +22,8 @@ class FuelController extends Controller
             ->withSum('fuels', 'cost')
             ->withMax('fuels', 'date')
             ->withMax('meterEntries', 'meter_entry')
+            ->withMin('meterEntries', 'meter_entry')
             ->get();
-
-        // $Vehicles = Vehicle::with(['fuels' => function ( $query) {
-        //     $query->where('quantity', '<', 6);
-        // }])
-        // ->with(['meterEntries' => function ($query) {
-        //     $query->where('meter_entry', '>', 1400);
-        // }])
-        // ->first();
 
 
         // dd($Vehicles);
@@ -98,7 +91,7 @@ class FuelController extends Controller
     }
     public function show()
     {
-        $fuels = Fuel::latest()->with('vehicle')->paginate(20);
+        $fuels = Fuel::latest()->with('vehicle')->get();
         return view('fuelRecords', [
                 'fuels' => $fuels
         ]);
@@ -147,42 +140,63 @@ class FuelController extends Controller
         $end = trim($date[1]);
 
         $start =  Carbon::parse($start)->format('Y-m-d');
-        $end =  Carbon::parse($end)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
 
-        $query = Trip::query();
+        // $query = Trip::query();
 
         if(request()->input('date')){
-        // $vehicles = Vehicle::withSum('fuels', 'quantity')
-        //     ->withCount('fuels')
-        //     ->withSum('fuels', 'cost')
-        //     ->withMax('fuels', 'date')
-        //     ->withMax('meterEntries', 'meter_entry')
-        //     ->get();
-
-        $vehicles = Vehicle::withSum(['fuels' => fn($query) => $query->whereBetween('date', [$start, $end])],'quantity')
-            ->withCount(['fuels' => function ($query) use ($start,$end) {
-                $query->whereBetween('date', [$start, $end]);
-            }])
-            ->withSum(
-                ['fuels' => fn($query) => $query->whereBetween('date', [$start, $end])],'cost'
-            )
-            ->withMax(
-                ['fuels' => fn($query) => $query->whereBetween('date', [$start, $end])],'date'
-            )
-            ->withMax(
-                ['meterEntries' => fn($query) => $query->whereBetween('date', [$start, $end])],'meter_entry'
-            )->get();
-
-        // dd($vehicles);
+            $vehicles = Vehicle::withSum(['fuels' => fn($query) => $query->whereBetween('date', [$start, $end])],'quantity')
+                ->withCount(['fuels' => function ($query) use ($start,$end) {
+                    $query->whereBetween('date', [$start, $end]);
+                }])
+                ->withSum(
+                    ['fuels' => fn($query) => $query->whereBetween('date', [$start, $end])],'cost'
+                )
+                ->withMax(
+                    ['fuels' => fn($query) => $query->whereBetween('date', [$start, $end])],'date'
+                )
+                ->withMax(
+                    ['meterEntries' => fn($query) => $query->whereBetween('date', [$start, $end])],'meter_entry'
+                )
+                ->withMin(
+                    ['meterEntries' => fn($query) => $query->whereBetween('date', [$start, $end])],'meter_entry'
+                )->get();
+                // dd($vehicles);
         }
         $start =  Carbon::parse($start)->format('d M Y');
         $end =  Carbon::parse($end)->format('d M Y');
-        // dd($trips);
         return view('fuelVehicles', [
             'vehicles' => $vehicles,
             'start' => $start,
             'end' => $end
         ]);
+    }
+
+    public function fuelRecordsfilter()
+    {
+        // dd(request()->all());
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        $query = Fuel::query();
+        if(request()->input('date')){
+            $fuels = $query->latest()
+            ->whereBetween('date', [$start, $end])
+            ->with('vehicle')
+            ->get();
+        }
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+        //  dd($fuels);
+         return view('fuelRecords', [
+             'fuels' => $fuels,
+             'start' => $start,
+             'end' => $end
+         ]);
     }
 
     public function destroy($fuel)

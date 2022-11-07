@@ -17,6 +17,7 @@ class MeterController extends Controller
         $vehicles = Vehicle::withCount('meterEntries')
             ->withMax('meterEntries', 'date')
             ->withMax('meterEntries', 'meter_entry')
+            ->withMin('meterEntries', 'meter_entry')
             ->get();
         return view('meterVehicles', [
             'vehicles' => $vehicles
@@ -182,6 +183,68 @@ class MeterController extends Controller
         return redirect('/meter/meterVehicles')->with('success', 'Meter reading has been Updated');
     }
 
+
+    public function meterVehicleFilter(){
+
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        // $query = Trip::query();
+
+        if(request()->input('date')){
+            $vehicles = Vehicle::latest()
+                ->withCount(['meterEntries' => function ($query) use ($start,$end) {
+                    $query->whereBetween('date', [$start, $end]);
+                }])
+                ->withMax(
+                    ['meterEntries' => fn($query) => $query->whereBetween('date', [$start, $end])],'date'
+                )
+                ->withMin(
+                    ['meterEntries' => fn($query) => $query->whereBetween('date', [$start, $end])],'meter_entry'
+                )
+                ->withMax(
+                    ['meterEntries' => fn($query) => $query->whereBetween('date', [$start, $end])],'meter_entry'
+                )->get();
+        }
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+
+        return view('meterVehicles', [
+            'vehicles' => $vehicles,
+            'start' =>  $start,
+            'end' => $end
+        ]);
+    }
+
+    public function meterEntriesFilter(){
+
+        // dd(request()->all());
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        $query = Meter::query();
+        if(request()->input('date')){
+            $meterEntries = $query->latest()
+            ->whereBetween('date', [$start, $end])
+            ->with('vehicle')
+            ->get();
+        }
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+        return view('meterEntries', [
+                'meterEntries' => $meterEntries,
+                'start' => $start,
+                'end' => $end
+        ]);
+    }
     public function destroy($meter)
     {
         $data = Meter::find($meter);

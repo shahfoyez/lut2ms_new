@@ -25,7 +25,13 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">Vehicles</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">Vehicles
+                            <span class="card-label text-muted">
+                                @if (isset($start) && isset($end))
+                                    {{ '('.$start.'-'.$end.')' }}
+                                @endif
+                            </span>
+                        </span>
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $vehicles->count() }} Vehicle Requisition</span>
                     </h3>
                     <div class="card-toolbar">
@@ -37,53 +43,53 @@
                                 <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
                             </svg>
                         </span>
-                    <!--end::Svg Icon-->Filter
-                    </button>
-                    <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
-                        <!--begin::Header-->
-                        <div class="px-7 py-5">
-                            <div class="fs-4 text-dark fw-bolder">Filter Options</div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Separator-->
-                        <div class="separator border-gray-200"></div>
-                        <!--end::Separator-->
-                        <!--begin::Content-->
-                        <div class="px-7 py-5">
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <!--begin::Input group-->
-                                <form action="/fuel/fuelVehicles/filter" class="form" method="get" id="" >
-                                    {{-- @csrf --}}
-                                    <div class="mb-10">
-                                        <!--begin::Options-->
-                                        <div class="d-flex flex-column flex-wrap fw-bold" data-kt-docs-table-filter="payment_type">
-                                            <div class="mb-0">
-                                                <label class="form-label">Choose Date</label>
-                                                <input name="date" class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1" />
-                                            </div>
-                                        </div>
-                                        <!--end::Options-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Actions-->
-                                    <div class="d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">Cancel</button>
-
-                                        <button type="submit" class="btn btn-primary">Apply</button>
-                                        {{-- <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">Apply</button> --}}
-
-                                    </div>
-                                </form>
-                                <!--end::Actions-->
+                        <!--end::Svg Icon-->Filter
+                        </button>
+                        <!--begin::Menu 1-->
+                        <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
+                            <!--begin::Header-->
+                            <div class="px-7 py-5">
+                                <div class="fs-4 text-dark fw-bolder">Filter Options</div>
                             </div>
-                            <!--end::Input group-->
+                            <!--end::Header-->
+                            <!--begin::Separator-->
+                            <div class="separator border-gray-200"></div>
+                            <!--end::Separator-->
+                            <!--begin::Content-->
+                            <div class="px-7 py-5">
+                                <!--begin::Input group-->
+                                <div class="mb-10">
+                                    <!--begin::Input group-->
+                                    <form action="/fuel/fuelVehicles/filter" class="form" method="get" id="" >
+                                        {{-- @csrf --}}
+                                        <div class="mb-10">
+                                            <!--begin::Options-->
+                                            <div class="d-flex flex-column flex-wrap fw-bold" data-kt-docs-table-filter="payment_type">
+                                                <div class="mb-0">
+                                                    <label class="form-label">Choose Date</label>
+                                                    <input name="date" class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1" />
+                                                </div>
+                                            </div>
+                                            <!--end::Options-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Actions-->
+                                        <div class="d-flex justify-content-end">
+                                            <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">Cancel</button>
+
+                                            <button type="submit" class="btn btn-primary">Apply</button>
+                                            {{-- <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">Apply</button> --}}
+
+                                        </div>
+                                    </form>
+                                    <!--end::Actions-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Content-->
                         </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Menu 1-->
-                    <!--end::Filter-->
+                        <!--end::Menu 1-->
+                        <!--end::Filter-->
                     </div>
                 </div>
                 <!--end::Header-->
@@ -168,9 +174,16 @@
                                         <td>
                                             @php
                                                 if ($vehicle->meter_entries_max_meter_entry && $vehicle->fuels_sum_quantity){
+                                                    $minEntry =  $vehicle->meter_entries_min_meter_entry;
+
                                                     $maxEntry = $vehicle->meter_entries_max_meter_entry;
+
+                                                    // if($minEntry == $maxEntry){
+                                                    //     $minEntry  = $vehicle->meter_start;
+                                                    // }
+
                                                     $TotalConsumed = $vehicle->fuels_sum_quantity;
-                                                    $totalRun = $maxEntry - ($vehicle->meter_start);
+                                                    $totalRun = $maxEntry - $minEntry;
                                                     $kpl = $totalRun/$TotalConsumed;
                                                     $kpl = number_format($totalRun/$TotalConsumed, 2)." Km/L";
                                                     $kplClass = "";
@@ -245,9 +258,5 @@
     <script src="{{ asset('assets/js/custom/documentation/forms/daterangepicker.js') }}"></script>
     <!--end::Page Custom Javascript-->
 @endsection
-<script type="text/javascript">
-    @if (count($errors) > 0)
-        $('#validationError').modal('show');
-    @endif
-</script>
+
 

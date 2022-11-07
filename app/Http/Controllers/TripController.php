@@ -211,7 +211,7 @@ class TripController extends Controller
         $end = trim($date[1]);
 
         $start =  Carbon::parse($start)->format('Y-m-d');
-        $end =  Carbon::parse($end)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
 
         $query = Trip::query();
         if(request()->input('date')){

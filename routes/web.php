@@ -174,11 +174,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/fuel/fuelUpdate/{fuel}', 'update');
         Route::delete('/fuel/fuelDelete/{fuel}', 'destroy');
 
+        // Filter
         Route::get('/fuel/fuelVehicles/filter', 'filter');
-
-
-
-
+        Route::get('/fuel/fuelRecords/filter', 'fuelRecordsfilter');
     });
 
     // MeterController Group
@@ -193,6 +191,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/meter/edit/{meter}', 'edit');
         Route::post('/meter/update/{meter}', 'update');
         Route::delete('/meter/meterDelete/{meter}', 'destroy');
+
+        // Filter
+        Route::get('/meter/meterVehicles/filter', 'meterVehicleFilter');
+        Route::get('/meter/meterEntries/filter', 'meterEntriesFilter');
+
 
 
     });
