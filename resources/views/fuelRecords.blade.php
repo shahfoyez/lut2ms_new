@@ -23,8 +23,8 @@
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $fuels->count() }} Records</span>
                     </h3>
                     <div class="card-toolbar">
-                       <!--begin::Filter-->
-                       <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="foy-button">
+                        <!--begin::Filter-->
+                        <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="foy-button">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -46,9 +46,9 @@
                             <!--begin::Content-->
                             <div class="px-7 py-5">
                                 <!--begin::Input group-->
-                                <div class="mb-10">
+                                <div class="mb-0">
                                     <!--begin::Input group-->
-                                    <form action="/fuel/fuelRecords/filter" class="form" method="get" id="" >
+                                    <form action="/fuel/fuelRecords/filter" class="form m-0" method="get" id="" >
                                         {{-- @csrf --}}
                                         <div class="mb-10">
                                             <!--begin::Options-->

@@ -196,8 +196,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/meter/meterVehicles/filter', 'meterVehicleFilter');
         Route::get('/meter/meterEntries/filter', 'meterEntriesFilter');
 
-
-
     });
 
     // MaintenanceController Group
@@ -218,6 +216,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reminder/edit/{reminder}', 'edit');
         Route::post('/reminder/update/{reminder}', 'update');
         Route::delete('/reminder/delete/{reminder}', 'destroy');
+
+        Route::get('/reminder/reminders/filter', 'filter');
+
     });
 
     // logout

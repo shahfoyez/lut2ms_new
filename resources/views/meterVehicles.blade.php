@@ -46,7 +46,7 @@
                         <!--begin::Content-->
                         <div class="px-7 py-5">
                             <!--begin::Input group-->
-                            <div class="mb-10">
+                            <div class="mb-0">
                                 <!--begin::Input group-->
                                 <form action="/meter/meterVehicles/filter" class="form" method="get" id="" >
                                     {{-- @csrf --}}

@@ -51,7 +51,7 @@
                                 <!--begin::Content-->
                                 <div class="px-7 py-5">
                                     <!--begin::Input group-->
-                                    <div class="mb-10">
+                                    <div class="">
                                         <!--begin::Input group-->
                                         <form action="/requisition/vehicles/filter" class="form" method="get" id="" >
                                             {{-- @csrf --}}
