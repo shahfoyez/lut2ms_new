@@ -100,7 +100,7 @@ class FuelController extends Controller
         $fuels = Fuel::latest('date')
             ->where('vid', $vehicle)
             ->get();
-        $vehicle = Vehicle::where('id', $vehicle)->first();
+        $vehicle = Vehicle::find($vehicle);
         return view('vehicleFuels',[
             'fuels' => $fuels,
             'vehicle' => $vehicle
@@ -196,6 +196,35 @@ class FuelController extends Controller
              'fuels' => $fuels,
              'start' => $start,
              'end' => $end
+         ]);
+    }
+
+    public function vehicleFuelsFilter($vehicle)
+    {
+        // dd(request()->all());
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        $query = Fuel::query();
+        if(request()->input('date')){
+            $fuels = $query->latest()
+            ->whereBetween('date', [$start, $end])
+            ->where('vid', $vehicle)
+            ->get();
+        }
+        $vehicle = Vehicle::find($vehicle);
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+        //  dd($fuels);
+         return view('vehicleFuels', [
+            'fuels' => $fuels,
+            'vehicle' => $vehicle,
+            'start' => $start,
+            'end' => $end
          ]);
     }
 

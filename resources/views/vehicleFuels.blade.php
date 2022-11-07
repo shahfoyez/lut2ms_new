@@ -19,40 +19,71 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">{{ $vehicle->codeName }}</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">{{ $vehicle->codeName }}
+                            <span class="card-label text-muted">
+                                @if (isset($start) && isset($end))
+                                    {{ '('.$start.'-'.$end.')' }}
+                                @endif
+                            </span>
+                        </span>
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $fuels->count() }} Records</span>
                     </h3>
                     <div class="card-toolbar">
-                        <!--begin::Menu-->
-                        <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary ms-4" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                         <!--begin::Filter-->
+                         <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="foy-button">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                             <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-                                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->
+                            <!--end::Svg Icon-->Filter
                         </button>
-                        <!--begin::Menu 3-->
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true">
-                            <!--begin::Heading-->
-                            <div class="menu-item px-3">
-                                <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Filter</div>
+                        <!--begin::Menu 1-->
+                        <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
+                            <!--begin::Header-->
+                            <div class="px-7 py-5">
+                                <div class="fs-4 text-dark fw-bolder">Filter Options</div>
                             </div>
-                            <!--end::Heading-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3">Available</a>
+                            <!--end::Header-->
+                            <!--begin::Separator-->
+                            <div class="separator border-gray-200"></div>
+                            <!--end::Separator-->
+                            <!--begin::Content-->
+                            <div class="px-7 py-5">
+                                <!--begin::Input group-->
+                                <div class="mb-0">
+                                    <!--begin::Input group-->
+                                    <form action="/fuel/vehicleFuels/{{ $vehicle->id }}/filter" class="form m-0" method="get" id="" >
+                                        {{-- @csrf --}}
+                                        <div class="mb-10">
+                                            <!--begin::Options-->
+                                            <div class="d-flex flex-column flex-wrap fw-bold" data-kt-docs-table-filter="payment_type">
+                                                <div class="mb-0">
+                                                    <label class="form-label">Choose Date</label>
+                                                    <input name="date" class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1" />
+                                                </div>
+                                            </div>
+                                            <!--end::Options-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Actions-->
+                                        <div class="d-flex justify-content-end">
+                                            <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">Cancel</button>
+
+                                            <button type="submit" class="btn btn-primary">Apply</button>
+                                            {{-- <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">Apply</button> --}}
+
+                                        </div>
+                                    </form>
+                                    <!--end::Actions-->
+                                </div>
+                                <!--end::Input group-->
                             </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link flex-stack px-3">In Trip</a>
-                            </div>
-                            <!--end::Menu item-->
+                            <!--end::Content-->
                         </div>
-                        <!--end::Menu 3-->
-                        <!--end::Menu-->
+                        <!--end::Menu 1-->
+                        <!--end::Filter-->
                     </div>
                 </div>
                 <!--end::Header-->
@@ -176,6 +207,16 @@
 @endsection
 @section('modals')
     @include('modals.deleteModal')
+@endsection
+@section('scripts')
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    {{-- <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script> --}}
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    {{-- <script src="{{ asset('assets/js/custom/documentation/documentation.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/js/custom/documentation/search.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/custom/documentation/forms/daterangepicker.js') }}"></script>
+    <!--end::Page Custom Javascript-->
 @endsection
 <script type="text/javascript">
     @if (count($errors) > 0)

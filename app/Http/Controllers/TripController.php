@@ -173,12 +173,13 @@ class TripController extends Controller
         ]);
         return redirect('/requisition/vehicles')->with('success', 'Requisition information updated.');
     }
+
     public function vehicleTrips($vehicle){
         $trips = Trip::latest()
             ->where('vid', $vehicle)
             ->where('status', '!=', 0)
             ->get();
-        $vehicle = Vehicle::where('id', $vehicle)->first();
+        $vehicle = Vehicle::find($vehicle);
         return view('vehicleTrips',[
             'trips' => $trips,
             'vehicle' => $vehicle
@@ -226,6 +227,37 @@ class TripController extends Controller
         // dd($trips);
         return view('tripHistory', [
             'trips' => $trips,
+            'start' => $start,
+            'end' => $end
+        ]);
+    }
+
+
+    public function vehicleTripsFilter($vehicle)
+    {
+        // dd(request()->all());
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        $query = Trip::query();
+        if(request()->input('date')){
+            $trips = Trip::latest()
+                ->whereBetween('start', [$start, $end])
+                ->where('vid', $vehicle)
+                ->where('status', '!=', 0)
+                ->get();
+        }
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+
+        $vehicle = Vehicle::find($vehicle);
+        return view('vehicleTrips',[
+            'trips' => $trips,
+            'vehicle' => $vehicle,
             'start' => $start,
             'end' => $end
         ]);

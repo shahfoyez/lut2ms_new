@@ -245,6 +245,38 @@ class MeterController extends Controller
                 'end' => $end
         ]);
     }
+
+    public function vehicleMeterEntriesFilter( $vehicle)
+    {
+        // dd(request()->all());
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        $query = Meter::query();
+        if(request()->input('date')){
+            $meterEntries = $query->latest()
+            ->whereBetween('date', [$start, $end])
+            ->where('vid', $vehicle)
+            ->get();
+        }
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+
+        $vehicle = Vehicle::find($vehicle);
+        return view('vehicleMeterEntries', [
+            'meterEntries' => $meterEntries,
+            'vehicle'=>  $vehicle,
+            'start' => $start,
+            'end' => $end
+        ]);
+        // dd($meterEntries);
+    }
+
+
     public function destroy($meter)
     {
         $data = Meter::find($meter);
