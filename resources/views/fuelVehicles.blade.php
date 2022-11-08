@@ -98,7 +98,7 @@
                     <!--begin::Table container-->
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table id="kt_datatable_example_5" class="table table-striped gy-5 gs-7 border rounded">
+                        <table id="kt_datatable_example_5" class="kt_datatable_example table table-striped gy-5 gs-7 border rounded">
                             <!--begin::Table head-->
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">

@@ -39,7 +39,7 @@
                     <div class="table-responsive">
                         <!--begin::Table-->
                         {{-- <table class="table align-middle gs-0 gy-4"> --}}
-                            <table id="kt_datatable_example_5" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+                            <table id="kt_datatable_example_5" class="kt_datatable_example table table-striped table-row-bordered gy-5 gs-7 border rounded">
                             <!--begin::Table head-->
                             <thead>
                                 {{-- <tr class="fw-bolder text-muted bg-light"> --}}
@@ -165,9 +165,7 @@
 @section('modals')
     @include('modals.deleteModal')
 @endsection
-<script type="text/javascript">
-    @if (count($errors) > 0)
-        $('#validationError').modal('show');
-    @endif
-</script>
+
+
+
 

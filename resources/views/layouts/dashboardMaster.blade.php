@@ -79,8 +79,10 @@
         @include('modals.logout')
         @yield('modals')
 		@include('components.scrolltop')
+
 		<!--end::Main-->
 		<script>var hostUrl = "assets/";</script>
+
 		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 		<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
@@ -112,6 +114,17 @@
 		<script src="{{ asset('assets/js/custom/documentation/general/datatables/advanced.js') }}"></script>
 		<!--end::Page Custom Javascript-->
         @yield('scripts')
+
+        <script >
+            // $(document).ready(function() {
+            //     $('.kt_datatable_example').DataTable( {
+            //         dom: 'Bfrtip',
+            //         buttons: [
+            //             'copy', 'csv', 'excel', 'pdf', 'print'
+            //         ]
+            //     } );
+            // } );
+        </script>
 	</body>
 	<!--end::Body-->
 </html
