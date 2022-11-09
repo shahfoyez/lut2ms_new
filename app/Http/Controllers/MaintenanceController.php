@@ -42,7 +42,7 @@ class MaintenanceController extends Controller
             'vid'=> 'required',
             'cost'=>  'required|integer',
             'from' => 'required|date',
-            'to'=> 'nullable|date|after:'.$from,
+            'to'=> 'nullable|date|after:from',
             'note'=> 'nullable'
         ]);
         $create= Maintenance::create([
@@ -93,7 +93,8 @@ class MaintenanceController extends Controller
         $attributes= $request->validate([
             'vid'=> 'prohibited',
             'cost'=>  'required|integer',
-
+            'from' => 'required|date',
+            'to'=> 'nullable|date|after:from',
             'note'=> 'nullable'
         ]);
         $create= Maintenance::where('id', $maintenance)

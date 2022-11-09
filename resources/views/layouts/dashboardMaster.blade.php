@@ -114,17 +114,6 @@
 		<script src="{{ asset('assets/js/custom/documentation/general/datatables/advanced.js') }}"></script>
 		<!--end::Page Custom Javascript-->
         @yield('scripts')
-
-        <script >
-            // $(document).ready(function() {
-            //     $('.kt_datatable_example').DataTable( {
-            //         dom: 'Bfrtip',
-            //         buttons: [
-            //             'copy', 'csv', 'excel', 'pdf', 'print'
-            //         ]
-            //     } );
-            // } );
-        </script>
 	</body>
 	<!--end::Body-->
 </html

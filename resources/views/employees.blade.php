@@ -45,7 +45,7 @@
                                 {{-- <tr class="fw-bolder text-muted bg-light"> --}}
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                     <th class="w-20px">Sl</th>
-                                    <th >Name</th>
+                                    <th>Name</th>
                                     <th>ID</th>
                                     <th>Address</th>
                                     <th>Department</th>

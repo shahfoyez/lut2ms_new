@@ -67,7 +67,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="slat" class="form-control mb-3 mb-lg-0" placeholder="Latitude" value="{{ $route->slat }}"/>
+                                            <input type="text" id="slat" name="slat" class="form-control mb-3 mb-lg-0" placeholder="Latitude" value="{{ $route->slat }}"/>
                                             @error('slat')
                                                 @include('components.validation')
                                             @enderror
@@ -77,15 +77,24 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="fw-bold fs-6 mb-2">StartLongitude</label>
+                                            <label class="fw-bold fs-6 mb-2">Start Longitude</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="slon" class="form-control mb-3 mb-lg-0" placeholder="Longitude" value="{{ $route->slon }}" />
+                                            <input type="text" id="slon" name="slon" class="form-control mb-3 mb-lg-0" placeholder="Longitude" value="{{ $route->slon }}" />
                                             @error('slon')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                     <!--begin::Input group-->
+                                    <div class="row mb-6">
+                                        <!--begin::Col-->
+                                        <div class="fv-row">
+                                            <div id="map" style="height: 300px; width: 100%; border-radius: 10px" class="my-3"></div>
                                         </div>
                                         <!--end::Col-->
                                     </div>
@@ -117,7 +126,41 @@
     </div>
     <!--end::Content-->
 @endsection
-<!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset(' assets/js/custom/modals/create-account.js') }}"></script>
-<!--end::Page Custom Javascript-->
+@section('scripts')
+<script>
+    let map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 24.8949, lng: 91.8687 },
+            zoom: 15,
+            scrollwheel: true,
+        });
+        const uluru = { lat: 24.8949, lng: 91.8687 };
+        let marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+            draggable: true
+        });
+        google.maps.event.addListener(marker,'position_changed',
+            function (){
+                let lat = marker.position.lat()
+                let lng = marker.position.lng()
+                // console.log(marker.position())
+                // let label = marker.position.label()
+                $('#slat').val(lat)
+                $('#slon').val(lng)
+                // $('#slabel').val(label)
+
+            })
+        google.maps.event.addListener(map,'click',
+        function (event){
+            pos = event.latLng
+            marker.setPosition(pos)
+        })
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"
+        type="text/javascript">
+</script>
+@endsection
 
