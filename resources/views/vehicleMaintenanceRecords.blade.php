@@ -19,7 +19,7 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">Maintenance Records</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">{{ $vehicle }}</span>
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $maintenanceRecords->count() }} Records</span>
                     </h3>
                     <div class="card-toolbar">
@@ -66,7 +66,6 @@
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                     <th class="w-20px">Sl</th>
-                                    <th class="ps-4 min-w-300px rounded-start">Vehicle</th>
                                     <th class="min-w-125px">From</th>
                                     <th class="min-w-150px">To</th>
                                     <th class="min-w-125px">Cost</th>
@@ -81,17 +80,6 @@
                                     <tr>
                                         <td>
                                             @include('components.tableSerial')
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ $entry->vehicle->image ? asset($entry->vehicle->image) : asset('assets/uploads/default/defaultVehicle.webp') }}" class="" alt="" />
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <p href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{ $entry->vehicle->codeName }}</p>
-                                                    <span class="text-muted fw-bold text-muted d-block fs-7">License: {{ $entry->vehicle->license }}</span>
-                                                </div>
-                                            </div>
                                         </td>
                                         <td>
                                             <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $entry->from->format('d M Y') }}</p>

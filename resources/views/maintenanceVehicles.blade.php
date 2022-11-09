@@ -74,6 +74,7 @@
                             <!--begin::Table head-->
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
+                                    <th class="w-20px">Sl</th>
                                     <th class="ps-4 min-w-325px rounded-start">Vehicle</th>
                                     <th class="min-w-125px">Total Entries</th>
                                     <th class="min-w-125px">Total Cost</th>
@@ -87,6 +88,9 @@
                                 @if($vehicles && $vehicles->count()>0)
                                     @foreach($vehicles as $vehicle)
                                     <tr>
+                                        <td>
+                                            @include('components.tableSerial')
+                                        </td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-50px me-5">
@@ -144,7 +148,7 @@
                                             {{-- <a href="/requisition/send/{{ $vehicle->id }}" class=" btn btn-primary p-2">
                                                 Records
                                             </a> --}}
-                                            <a href="/fuel/fuelRecords/{{ $vehicle->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a href="/maintenance/vehicleMaintenanceRecords/{{ $vehicle->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">

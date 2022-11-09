@@ -64,56 +64,41 @@ class MaintenanceController extends Controller
                 'maintenanceRecords' => $maintenanceRecords
         ]);
     }
-    public function  vehicleMaintenanceEntries($vehicle)
+
+    public function edit(Maintenance $maintenance)
     {
-        $maintenanceRecords = Maintenance::latest('from')->where('vid', $vehicle)->get();
-        $vehicle = Vehicle::find($vehicle)->codeName;
-        // dd( $vehicle);
-        // dd($maintenanceRecords);
-        return view('vehicleMaintenanceRecords', [
-                'maintenanceRecords' => $maintenanceRecords,
-                'vehicle' => $vehicle
-        ]);
+        // $meter = Meter::with('vehicle:id,id')->first();
+        // return view('meterEntryEdit', [
+        //     'meter' => $meter
+        // ]);
     }
 
-
-    public function edit($maintenance)
+    public function update(UpdateMaintenanceRequest $request, Maintenance $maintenance)
     {
-        $maintenance = Maintenance::with('vehicle')->find($maintenance);
-        // dd($maintenance);
-        return view('maintenanceEdit', [
-            'maintenance' => $maintenance
-        ]);
+        // $attributes= request()->validate([
+        //     'fuelType'=>  'nullable|string',
+        //     'quantity'=> 'required|numeric',
+        //     'cost'=> 'nullable|numeric',
+        //     'note'=> 'nullable|string'
+        // ]);
+        // $create=  $fuel->update([
+        //     'fuelType'=> request()->input('fuelType'),
+        //     'quantity'=> request()->input('quantity'),
+        //     'cost' =>  request()->input('cost'),
+        //     'note' => request()->input('note'),
+        // ]);
+        // return redirect('/fuel/fuelRecords')->with('success', 'Fuel record has been added');
     }
 
-    public function update($maintenance, Request $request)
+    public function destroy(Maintenance $maintenance)
     {
-        $from = $request->input('from');
-        $from = Carbon::createFromFormat('Y-m-d\TH:i', $from)->format('Y-m-d H:i A');
-        $attributes= $request->validate([
-            'vid'=> 'prohibited',
-            'cost'=>  'required|integer',
-
-            'note'=> 'nullable'
-        ]);
-        $create= Maintenance::where('id', $maintenance)
-        ->update([
-            'cost'=> $request->input('cost'),
-            'from'=> $request->input('from'),
-            'to'=> $request->input('to'),
-            'note' => $request->input('note')
-        ]);
-        return redirect('/maintenance/maintenanceVehicles')->with('success', 'Maintenance entry has been updated.');
-    }
-
-    public function destroy($maintenance)
-    {
-        $data = Maintenance::find($maintenance);
-        if($data){
-            $data->delete();
-            return back()->with('success', 'Maintenance  Record has been deleted.');
-        }else{
-            return back()->with('error', 'Something went wrong!');
-        }
+        // $data = Fuel::find($fuel);
+        // // dd($data);
+        // if($data){
+        //     $data->delete();
+        //     return back()->with('success', 'Fuel Record has been deleted.');
+        // }else{
+        //     return back()->with('error', 'Something went wrong!');
+        // }
     }
 }

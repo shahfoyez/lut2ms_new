@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Edit Meter Read
+    Edit Maintenance Record
 @endsection
 @section('content')
     <!--begin::Content-->
@@ -22,20 +22,20 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/meter/update/{{ $meter->id }}" class="form mb-15" method="post" id="">
+                                <form action="/maintenance/update/{{ $maintenance->id }}" class="form mb-15" method="post" id="">
                                     @csrf
-                                    <h1 class="fw-bolder text-dark mb-9">Edit Meter Read</h1>
+                                    <h1 class="fw-bolder text-dark mb-9">Edit Maintenance Record</h1>
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label fs-6 mb-2">Vehicle (Readonly)</label>
+                                            <label class="required form-label fs-6 mb-2">Vehicle</label>
                                             <!--end::Label-->
 
                                             <!--begin::Select2-->
                                             <select class="form-select" name="vid" data-control="select2" data-placeholder="Select Vehicle" disabled>
-                                                <option value="{{ $meter->vehicle->id }}" selected>{{ $meter->vehicle->codeName }}</option>
+                                                <option value="{{ $maintenance->vehicle->id }}" selected>{{ $maintenance->vehicle->codeName }}</option>
                                             </select>
                                             @error('vid')
                                                 @include('components.validation')
@@ -46,14 +46,9 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label for="" class="form-label required">Meter Read
-                                                ({{
-                                                ($min ? 'PE: '.$min->meter_entry : '').($max && $min ? ', ' : '').($max ? 'NE: '.$max->meter_entry : '').(!$max && !$min ? 'Initial: '.$meter->vehicle->meter_start : '')
-                                                }})
-                                            </label>
-
-                                            <input type="number" step="0.1" class="form-control" placeholder="Meter Read(KM)" name="meter_entry" value="{{ old('meter_entry') ? old('meter_entry') : $meter->meter_entry  }}"/>
-                                            @error('meter_entry')
+                                            <label for="" class="form-label required">Cost</label>
+                                            <input type="number" step="0.1" class="form-control" placeholder="Cost(Taka)" name="cost" value="{{ old('cost') ? old('cost') : $maintenance->cost  }}"/>
+                                            @error('cost')
                                                 @include('components.validation')
                                             @enderror
                                             <!--begin::Select2-->
@@ -66,44 +61,35 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label for="" class="form-label required">Date & Time (Readonly)</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="date" value="{{  old('date') ? old('date') : $meter->date }}" readonly/>
-                                            @error('date')
+                                            <label for="" class="form-label required">From</label>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="from" value="{{  old('from') ? old('from') : $maintenance->from }}"/>
+                                            @error('from')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                         <!--begin::Col-->
+                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label fs-6 mb-2">Status (Readonly)</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Select2-->
-                                            <select class="form-select" name="status" data-control="select2" data-placeholder="Entry Status" data-hide-search="true" disabled>
-                                                <?php
-                                                    $status = old('status') ? old('status') : $meter->status;
-                                                ?>
-                                                <option></option>
-                                                <option value="1" {{ $status == 1 ? "selected" : "" }}>New Entry</option>
-                                                <option value="2" {{ $status == 2 ? "selected" : "" }}>Old Entry</option>
-                                            </select>
-                                            @error('status')
+                                            <label for="" class="form-label">To</label>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="to" value="{{  old('to') ? old('to') : $maintenance->to }}"/>
+                                            @error('to')
                                                 @include('components.validation')
                                             @enderror
-                                            <!--begin::Select2-->
+                                            <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Input-->
+
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col-md-12 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label">Note</label>
-                                            <textarea type="text-area" class="form-control" placeholder="Note(optional)" name="note" value="{{ old('note') }}" rows="3">{{ old('note') ? old('note') : $meter->note }}</textarea>
+                                            <textarea type="text-area" class="form-control" placeholder="Note(optional)" name="note" rows="3">{{ old('note') ? old('note') : $maintenance->note }}</textarea>
                                             @error('note')
                                                 @include('components.validation')
                                             @enderror

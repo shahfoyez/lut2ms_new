@@ -209,6 +209,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/maintenance/maintenanceRecords', 'show');
         Route::get('/maintenance/maintenanceAdd/{vehicle}', 'create');
         Route::post('/maintenance/maintenanceEntryAdd', 'store');
+
+        Route::get('/maintenance/vehicleMaintenanceRecords/{vehicle}', 'vehicleMaintenanceEntries');
+        Route::get('/maintenance/edit/{maintenance}', 'edit');
+        Route::post('/maintenance/update/{maintenance}', 'update');
+        Route::delete('/maintenance/delete/{maintenance}', 'destroy');
     });
 
     // ReminderController Group
