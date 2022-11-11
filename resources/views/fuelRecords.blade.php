@@ -90,6 +90,7 @@
                             <!--begin::Table head-->
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
+                                    <th class="w-20px">Sl</th>
                                     <th>vehicle</th>
                                     <th>Fuel</th>
                                     <th>Quantity</th>
@@ -105,6 +106,9 @@
                                 @if($fuels && $fuels->count()>0)
                                     @foreach($fuels as $fuel)
                                     <tr>
+                                        <td>
+                                            @include('components.tableSerial')
+                                        </td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-50px me-5">
