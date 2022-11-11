@@ -6,7 +6,7 @@
         <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
             <!--begin::Symbol-->
             <div class="symbol symbol-50px">
-                <img src="{{ asset('assets/media/avatars/150-26.jpg') }}" alt="" />
+                <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('assets/uploads/default/defaultProfile.webp') }}" alt="" />
             </div>
             <!--end::Symbol-->
             <!--begin::Wrapper-->
@@ -16,10 +16,10 @@
                     <!--begin::Info-->
                     <div class="flex-grow-1 me-2">
                         <!--begin::Username-->
-                        <a href="#" class="text-white text-hover-primary fs-6 fw-bold">Shah Foyez</a>
+                        <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{ auth()->user()->name }}</a>
                         <!--end::Username-->
                         <!--begin::Description-->
-                        <span class="text-gray-600 fw-bold d-block fs-8 mb-1">Admin</span>
+                        <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ auth()->user()->role == 1 ? 'Super Admin' : 'Admin' }}</span>
                         <!--end::Description-->
                     </div>
                     <!--end::Info-->

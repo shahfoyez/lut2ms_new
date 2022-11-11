@@ -10,10 +10,16 @@ class UserController extends Controller
 {
     public function create()
     {
+        if(auth()->user()->role != 1){
+            abort(404);
+        }
         return view('userAdd');
     }
     public function store()
     {
+        if(auth()->user()->role != 1){
+            abort(404);
+        }
         // dd(request()->all());
         $attributes=request()->validate([
             'name'=> 'required | min:3 | max:255',
@@ -38,6 +44,9 @@ class UserController extends Controller
     }
     public function show()
     {
+        if(auth()->user()->role != 1){
+            abort(404);
+        }
         $userId = auth()->user()->id;
         $users = User::all();
         // $users = User::query->without(['users' => function ($query) {
@@ -51,6 +60,9 @@ class UserController extends Controller
     }
     public function edit(User $user)
     {
+        if(auth()->user()->role != 1){
+            abort(404);
+        }
         // dd(bcrypt($user->password));
         return view('userEdit', [
             'user' => $user
@@ -58,6 +70,9 @@ class UserController extends Controller
     }
     public function update(User $user)
     {
+        if(auth()->user()->role != 1){
+            abort(404);
+        }
           // dd(request()->all());
           $attributes=request()->validate([
             'name'=> 'required | min:3 | max:255',
@@ -78,6 +93,9 @@ class UserController extends Controller
     }
     public function destroy($user)
     {
+        if(auth()->user()->role != 1){
+            abort(404);
+        }
         $data = User::find($user);
         // dd($data);
         if($data){

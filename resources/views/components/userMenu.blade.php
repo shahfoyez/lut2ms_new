@@ -18,15 +18,15 @@
                 <div class="menu-content d-flex align-items-center px-3">
                     <!--begin::Avatar-->
                     <div class="symbol symbol-50px me-5">
-                        <img alt="Logo" src="assets/media/avatars/150-26.jpg" />
+                        <img alt="Logo" src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('assets/uploads/default/defaultProfile.webp') }}" />
                     </div>
                     <!--end::Avatar-->
                     <!--begin::Username-->
                     <div class="d-flex flex-column">
                         <div class="fw-bolder d-flex align-items-center fs-5">
-                            Shah Foyez
+                            {{ auth()->user()->name }}
                         </div>
-                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">example@gmail.com</a>
+                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->phone  }}</a>
                     </div>
                     <!--end::Username-->
                 </div>
@@ -40,72 +40,14 @@
                 <a href="../../demo8/dist/account/overview.html" class="menu-link px-5">My Profile</a>
             </div>
             <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                <a href="#" class="menu-link px-5">
-                    <span class="menu-title position-relative">Language
-                    <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-                    <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
-                </a>
-                <!--begin::Menu sub-->
-                <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-3">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5 active">
-                        <span class="symbol symbol-20px me-4">
-                            <img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
-                        </span>English</a>
-                    </div>
-                    <!--end::Menu item-->
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-3">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
-                        <span class="symbol symbol-20px me-4">
-                            <img class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
-                        </span>Spanish</a>
-                    </div>
-                    <!--end::Menu item-->
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-3">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
-                        <span class="symbol symbol-20px me-4">
-                            <img class="rounded-1" src="assets/media/flags/germany.svg" alt="" />
-                        </span>German</a>
-                    </div>
-                    <!--end::Menu item-->
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-3">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
-                        <span class="symbol symbol-20px me-4">
-                            <img class="rounded-1" src="assets/media/flags/japan.svg" alt="" />
-                        </span>Japanese</a>
-                    </div>
-                    <!--end::Menu item-->
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-3">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
-                        <span class="symbol symbol-20px me-4">
-                            <img class="rounded-1" src="assets/media/flags/france.svg" alt="" />
-                        </span>French</a>
-                    </div>
-                    <!--end::Menu item-->
-                </div>
-                <!--end::Menu sub-->
-            </div>
-            <!--end::Menu item-->
-            <!--begin::Menu item-->
-            <div class="menu-item px-5 my-1">
-                <a href="../../demo8/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
-            </div>
-            <!--end::Menu item-->
-                <!--begin::Menu separator-->
-                <div class="separator my-2"></div>
-                <!--end::Menu separator-->
-            <!--begin::Menu item-->
+
+           <!--begin::Menu item-->
             <div class="menu-item px-5">
                 <a  data-bs-toggle="modal" data-bs-target="#kt_modal_create_api_key" class="menu-link px-5">Sign Out</a>
             </div>
             <!--end::Menu item-->
+
+
             <!--begin::Menu separator-->
             <div class="separator my-2"></div>
             <!--end::Menu separator-->
@@ -113,7 +55,7 @@
             <div class="menu-item px-5">
                 <div class="menu-content px-5">
                     <label class="form-check form-switch form-check-custom form-check-solid pulse pulse-success" for="kt_user_menu_dark_mode_toggle">
-                        <input class="form-check-input w-30px h-20px" type="checkbox" value="1" name="mode" id="kt_user_menu_dark_mode_toggle" data-kt-url="../../demo8/dist/index.html" />
+                        <input class="form-check-input w-30px h-20px" type="checkbox" value="1" name="mode" id="kt_user_menu_dark_mode_toggle" data-kt-url="#" />
                         <span class="pulse-ring ms-n1"></span>
                         <span class="form-check-label text-gray-600 fs-7">Dark Mode</span>
                     </label>
