@@ -18,7 +18,7 @@ class MaintenanceController extends Controller
         $vehicles = Vehicle::withCount('maintenanceEntries')
             ->withSum('maintenanceEntries', 'cost')
             ->withMax('maintenanceEntries', 'from')
-            ->get();
+            ->latest()->get();
         return view('maintenanceVehicles', [
             'vehicles' => $vehicles
         ]);
@@ -26,7 +26,7 @@ class MaintenanceController extends Controller
 
     public function create(Vehicle $vehicle)
     {
-        $vehicles = Vehicle::get();
+        $vehicles = Vehicle::latest()->get();
         return view('maintenanceAdd', [
             'vehicles' => $vehicles,
             'selVehicle' => $vehicle
@@ -59,14 +59,14 @@ class MaintenanceController extends Controller
 
     public function show()
     {
-        $maintenanceRecords = Maintenance::latest('from')->with('vehicle')->get();
+        $maintenanceRecords = Maintenance::with('vehicle')->latest('from')->get();
         return view('maintenanceRecords', [
-                'maintenanceRecords' => $maintenanceRecords
+            'maintenanceRecords' => $maintenanceRecords
         ]);
     }
     public function  vehicleMaintenanceEntries($vehicle)
     {
-        $maintenanceRecords = Maintenance::latest('from')->where('vid', $vehicle)->get();
+        $maintenanceRecords = Maintenance::where('vid', $vehicle)->latest('from')->get();
         $vehicle = Vehicle::find($vehicle)->codeName;
         // dd( $vehicle);
         // dd($maintenanceRecords);
@@ -105,6 +105,57 @@ class MaintenanceController extends Controller
             'note' => $request->input('note')
         ]);
         return redirect('/maintenance/maintenanceVehicles')->with('success', 'Maintenance entry has been updated.');
+    }
+
+
+
+    public function maintenanceVehiclesFilter(){
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+
+        $vehicles = Vehicle::withCount(['maintenanceEntries' => function ($query) use ($start,$end) {
+                $query->whereBetween('from', [$start, $end]);
+            }])
+            ->withSum(
+                ['maintenanceEntries' => fn($query) => $query->whereBetween('from', [$start, $end])], 'cost'
+            )
+            ->withMax(
+                ['maintenanceEntries' => fn($query) => $query->whereBetween('from', [$start, $end])], 'from'
+            )
+            ->latest()->get();
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+        return view('maintenanceVehicles', [
+            'vehicles' => $vehicles,
+            'start' => $start,
+            'end' => $end
+        ]);
+    }
+    public function maintenanceRecordsFilter(){
+        $date = explode("-", request()->input('date'));
+        $start = trim($date[0]);
+        $end = trim($date[1]);
+
+        $start =  Carbon::parse($start)->format('Y-m-d');
+        $end =  Carbon::parse($end)->format('Y-m-d 23:59:59');
+        if(request()->input('date')){
+            $maintenanceRecords = Maintenance::whereBetween('from', [$start, $end])
+            ->with('vehicle')
+            ->latest()->get();
+        }
+        // dd($maintenanceRecords);
+
+        $start =  Carbon::parse($start)->format('d M Y');
+        $end =  Carbon::parse($end)->format('d M Y');
+        return view('maintenanceRecords', [
+            'maintenanceRecords' => $maintenanceRecords,
+            'start' => $start,
+            'end' => $end
+        ]);
     }
 
     public function destroy($maintenance)
