@@ -61,7 +61,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user/update/{user}', 'Update');
         Route::delete('/user/delete/{user}', 'destroy');
 
-        Route::get('/user/profile/{user}', 'profile');
+        Route::get('/user/profile', 'profile');
+        Route::post('/user/profileUpdate/{user}', 'profileUpdate');
+
     });
 
     // EmployeeController Group

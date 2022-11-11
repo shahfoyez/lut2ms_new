@@ -26,7 +26,7 @@
                         <div class="fw-bolder d-flex align-items-center fs-5">
                             {{ auth()->user()->name }}
                         </div>
-                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->phone  }}</a>
+                        <a href="tel:{{ auth()->user()->phone }}" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->phone  }}</a>
                     </div>
                     <!--end::Username-->
                 </div>
@@ -37,13 +37,15 @@
             <!--end::Menu separator-->
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="../../demo8/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                <a href="/user/profile" class="menu-link px-5">My Profile</a>
             </div>
             <!--end::Menu item-->
 
            <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a  data-bs-toggle="modal" data-bs-target="#kt_modal_create_api_key" class="menu-link px-5">Sign Out</a>
+                <a href="/logout" data-bs-toggle="modal" class="menu-link px-5" data-bs-target="#kt_modal_create_api_key" class="menu-link px-5">
+                    <span class="btn-label">Sign Out</span>
+                </a>
             </div>
             <!--end::Menu item-->
 

@@ -91,6 +91,35 @@ class UserController extends Controller
         ]);
         return redirect('/user/users')->with('success', 'Profile Updated');
     }
+    public function profileUpdate(User $user)
+    {
+
+        if(auth()->user()->id != $user->id){
+            abort(404);
+        }
+          // dd(request()->all());
+          $attributes=request()->validate([
+            'name'=> 'required | min:3 | max:255',
+            'username'=> ['required', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($user->username, 'username')],
+            'phone'=> 'nullable|numeric',
+        ]);
+        // dd(request()->all());
+        User::where('id', $user->id)->update([
+            'name'=> request()->input('name'),
+            'username'=> request()->input('username'),
+            'phone'=> request()->input('phone'),
+        ]);
+        return redirect('/user/profile')->with('success', 'You Profile has been Updated!');
+    }
+    public function profile()
+    {
+        $user = auth()->user();
+
+        // dd(bcrypt($user->password));
+        return view('userProfile', [
+            'user' => $user
+        ]);
+    }
     public function destroy($user)
     {
         if(auth()->user()->role != 1){
