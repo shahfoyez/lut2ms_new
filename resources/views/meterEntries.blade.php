@@ -19,7 +19,13 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">Meter Entries</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">Meter Entries
+                            <span class="card-label text-muted">
+                                @if (isset($start) && isset($end))
+                                    {{ '('.$start.'-'.$end.')' }}
+                                @endif
+                            </span>
+                        </span>
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $meterEntries->count() }} Entries</span>
                     </h3>
                     <div class="card-toolbar">
