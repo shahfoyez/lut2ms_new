@@ -57,6 +57,4 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
     height: 50%;
     width: 50%;
 }
-.separator :nth-child(last){
-    display: none;
-}
+

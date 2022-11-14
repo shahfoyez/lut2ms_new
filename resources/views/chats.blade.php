@@ -449,10 +449,10 @@
                     </div> --}}
                     <!--end::Content-->
                 @else
-                 <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
                         <!--begin::Messenger-->
                         <div class="card pb-10" id="kt_chat_messenger">
-                            <div class="chat-default text-center">
+                            <div class="chat-box text-center" id="chat-box">
                                 <img class="chat-default-image"v src="{{ asset('assets/images/illustrations/chat.png') }}">
                                 <h3>Welcome to Chat</h3>
                             </div>
@@ -1799,7 +1799,7 @@
             // var ff = Js::from($array)
             var ff= $(this).attr('data-item');
             console.log(ff);
-
+            document.getElementById("chat-box").innerHTML = "jkd";
         });
 
     </script>
