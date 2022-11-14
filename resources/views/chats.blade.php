@@ -44,38 +44,42 @@
                             <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px">
                                 @if($chats && $chats->count()>0)
                                     @foreach ($chats as $chat)
+                                    <?php
+                                        $new= $chat->toJson();
+                                        // dd($new);
+                                    ?>
+
                                          <!--begin::User-->
-                                    <div class="d-flex flex-stack py-4">
-                                        <!--begin::Details-->
-                                        <div class="d-flex align-items-center">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-45px symbol-circle">
-                                                <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{ substr($chat->name, 0,1); }}</span>
-                                                <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
-                                            </div>
-                                            <!--end::Avatar-->
+                                        <div class="d-flex flex-stack py-4 position-relative">
                                             <!--begin::Details-->
-                                            <div class="ms-5">
-                                                <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">{{ $chat->name }}</a>
-                                                <div class="fw-bold text-muted">{{ $chat->email }}</div>
+                                            <div class="d-flex align-items-center">
+                                                <!--begin::Avatar-->
+                                                <div class="symbol symbol-45px symbol-circle">
+                                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{ substr($chat->name, 0,1); }}</span>
+                                                    <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+                                                </div>
+                                                <!--end::Avatar-->
+                                                <!--begin::Details-->
+                                                <div class="ms-5">
+                                                    <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2 stretched-link foy-chat" data-item="{{ $new }}"  >{{ $chat->name }}</a>
+                                                    <div class="fw-bold text-muted">{{ $chat->email }}</div>
+                                                </div>
+                                                <!--end::Details-->
                                             </div>
                                             <!--end::Details-->
-                                        </div>
-                                        <!--end::Details-->
-                                        <!--begin::Lat seen-->
-                                        <div class="d-flex flex-column align-items-end ms-2">
-                                            <span class="text-muted fs-7 mb-1">{{ $chat->created_at->diffForHumans() }}</span>
-											<span class="badge badge-sm badge-circle badge-light-success">6</span>
+                                            <!--begin::Lat seen-->
+                                            <div class="d-flex flex-column align-items-end ms-2">
+                                                <span class="text-muted fs-7 mb-1">{{ $chat->created_at->diffForHumans() }}</span>
+                                                <span class="badge badge-sm badge-circle badge-light-success">6</span>
 
+                                            </div>
+                                            <!--end::Lat seen-->
                                         </div>
-                                        <!--end::Lat seen-->
-                                    </div>
-                                    <!--end::User-->
-                                    <!--begin::Separator-->
-                                    <div class="separator separator-dashed d-none"></div>
-                                    <!--end::Separator-->
+                                        <!--end::User-->
+                                        <!--begin::Separator-->
+                                        <div class="separator separator-dashed"></div>
+                                        <!--end::Separator-->
                                     @endforeach
-
                                 @endif
 
                             </div>
@@ -1790,6 +1794,15 @@
     <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
     <script src="{{ asset('assets/js/custom/modals/create-app.js') }}"></script>
     <script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
+    <script>
+        $(document).on("click", ".foy-chat", function () {
+            // var ff = Js::from($array)
+            var ff= $(this).attr('data-item');
+            console.log(ff);
+
+        });
+
+    </script>
     <!--end::Page Custom Javascript-->
 @endsection
 

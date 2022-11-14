@@ -26,6 +26,8 @@ class ChatController extends Controller
     public function create()
     {
         $chats = Chat::latest()->get();
+        $chats = Chat::latest()->get();
+
         // dd($chats);
         return view('chats', [
             'chats' => $chats
