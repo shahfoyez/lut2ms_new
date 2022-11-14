@@ -28,13 +28,12 @@ class TripController extends Controller
 
     public function reqVehicles()
     {
-        $vehicles = Vehicle::latest()
-            ->with(['activeTrip' => function ($query) {
+        $vehicles = Vehicle::with(['activeTrip' => function ($query) {
                 $query->where('status', 0);
             }])
             ->with('vehicleType:id,name')
             ->withCount('trips')
-            ->get();
+            ->latest()->get();
 
         // dd($vehicles);
         return view('reqVehicles', [
