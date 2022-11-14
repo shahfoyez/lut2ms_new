@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FuelController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
@@ -233,7 +234,16 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/reminder/delete/{reminder}', 'destroy');
 
         Route::get('/reminder/reminders/filter', 'filter');
-
+    });
+    // ChatController Group
+    Route::controller(ChatController::class)->group(function () {
+        Route::get('/chat/chats', 'create');
+        // Route::get('/route/stoppageAdd', 'stopageAdd');
+        // Route::post('/route/stopageAdd', 'store');
+        // Stoppage EUD
+        // Route::get('/route/stoppageEdit/{stoppage}', 'edit');
+        // Route::post('/route/stoppageUpdate/{stoppage}', 'update');
+        // Route::delete('/route/stoppageDelete/{stoppage}', 'destroy');
     });
 
     // logout

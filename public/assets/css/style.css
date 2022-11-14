@@ -53,3 +53,7 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
     border-color: #f5f8fa;
     background-color: #ffffff;
 }
+.chat-default-image{
+    height: 50%;
+    width: 50%;
+}

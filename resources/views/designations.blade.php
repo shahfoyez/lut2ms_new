@@ -12,7 +12,6 @@
             @include('components.flashMessage')
             @include('components.success')
             @include('components.error')
-
             <!--begin::Tables Widget 11-->
             <div class="card mb-5 mb-xl-8">
                 <!--begin::Header-->
