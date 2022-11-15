@@ -68,7 +68,12 @@
                                             <!--begin::Lat seen-->
                                             <div class="d-flex flex-column align-items-end ms-2">
                                                 <span class="text-muted fs-7 mb-1">{{ $chat->created_at->diffForHumans() }}</span>
-                                                <span class="badge badge-sm badge-circle badge-light-success">6</span>
+                                                <?php
+                                                    $status = $chat->status == 0 ? 1 : '';
+                                                ?>
+                                                @if ($status)
+                                                    <span class="badge badge-sm badge-circle badge-light-success">{{ $status }}</span>
+                                                @endif
                                             </div>
                                             <!--end::Lat seen-->
                                         </div>
@@ -155,6 +160,7 @@
                     <button class="btn btn-primary" type="button" data-kt-element="send">Send</button>
                 </div>
             </div>`;
+
         });
     </script>
     <!--begin::Page Custom Javascript(used by this page)-->

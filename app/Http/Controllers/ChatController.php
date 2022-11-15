@@ -8,21 +8,11 @@ use App\Http\Requests\UpdateChatRequest;
 
 class ChatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $chats = Chat::latest()->get();
@@ -32,24 +22,9 @@ class ChatController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreChatRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
+    public function store(StoreChatRequest $request)
     {
-        // return request()->all();
         $data = request()->all();
-
-        $attributes= request()->validate([
-            'name'=> 'required',
-            'email'=>  'required',
-            'student_id' => 'required',
-            'message'=> 'required'
-        ]);
-        // return request()->all();
         try {
             $chat= Chat::create([
                 'name'=> $data['name'],
