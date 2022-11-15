@@ -17,7 +17,6 @@
                     <p>{{ session('message') }}</p>
                 </div>
             @endif
-
             <h4 class="pb-2">User Based Reservation</h4>
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
