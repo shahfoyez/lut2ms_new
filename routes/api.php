@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\VehicleLocationController;
 
 /*
@@ -20,6 +21,11 @@ Route::controller(VehicleLocationController::class)->group(function () {
     Route::get('/routes', 'index');
     Route::get('/route/vehicles/{route}', 'routeVehicles');
     Route::get('/vehicle/locationUpdate/{vid}/{long}/{lat}', 'store');
+});
+Route::controller(ChatController::class)->group(function () {
+    Route::post('/message/send', 'store');
+    // Route::get('/route/vehicles/{route}', 'routeVehicles');
+    // Route::get('/vehicle/locationUpdate/{vid}/{long}/{lat}', 'store');
 });
 
 // Protected routes
