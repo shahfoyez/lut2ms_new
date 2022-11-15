@@ -46,10 +46,8 @@
                                     @foreach ($chats as $chat)
                                     <?php
                                         $new= $chat->toJson();
-                                        // dd($new);
                                     ?>
-
-                                         <!--begin::User-->
+                                        <!--begin::User-->
                                         <div class="d-flex flex-stack py-4 position-relative">
                                             <!--begin::Details-->
                                             <div class="d-flex align-items-center">
@@ -71,7 +69,6 @@
                                             <div class="d-flex flex-column align-items-end ms-2">
                                                 <span class="text-muted fs-7 mb-1">{{ $chat->created_at->diffForHumans() }}</span>
                                                 <span class="badge badge-sm badge-circle badge-light-success">6</span>
-
                                             </div>
                                             <!--end::Lat seen-->
                                         </div>
