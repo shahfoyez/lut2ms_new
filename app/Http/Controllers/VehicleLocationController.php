@@ -21,11 +21,14 @@ class VehicleLocationController extends Controller
     }
     public function routeVehicles($route)
     {
-        $trips = Trip::with('vehicle', 'vehicle.location')
+        $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
+                $query->with('driver')->where('status', 0);
+            }])
             ->with('employee')
             ->where('route', $route)
             ->where('status', 0)
-            ->get()->pluck('vehicle');
+            ->latest()->get()->pluck('vehicle');
+            dd($trips);
         return $trips;
     }
 

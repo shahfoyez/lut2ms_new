@@ -12,10 +12,16 @@ class Trip extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    // protected $with=['driver'];
+
 
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vid');
+    }
+    public function driver()
+    {
+        return $this->belongsTo(Employee::class, 'driver');
     }
     public function rout()
     {

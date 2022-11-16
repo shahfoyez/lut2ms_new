@@ -23,6 +23,12 @@ class Vehicle extends Model
     {
         return $this->hasOne(Trip::class, 'vid');
     }
+    public function activeTrip1()
+    {
+        return $this->hasOne(Trip::class, 'vid')->ofMany([], function ($query) {
+            $query->where('status', 0);
+        });
+    }
     public function fuels()
     {
         return $this->hasMany(Fuel::class, 'vid');

@@ -160,7 +160,7 @@ class TestController extends Controller
         ->restore();
 
 
-        public function edit(Stoppage $stoppage)
+    public function edit(Stoppage $stoppage)
     {
         $routes = Routex::latest()->get();
         return view('stoppageEdit', [
