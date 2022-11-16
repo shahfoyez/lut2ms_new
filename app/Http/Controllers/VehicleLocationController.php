@@ -28,7 +28,6 @@ class VehicleLocationController extends Controller
             ->where('route', $route)
             ->where('status', 0)
             ->latest()->get()->pluck('vehicle');
-            dd($trips);
         return $trips;
     }
 
