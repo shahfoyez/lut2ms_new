@@ -73,20 +73,33 @@ class UserController extends Controller
         if(auth()->user()->role != 1){
             abort(404);
         }
-          // dd(request()->all());
-          $attributes=request()->validate([
+        // dd(request()->all());
+        $attributes=request()->validate([
             'name'=> 'required | min:3 | max:255',
             'username'=> ['required', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($user->username, 'username')],
             'phone'=> 'nullable|numeric',
             'role' => 'required|numeric',
-            'status' => 'required|numeric'
+            'status' => 'required|numeric',
+            'image' => 'image|nullable|max:150'
         ]);
+        if (request()->has('image')) {
+            // File::delete($employee->image);
+            if($user->image){
+                unlink(public_path($user->image));
+            }
+            $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.request()->image->extension();
+            request()->image->move(public_path('assets/uploads/users'),$imageName);
+            $imageName = "assets/uploads/users/".$imageName;
+        }else{
+            $imageName = $user->image;
+        }
         // dd(request()->all());
         User::where('id', $user->id)->update([
             'name'=> request()->input('name'),
             'username'=> request()->input('username'),
             'phone'=> request()->input('phone'),
             'role'=> request()->input('role'),
+            'image' => $imageName,
             'status'=> request()->input('status'),
         ]);
         return redirect('/user/users')->with('success', 'Profile Updated');
@@ -102,12 +115,25 @@ class UserController extends Controller
             'name'=> 'required | min:3 | max:255',
             'username'=> ['required', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($user->username, 'username')],
             'phone'=> 'nullable|numeric',
+            'image' => 'image|nullable|max:150'
         ]);
+        if (request()->has('image')) {
+            // File::delete($employee->image);
+            if($user->image){
+                unlink(public_path($user->image));
+            }
+            $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.request()->image->extension();
+            request()->image->move(public_path('assets/uploads/users'),$imageName);
+            $imageName = "assets/uploads/users/".$imageName;
+        }else{
+            $imageName = $user->image;
+        }
         // dd(request()->all());
         User::where('id', $user->id)->update([
             'name'=> request()->input('name'),
             'username'=> request()->input('username'),
             'phone'=> request()->input('phone'),
+            'image' => $imageName,
         ]);
         return redirect('/user/profile')->with('success', 'You Profile has been Updated!');
     }

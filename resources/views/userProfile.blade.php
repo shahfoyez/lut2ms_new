@@ -76,22 +76,7 @@
 
                             </div>
                             <!--end::Title-->
-                            <!--begin::Stats-->
-                            <div class="d-flex flex-wrap flex-stack">
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-column flex-grow-1 pe-8">
-                                    <!--begin::Stats-->
-                                    <div class="d-flex flex-wrap">
 
-
-
-                                    </div>
-                                    <!--end::Stats-->
-                                </div>
-                                <!--end::Wrapper-->
-
-                            </div>
-                            <!--end::Stats-->
                         </div>
                         <!--end::Info-->
                     </div>
@@ -109,7 +94,7 @@
                         <!--begin::Col-->
                         <div class="col-md-12 pe-lg-10">
                             <!--begin::Form-->
-                            <form action="/user/profileUpdate/{{ $user->id }}" class="form mb-15" method="post" id="kt_contact_form">
+                            <form action="/user/profileUpdate/{{ $user->id }}" class="form mb-15" method="post" id="kt_contact_form" enctype="multipart/form-data">
                                 @csrf
                                 <h1 class="fw-bolder text-dark mb-9">My Profile</h1>
                                 <!--begin::Input group-->
@@ -166,11 +151,61 @@
 
                                 </div>
                                 <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Col-->
+                                    <div class="col fv-row mt-5">
+                                        <!--begin::Image input-->
+                                        <?php
+                                            $imageURL = $user->image ? asset($user->image) : asset('/assets/media/avatars/blank.png');
+                                        ?>
+                                       <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('{{ $imageURL }}')">
 
+                                            <!--begin::Image preview wrapper-->
+                                            <div class="image-input-wrapper w-125px h-125px"></div>
+                                            <!--end::Image preview wrapper-->
 
+                                            <!--begin::Edit button-->
+                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                            data-kt-image-input-action="change"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-dismiss="click"
+                                            title="Upload Image">
+                                                <i class="bi bi-pencil-fill fs-7"></i>
+                                                <!--begin::Inputs-->
+                                                <input type="file" name="image" accept=".png, .jpg, .jpeg" />
+                                                <input type="hidden" name="avatar_remove" />
+                                                <!--end::Inputs-->
+                                            </label>
+                                            <!--end::Edit button-->
+                                            <!--begin::Cancel button-->
+                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                            data-kt-image-input-action="cancel"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-dismiss="click"
+                                            title="Cancel avatar">
+                                                <i class="bi bi-x fs-2"></i>
+                                            </span>
+                                            <!--end::Cancel button-->
 
-
-
+                                            <!--begin::Remove button-->
+                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                            data-kt-image-input-action="remove"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-dismiss="click"
+                                            title="Remove avatar">
+                                                <i class="bi bi-x fs-2"></i>
+                                            </span>
+                                            <!--end::Remove button-->
+                                        </div>
+                                        <!--end::Image input-->
+                                        @error('image')
+                                            @include('components.validation')
+                                        @enderror
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
                                 <!--begin::Submit-->
                                 <button type="submit" class="btn btn-primary mt-5">
                                     <!--begin::Indicator-->

@@ -162,6 +162,9 @@
                                                     <input type="file" name="image" accept=".png, .jpg, .jpeg" />
                                                     <input type="hidden" name="avatar_remove" />
                                                     <!--end::Inputs-->
+                                                    @error('image')
+                                                        @include('components.validation')
+                                                    @enderror
                                                 </label>
                                                 <!--end::Edit button-->
 

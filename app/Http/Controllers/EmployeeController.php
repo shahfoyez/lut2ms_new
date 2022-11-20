@@ -89,7 +89,7 @@ class EmployeeController extends Controller
                 Rule::unique('employees', 'idNumber')->ignore($employee->idNumber, 'idNumber'),
             ],
             'phone'=> 'required',
-            'image' => 'max:500'
+            'image' => 'image|nullable|max:150'
         ]);
         if (request()->has('image')) {
             // File::delete($employee->image);
