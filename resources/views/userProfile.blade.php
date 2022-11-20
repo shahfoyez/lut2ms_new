@@ -29,7 +29,7 @@
                         </div>
                         <!--end::Pic-->
                         <!--begin::Info-->
-                        <div class="flex-grow-1">
+                        <div class="d-flex">
                             <!--begin::Title-->
                             <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
                                 <!--begin::User-->
