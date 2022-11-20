@@ -28,16 +28,6 @@ use App\Http\Controllers\MaintenanceController;
 Route::get('/landing', function(){
     return view('landing');
 });
-Route::get('/location', function(){
-    return view('location');
-});
-Route::get('/dateR', function(){
-    return view('daterangepicker');
-});
-
-// Route::get('/tests', function(){
-//     return view('tests');
-// });
 Route::middleware(['guest'])->group(function () {
     Route::controller(SessionController::class)->group(function () {
         Route::get('/', 'loginCreate')->name('login');
