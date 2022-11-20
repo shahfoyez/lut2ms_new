@@ -76,7 +76,6 @@ class VehicleController extends Controller
     {
         //
     }
-
     public function edit(Vehicle $vehicle)
     {
         // $vehicles = Vehicle::with('user:id,name,added_by')->find($vehicle->id); //added_by for Nested Eager Loading, id is necessary
