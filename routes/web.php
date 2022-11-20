@@ -161,9 +161,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/requisition/vehicles/filter', 'filter');
         Route::get('/trip/history/filter', 'tripFilter');
         Route::get('/trip/vehicleTrips/{vehicle}/filter', 'vehicleTripsFilter');
-
-
-
     });
 
     // FuelController Group
@@ -202,8 +199,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/meter/meterVehicles/filter', 'meterVehicleFilter');
         Route::get('/meter/meterEntries/filter', 'meterEntriesFilter');
         Route::get('/meter/vehicleMeterEntries/{vehicle}/filter', 'vehicleMeterEntriesFilter');
-
-
     });
 
     // MaintenanceController Group
