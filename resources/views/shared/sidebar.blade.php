@@ -306,10 +306,10 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <?php
-                            $employees = array('maintenanceVehicles', 'employeeAdd', 'employeeEdit');
+                            $maintenance_vehicles = array('maintenanceVehicles', 'maintenanceAdd');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'maintenanceVehicles' || request()->segment(2) == 'maintenanceVehicles') ? 'active' : '' }}" href="/maintenance/maintenanceVehicles">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $maintenance_vehicles) ? 'active' : '' }}" href="/maintenance/maintenanceVehicles">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -317,10 +317,10 @@
                             </a>
                         </div>
                         <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                            $maintenance_records = array('maintenanceRecords', 'vehicleMaintenanceRecords', 'edit');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'maintenanceRecords') ? 'active' : '' }}" href="/maintenance/maintenanceRecords">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $maintenance_records) ? 'active' : '' }}" href="/maintenance/maintenanceRecords">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -344,10 +344,10 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                            $reminders_segments = array('reminders', 'reminderAdd');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'reminders' || request()->segment(2) == 'reminderAdd') ? 'active' : '' }}" href="/reminder/reminders">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $reminders_segments) ? 'active' : '' }}" href="/reminder/reminders">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -447,10 +447,10 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                            $users_segments = array('users', 'add');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'users' || request()->segment(2) == 'userAdd') ? 'active' : '' }}" href="/user/users">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $users_segments)  ? 'active' : '' }}" href="/user/users">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
