@@ -64,7 +64,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/user/profile', 'profile');
         Route::post('/user/profileUpdate/{user}', 'profileUpdate');
-
     });
 
     // EmployeeController Group
@@ -120,10 +119,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/vehicle/vehicleAdd', 'vehicleAdd');
         Route::post('/vehicle/vehicleAdd', 'store');
         Route::get('/requisition/vehicles', 'reqVehicles');
-        // Route::get('/requisition/send/{vehicle}', 'vehicleCreate');
-        // Route::post('/requisition/vehicleSend', 'vehicleSend');
-        // Route::get('/requisition/reach/{vehicle}', 'vehicleReach');
-        // Route::get('/requisition/cancel/{vehicle}', 'vehicleCancel');
         // Vehicle EUD
         Route::get('/vehicle/vehicleEdit/{vehicle}', 'edit');
         Route::post('/vehicle/vehicleUpdate/{vehicle}', 'update');
