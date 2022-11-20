@@ -107,7 +107,6 @@
                                     </tr>
                                     @endforeach
                                 @endif
-
                             </tbody>
                             <!--end::Table body-->
                         </table>
