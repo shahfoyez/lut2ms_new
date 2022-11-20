@@ -22,15 +22,16 @@ class Trip extends Model
     public function driver()
     {
         return $this->belongsTo(Employee::class, 'driver');
+
     }
     public function rout()
     {
         return $this->belongsTo(Routex::class, 'route');
     }
-    // public function employee()
-    // {
-    //     return $this->belongsTo(Employee::class, 'driver');
-    // }
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'driver');
+    }
 
     // Mutator for automatically be cast to Carbon instances
     protected $dates = [

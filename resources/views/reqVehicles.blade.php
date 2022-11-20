@@ -215,7 +215,7 @@
                                                     <!--end::Svg Icon-->
                                                 </a>
                                             @endif
-                                            <a href="/vehicleTrip/history/{{ $list->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a href="/trip/vehicleTrips/{{ $list->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">

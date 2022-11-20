@@ -39,6 +39,7 @@
         <div class="hover-scroll-overlay-y px-2 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
             <!--begin::Menu-->
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+
                 <div class="menu-item">
                     <a class="menu-link {{ (request()->is('/')? 'active': '') }}" href="/">
                         <span class="menu-icon">
@@ -49,8 +50,50 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
+                <?php
+                    $segment_1 = request()->segment(1);
+                    $segment_2 = request()->segment(2);
+                ?>
+                  {{-- start::Route Management --}}
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'route' ? 'here show' : '' }}">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <!--begin::Icon-->
+                            <i class="fas fa-bus-alt"></i>
+                            <!--end::Icon-->
+                        </span>
+                        <span class="menu-title">Route Management</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <?php
+                        $routes = array('routes', 'routeAdd', 'routeEdit');
+                    ?>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div class="menu-item">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $routes) ? 'active' : '' }}" href="/route/routes">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Routes</span>
+                            </a>
+                        </div>
+                        <?php
+                            $stopages = array('stoppages', 'stoppageAdd', 'stoppageEdit');
+                        ?>
+                        <div class="menu-item">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $stopages) ? 'active' : '' }}" href="/route/stoppages">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Stopages</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{-- end::Route Management --}}
+
                 {{-- start::Our Employees --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'employee') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'employee' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -61,24 +104,33 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'employees') || (request()->segment(2) == 'employeeAdd') ? 'active' : '' }}" href="/employee/employees">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $employees) || (request()->segment(2) == 'employeeAdd') ? 'active' : '' }}" href="/employee/employees">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Employees</span>
                             </a>
                         </div>
+                        <?php
+                            $departments = array('departments', 'departmentAdd', 'departmentEdit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'departments' || request()->segment(2) == 'departmentAdd') ? 'active' : '' }}" href="/employee/departments">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $departments) ? 'active' : '' }}" href="/employee/departments">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Departments</span>
                             </a>
                         </div>
+                        <?php
+                            $designations = array('designations', 'designationAdd', 'designationEdit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'designations' || request()->segment(2) == 'designationAdd') ? 'active' : '' }}" href="/employee/designations">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $designations) ? 'active' : '' }}" href="/employee/designations">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -88,39 +140,9 @@
                     </div>
                 </div>
                 {{-- end::Our Employees --}}
-                {{-- start::Route Management --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'route') ? 'here show' : '' }}">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <!--begin::Icon-->
-                            <i class="fas fa-bus-alt"></i>
-                            <!--end::Icon-->
-                        </span>
-                        <span class="menu-title">Route Management</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'routes' || request()->segment(2) == 'routeAdd') ? 'active' : '' }}" href="/route/routes">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Routes</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'stoppages' || request()->segment(2) == 'stoppageAdd') ? 'active' : '' }}" href="/route/stoppages">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Stopages</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {{-- end::Route Management --}}
+
                 {{-- start::Vehicle Management --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'vehicle') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'vehicle' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -131,16 +153,22 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $vehicles = array('vehicles', 'vehicleAdd', 'vehicleEdit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->segment(1) == 'vehicle' && (request()->segment(2) == 'vehicles' || request()->segment(2) == 'vehicleAdd') ? 'active' : '' }}" href="/vehicle/vehicles">
+                            <a class="menu-link {{ $segment_1 == 'vehicle' && $segment_2 == in_array($segment_2,  $vehicles) ? 'active' : '' }}" href="/vehicle/vehicles">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Vehicles</span>
                             </a>
                         </div>
+                        <?php
+                            $vehicleTypes = array('vehicleTypes', 'typeEdit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'vehicleType') ? 'active' : '' }}" href="/vehicle/vehicleTypes">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $vehicleTypes) ? 'active' : '' }}" href="/vehicle/vehicleTypes">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -152,7 +180,7 @@
                 {{-- end::Vehicle Management --}}
 
                 {{-- start::Vehicle Requisition Management--}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'requisition' || request()->segment(1) == 'trip') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'requisition' || $segment_1 == 'trip' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -163,17 +191,22 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $tripVehicles = array('vehicles', 'send', 'edit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->segment(1) == 'requisition' && (request()->segment(2) == 'vehicles' || request()->segment(2) == 'send') ? 'active' : '' }}" href="/requisition/vehicles">
+                            <a class="menu-link {{ $segment_1 == 'requisition' && $segment_2 == in_array($segment_2,  $tripVehicles) ? 'active' : '' }}" href="/requisition/vehicles">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Vehicles</span>
                             </a>
                         </div>
-
+                        <?php
+                            $triphistory = array('history', 'vehicleTrips');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'history') ? 'active' : '' }}" href="/trip/history">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $triphistory) ? 'active' : '' }}" href="/trip/history">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -185,7 +218,7 @@
                 {{-- end::Vehicle Requisition --}}
 
                 {{-- start::Fuel --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'fuel') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'fuel' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -196,16 +229,22 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $fuelVehicles = array('fuelVehicles', 'fuelAdd');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'fuelVehicles' || request()->segment(2) == 'fuelAdd') ? 'active' : '' }}" href="/fuel/fuelVehicles">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $fuelVehicles)  ? 'active' : '' }}" href="/fuel/fuelVehicles">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Vehicles</span>
                             </a>
                         </div>
+                        <?php
+                            $fuelRecords = array('fuelRecords', 'vehicleFuels', 'edit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'fuelRecords') ? 'active' : '' }}" href="/fuel/fuelRecords">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $fuelRecords)  ? 'active' : '' }}" href="/fuel/fuelRecords">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -216,7 +255,7 @@
                 </div>
                 {{-- end::Fuel Requisition --}}
                 {{-- start::Meter --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'meter') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'meter' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -227,16 +266,22 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $meter_vehicles_segments = array('meterVehicles', 'meterEntryAdd');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'meterVehicles' || request()->segment(2) == 'meterEntryAdd') ? 'active' : '' }}" href="/meter/meterVehicles">
+                            <a class="menu-link {{  $segment_2 == in_array($segment_2,  $meter_vehicles_segments) ? 'active' : '' }}" href="/meter/meterVehicles">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Vehicles</span>
                             </a>
                         </div>
+                        <?php
+                            $meter_entries_segments = array('meterEntries', 'vehicleMeterEntries', 'edit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->segment(2) == 'meterEntries' ? 'active' : '' }}" href="/meter/meterEntries">
+                            <a class="menu-link {{  $segment_2 == in_array($segment_2,  $meter_entries_segments) ? 'active' : '' }}" href="/meter/meterEntries">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -249,7 +294,7 @@
                 {{-- end::VehiFuelcle Requisition --}}
 
                  {{-- start::Maintenance Requisition --}}
-                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'maintenance') ? 'here show' : '' }}">
+                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'maintenance' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -260,14 +305,20 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $employees = array('maintenanceVehicles', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'maintenanceVehicles' || request()->segment(2) == 'maintenanceEntry') ? 'active' : '' }}" href="/maintenance/maintenanceVehicles">
+                            <a class="menu-link {{ (request()->segment(2) == 'maintenanceVehicles' || request()->segment(2) == 'maintenanceVehicles') ? 'active' : '' }}" href="/maintenance/maintenanceVehicles">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Vehicles</span>
                             </a>
                         </div>
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
                             <a class="menu-link {{ (request()->segment(2) == 'maintenanceRecords') ? 'active' : '' }}" href="/maintenance/maintenanceRecords">
                                 <span class="menu-bullet">
@@ -281,7 +332,7 @@
                 {{-- end::Maintenance Requisition --}}
 
                 {{-- start::Reminder --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'reminder') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'reminder' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -292,6 +343,9 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
                             <a class="menu-link {{ (request()->segment(2) == 'reminders' || request()->segment(2) == 'reminderAdd') ? 'active' : '' }}" href="/reminder/reminders">
                                 <span class="menu-bullet">
@@ -305,7 +359,7 @@
                 {{-- end::Reminder --}}
 
                 {{-- start::Report --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'report') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'report' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -316,6 +370,9 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
                             <a class="menu-link {{ (request()->segment(2) == 'reportKpl') ? 'active' : '' }}" href="/report/reportKpl">
                                 <span class="menu-bullet">
@@ -324,6 +381,9 @@
                                 <span class="menu-title">KPL Report</span>
                             </a>
                         </div>
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
                             <a class="menu-link {{ (request()->segment(2) == 'reportExpense') ? 'active' : '' }}" href="/report/reportExpense">
                                 <span class="menu-bullet">
@@ -332,6 +392,9 @@
                                 <span class="menu-title">Expense Report</span>
                             </a>
                         </div>
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
                             <a class="menu-link {{ (request()->segment(2) == 'reportAll') ? 'active' : '' }}" href="/report/reportAll">
                                 <span class="menu-bullet">
@@ -343,10 +406,36 @@
                     </div>
                 </div>
                 {{-- end::Report --}}
+                 {{-- start::Report --}}
+                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'chat' ? 'here show' : '' }}">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <!--begin::Icon-->
+                            <i class="fas fa-print"></i>
+                            <!--end::Icon-->
+                        </span>
+                        <span class="menu-title">Chat</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
+                        <div class="menu-item">
+                            <a class="menu-link {{ (request()->segment(2) == 'chats') ? 'active' : '' }}" href="/chat/chats">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Chats</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{-- end::Report --}}
 
                 {{-- start::User Management --}}
                 @if(auth()->user()->role == 1)
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ (request()->segment(1) == 'user') ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'user' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -357,6 +446,9 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                        ?>
                         <div class="menu-item">
                             <a class="menu-link {{ (request()->segment(2) == 'users' || request()->segment(2) == 'userAdd') ? 'active' : '' }}" href="/user/users">
                                 <span class="menu-bullet">

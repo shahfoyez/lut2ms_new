@@ -142,7 +142,7 @@
                                             <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $trip->rout->route }}</p>
                                         </td> --}}
                                         <td>
-                                            <a href="/user/profile/{{ $trip->employee->id }}" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $trip->employee->name }}</a>
+                                            <a href="/employee/employeeEdit/{{ $trip->employee->id }}" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $trip->employee->name }}</a>
                                         </td>
                                         <td>
                                             <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $trip->from }}</p>

@@ -151,7 +151,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/requisition/cancel/{vehicle}', 'vehicleCancel');
 
         Route::get('/trip/history', 'show');
-        Route::get('/vehicleTrip/history/{vehicle}', 'vehicleTrips');
+        Route::get('/trip/vehicleTrips/{vehicle}', 'vehicleTrips');
 
         Route::get('/requisition/edit/{trip}', 'edit');
         Route::post('/requisition/update/{trip}', 'update');
@@ -160,7 +160,7 @@ Route::middleware(['auth'])->group(function () {
         // Filter
         Route::get('/requisition/vehicles/filter', 'filter');
         Route::get('/trip/history/filter', 'tripFilter');
-        Route::get('/vehicleTrip/history/{vehicle}/filter', 'vehicleTripsFilter');
+        Route::get('/trip/vehicleTrips/{vehicle}/filter', 'vehicleTripsFilter');
 
 
 
