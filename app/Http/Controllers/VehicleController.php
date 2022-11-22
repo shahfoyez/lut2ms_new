@@ -49,7 +49,8 @@ class VehicleController extends Controller
             'capacity'=> 'nullable||numeric',
             'meter_start' => 'required||numeric',
             'type'=> 'required',
-            'status'=> 'required'
+            'status'=> 'required',
+            'image' => 'max:150'
         ]);
 
         if (request()->has('image')) {
@@ -100,7 +101,8 @@ class VehicleController extends Controller
             ],
             'license'=>  'required',
             'capacity'=> 'required|numeric',
-            'meter_start' => 'required|numeric'
+            'meter_start' => 'required|numeric',
+            'image' => 'max:150'
         ]);
 
         if (request()->has('image')) {
@@ -129,10 +131,10 @@ class VehicleController extends Controller
     public function destroy($stoppage)
     {
         $data = Vehicle::find($stoppage);
-        if($data->image){
-            unlink(public_path($data->image));
-        }
         if($data){
+            if($data->image){
+                unlink(public_path($data->image));
+            }
             $data->delete();
             return back()->with('success', 'Stoppage has been deleted.');
         }else{

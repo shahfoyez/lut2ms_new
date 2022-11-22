@@ -1,19 +1,17 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Add Employee
+    Add Notice
 @endsection
 @section('content')
     <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-
-        <div class="foy-errors container-xxl">
-            @include('components.success')
-            @include('components.error')
-        </div>
         <!--begin::Post-->
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
+                @include('components.flashMessage')
+                @include('components.success')
+                @include('components.error')
                 <!--begin::Contact-->
                 <div class="card">
                     <!--begin::Body-->
@@ -23,54 +21,20 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/employee/employeeAdd" class="form mb-15" method="post" id="" enctype="multipart/form-data">
+                                <form action="/notice/noticeAdd" class="form mb-15" method="post" id="" enctype="multipart/form-data">
                                     @csrf
-                                    <h1 class="fw-bolder text-dark mb-9">Add Employee</h1>
+                                    <h1 class="fw-bolder text-dark mb-9">Add Notice</h1>
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Name</label>
+                                            <label class="required fw-bold fs-6 mb-2">Title</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="name" class="form-control mb-3 mb-lg-0" placeholder="name" value="{{ old('name') }}" />
-                                            <!--end::Input-->
-                                            @error('name')
-                                                @include('components.validation')
-                                            @enderror
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">ID</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <input type="text" name="idNumber" class="form-control mb-3 mb-lg-0" placeholder="ID" value="{{ old('idNumber') }}" />
-                                            @error('idNumber')
-                                                @include('components.validation')
-                                            @enderror
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6">
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Phone</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <input type="tel" name="phone" class="form-control mb-3 mb-lg-0" placeholder="Phone" value="{{ old('phone') }}"/>
-                                            @error('phone')
+                                            <input type="text" name="title" class="form-control mb-3 mb-lg-0" placeholder="Title" value="{{ old('title') ? old('title') : ''  }}" />
+                                            @error('title')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
@@ -79,12 +43,12 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="fw-bold fs-6 mb-2">Address</label>
+                                            <label class="fw-bold fs-6 mb-2">Description</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="address" class="form-control mb-3 mb-lg-0" placeholder="Address" value="{{ old('address') }}" />
-                                            @error('address')
+                                            <input type="text" name="desc" class="form-control mb-3 mb-lg-0" placeholder="Description" value="{{ old('desc') ? old('desc') : '' }}" />
+                                            @error('desc')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
@@ -92,56 +56,9 @@
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6">
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="form-label fs-6 mb-2">Department</label>
-                                            <!--end::Label-->
 
-                                            <!--begin::Select2-->
-                                            <select class="form-select" name="department" data-control="select2" data-placeholder="Select Department" data-hide-search="true">
-                                                <option></option>
-                                                <?php
-                                                if($departments->count()>0){
-                                                    foreach($departments as $department){
-                                                    ?>
-                                                        <option value="{{ $department->id }}" {{ old('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
-                                                    <?php
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                            <!--begin::Select2-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="form-label fs-6 mb-2">Designation</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Select2-->
-                                            <select class="form-select" name="designation" data-control="select2" data-placeholder="Select Designation" data-hide-search="true">
-                                                <option></option>
-                                                <?php
-                                                if($designations->count()>0){
-                                                    foreach($designations as $designation){
-                                                    ?>
-                                                        <option value="{{ $designation->id }}" {{ old('designation') == $designation->id ? 'selected' : '' }}>{{ $designation->name }}</option>
-                                                    <?php
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                            <!--begin::Select2-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6">
+                                       <!--begin::Input group-->
+                                       <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col fv-row mt-5">
                                             <!--begin::Image input-->
@@ -194,6 +111,7 @@
                                     </div>
                                     <!--end::Input group-->
 
+
                                     <!--begin::Submit-->
                                     <button type="submit" class="btn btn-primary mt-5">
                                         <!--begin::Indicator-->
@@ -221,6 +139,4 @@
     </div>
     <!--end::Content-->
 @endsection
-<!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset(' assets/js/custom/modals/create-account.js') }}"></script>
-<!--end::Page Custom Javascript-->
+

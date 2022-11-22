@@ -49,11 +49,6 @@ class UserController extends Controller
         }
         $userId = auth()->user()->id;
         $users = User::all();
-        // $users = User::query->without(['users' => function ($query) {
-        //     $query->select('id', $userId);
-        // }])->get();
-
-        // dd($users);
         return view('users', [
             'users' => $users
         ]);
@@ -154,6 +149,9 @@ class UserController extends Controller
         $data = User::find($user);
         // dd($data);
         if($data){
+            if($data->image){
+                unlink(public_path($data->image));
+            }
             $data->delete();
             return back()->with('success', 'User has been deleted.');
         }else{

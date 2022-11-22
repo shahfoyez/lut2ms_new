@@ -191,9 +191,7 @@
                                                     <i class="bi bi-x fs-2"></i>
                                                 </span>
                                                 @error('image')
-                                                    <p class="fv-plugins-message-container invalid-feedback">
-                                                            {{  $message }}
-                                                    </p>
+                                                    @include('components.validation')
                                                 @enderror
                                                 <!--end::Remove button-->
                                             </div>

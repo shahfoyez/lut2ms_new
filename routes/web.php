@@ -6,6 +6,7 @@ use App\Http\Controllers\FuelController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MeterController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\RoutexController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\SessionController;
@@ -218,6 +219,19 @@ Route::middleware(['auth'])->group(function () {
     // ChatController Group
     Route::controller(ChatController::class)->group(function () {
         Route::get('/chat/chats', 'create');
+    });
+    // NoticeController Group
+    Route::controller(NoticeController::class)->group(function () {
+        Route::get('/notice/notices', 'index');
+        Route::get('/notice/noticeAdd', 'create');
+        Route::post('/notice/noticeAdd', 'store');
+
+        // new added
+        Route::get('/notice/noticeEdit/{notice}', 'edit');
+        Route::post('/notice/noticeUpdate/{notice}', 'update');
+        Route::delete('/notice/delete/{notice}', 'destroy');
+
+        Route::get('/notice/notices/filter', 'filter');
     });
 
     // logout

@@ -195,14 +195,12 @@
                                                 title="Remove avatar">
                                                     <i class="bi bi-x fs-2"></i>
                                                 </span>
-                                                @error('image')
-                                                    <p class="fv-plugins-message-container invalid-feedback">
-                                                            {{  $message }}
-                                                    </p>
-                                                @enderror
                                                 <!--end::Remove button-->
                                             </div>
                                             <!--end::Image input-->
+                                            @error('image')
+                                                @include('components.validation')
+                                            @enderror
                                         </div>
                                         <!--end::Col-->
                                     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Users
+    Notices
 @endsection
 @section('content')
 <!--begin::Content-->
@@ -26,18 +26,18 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">Users</span>
-                        <span class="text-muted mt-1 fw-bold fs-7">Total {{ $users->count() }} Users</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">Notices</span>
+                        <span class="text-muted mt-1 fw-bold fs-7">Total {{ $notices->count() }} Notices</span>
                     </h3>
                     <div class="card-toolbar">
-                        <a href="/user/add" class="btn btn-sm btn-light-primary">
+                        <a href="/notice/noticeAdd" class="btn btn-sm btn-light-primary">
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
                                     <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
                                 </svg>
                             </span>
-                            New User</a>
+                            New Notice</a>
                     </div>
                 </div>
                 <!--end::Header-->
@@ -51,58 +51,43 @@
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                     <th class="w-20px">Sl</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>role</th>
-                                    <th>Status</th>
-                                    <th></th>
+                                    <th class="max-w-325px">title</th>
+                                    <th class="max-w-325px">desc</th>
+                                    <th>image</th>
+                                    <th class="min-w-125px text-end rounded-end"> </th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
                             <!--begin::Table body-->
                             <tbody>
-                                @if($users)
-                                    @foreach($users as $user)
+                                @if($notices && $notices->count() > 0)
+                                    @foreach($notices as $notice)
                                     <tr>
                                         <td>
                                             @include('components.tableSerial')
                                         </td>
                                         <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ $user->image ? asset($user->image) : asset('assets/uploads/default/defaultProfile.webp')}}" class="" alt="" />
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{ $user->name }}</a>
-                                                    <span class="text-muted fw-bold text-muted d-block fs-7">Phone: {{ $user->phone ? $user->phone : "No Data" }}</span>
-                                                </div>
-                                            </div>
+                                            <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 twoline">{{ $notice->title ?? 'No Data' }}</p>
                                         </td>
                                         <td>
-                                            <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $user->username }}</p>
+                                            <p href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 twoline">{{ $notice->desc ?? 'No Data' }}</p>
                                         </td>
-                                        <td>
-                                            @php
-                                                if($user->role == 1){
-                                                    $role = "Super Admin";
-                                                }elseif($user->role == 2){
-                                                    $role =  "Admin";
-                                                }
-                                            @endphp
-                                            <span class="badge badge-success fs-7 fw-bold">{{ $role }}</span>
+                                        <?php
+                                            $imgCheck = $notice->image ? asset($notice->image) : "No Image";
+                                        ?>
+                                        <td class="p-1">
+                                            @if($notice->image)
+                                                <a href="{{ asset($notice->image) }}" target="_blank" class=
+                                                    "symbol symbol-50px me-5">
+                                                    <img class="rounded" src="{{ $imgCheck }}">
+                                                </a>
+                                            @else
+                                            <p href="#" class="text-muted">{{ 'No Data' }}</p>
+                                            @endif
                                         </td>
-                                        <td>
-                                            @php
-                                                if($user->status == 1){
-                                                    $status = "Active";
-                                                }elseif($user->status != 1){
-                                                    $status =  "Deactive";
-                                                }
-                                            @endphp
-                                            <span class="badge badge-success fs-7 fw-bold">{{ $status }}</span>
-                                        </td>
+
                                         <td class="text-end">
-                                            <a href="/user/edit/{{ $user->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a href="/notice/noticeEdit/{{ $notice->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -112,7 +97,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#delete_Modal" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm cd_modal" data-item="/user/delete/{{ $user->id }}" >
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#delete_Modal" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm cd_modal" data-item="/notice/delete/{{ $notice->id }}" >
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

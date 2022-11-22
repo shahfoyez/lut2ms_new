@@ -42,7 +42,7 @@ class EmployeeController extends Controller
             'name'=> 'required | min:3 | max:255',
             'idNumber'=> ['required', Rule::unique('employees', 'idNumber')],
             'phone'=> 'required',
-            'image' => 'max:500'
+            'image' => 'max:150'
         ]);
 
         if (request()->has('image')) {
@@ -131,12 +131,6 @@ class EmployeeController extends Controller
         }
     }
 
-
-
-
-
-
-
     // Department & Designation
     public function departments()
     {
@@ -207,15 +201,15 @@ class EmployeeController extends Controller
         $data = Department::find($department);
         // dd($data);
         if($data){
+            if($data->image){
+                unlink(public_path($data->image));
+            }
             $data->delete();
             return back()->with('success', 'Department has been deleted.');
         }else{
             return back()->with('error', 'Something went wrong!');
         }
     }
-
-
-
     public function departmentEdit(Department $department)
     {
         return view('departmentEdit', [

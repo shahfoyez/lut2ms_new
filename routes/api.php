@@ -24,6 +24,9 @@ Route::controller(VehicleLocationController::class)->group(function () {
 });
 Route::controller(ChatController::class)->group(function () {
     Route::post('/message/send', 'store');
+});
+Route::controller(ChatController::class)->group(function () {
+    Route::post('/message/send', 'store');
     // Route::get('/route/vehicles/{route}', 'routeVehicles');
     // Route::get('/vehicle/locationUpdate/{vid}/{long}/{lat}', 'store');
 });
