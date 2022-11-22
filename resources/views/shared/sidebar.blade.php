@@ -358,6 +358,50 @@
                 </div>
                 {{-- end::Reminder --}}
 
+                {{-- start::Notice & Schedule --}}
+                <?php
+                    $ns_segments = array('notice', 'schedule');
+                ?>
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 ==  in_array($segment_2,  $ns_segments) ? 'here show' : '' }}">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <!--begin::Icon-->
+                            <i class="fas fa-bell"></i>
+                            <!--end::Icon-->
+                        </span>
+                        <span class="menu-title">Notice & Schedule</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $notice_segments = array('notices', 'noticeAdd', 'noticeEdit');
+                        ?>
+                        <div class="menu-item">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $notice_segments) ? 'active' : '' }}" href="/reminder/reminders">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Notices</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $schedule_segments = array('schedules', 'scheduleAdd', 'scheduleEdit');
+                        ?>
+                        <div class="menu-item">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $schedule_segments) ? 'active' : '' }}" href="/reminder/reminders">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Notices</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{-- end::Notice & Schedule --}}
+
+
                 {{-- start::Report --}}
                 {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'report' ? 'here show' : '' }}">
                     <span class="menu-link">
