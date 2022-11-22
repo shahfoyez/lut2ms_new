@@ -5,11 +5,6 @@
 @section('content')
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    {{-- <div class="foy-errors container-xxl">
-        @include('components.success')
-        @include('components.error')
-    </div> --}}
-
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
