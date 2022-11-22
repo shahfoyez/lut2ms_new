@@ -359,7 +359,7 @@
                 {{-- end::Reminder --}}
 
                 {{-- start::Report --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'report' ? 'here show' : '' }}">
+                {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'report' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -404,7 +404,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 {{-- end::Report --}}
                  {{-- start::Report --}}
                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'chat' ? 'here show' : '' }}">
