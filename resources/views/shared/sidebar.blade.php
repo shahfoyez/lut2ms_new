@@ -39,9 +39,12 @@
         <div class="hover-scroll-overlay-y px-2 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
             <!--begin::Menu-->
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
-
+                <?php
+                    $segment_1 = request()->segment(1) ?? 'dashboard';
+                    $segment_2 = request()->segment(2) ?? 'dashboard';
+                ?>
                 <div class="menu-item">
-                    <a class="menu-link {{ (request()->is('/')? 'active': '') }}" href="/">
+                    <a class="menu-link {{ ($segment_1 == 'dashboard'  ? 'active': '') }}" href="/">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <i class="fa fa-home" aria-hidden="true"></i>
@@ -50,12 +53,8 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
-                <?php
-                    $segment_1 = request()->segment(1);
-                    $segment_2 = request()->segment(2);
-                ?>
-                  {{-- start::Route Management --}}
-                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'route' ? 'here show' : '' }}">
+                {{-- start::Route Management --}}
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'route' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -293,8 +292,8 @@
                 </div>
                 {{-- end::VehiFuelcle Requisition --}}
 
-                 {{-- start::Maintenance Requisition --}}
-                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'maintenance' ? 'here show' : '' }}">
+                {{-- start::Maintenance Requisition --}}
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'maintenance' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -362,7 +361,7 @@
                 <?php
                     $ns_segments = array('notice', 'schedule');
                 ?>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 ==  in_array($segment_2,  $ns_segments) ? 'here show' : '' }}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == in_array($segment_1,  $ns_segments) ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -377,24 +376,22 @@
                             $notice_segments = array('notices', 'noticeAdd', 'noticeEdit');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $notice_segments) ? 'active' : '' }}" href="/reminder/reminders">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $notice_segments) ? 'active' : '' }}" href="/notice/notices">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Notices</span>
                             </a>
                         </div>
-                    </div>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <?php
                             $schedule_segments = array('schedules', 'scheduleAdd', 'scheduleEdit');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $schedule_segments) ? 'active' : '' }}" href="/reminder/reminders">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $schedule_segments) ? 'active' : '' }}" href="/schedule/schedules">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Notices</span>
+                                <span class="menu-title">Schedules</span>
                             </a>
                         </div>
                     </div>
