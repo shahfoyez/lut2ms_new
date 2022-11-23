@@ -81,7 +81,7 @@
                                                     $status = ucfirst("Active");
                                                     $statusClass = "badge-success";
                                                 }elseif($schedule->status == 0){
-                                                    $status =  "In ".ucfirst("Inactive");
+                                                    $status = ucfirst("Inactive");
                                                     $statusClass = "badge-warning";
                                                 }else{
                                                     $status = ucfirst($schedule->status);

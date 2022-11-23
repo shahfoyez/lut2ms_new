@@ -40,7 +40,13 @@ class ScheduleController extends Controller
         }else{
             $imageName = "";
         }
-        $notice= Schedule::create([
+        if($attributes['status'] == 1){
+            $oldScheduleStatusUpdate = Schedule::where('status', 1)
+            ->update([
+                'status'=> 0,
+            ]);
+        }
+        $newSchedule= Schedule::create([
             'schedule'=> request()->input('schedule'),
             'image' => $imageName,
             'added_by' => $added_by,
@@ -70,6 +76,7 @@ class ScheduleController extends Controller
             'image' => 'image|max:500',
             'status'=> 'required | boolean',
         ]);
+        // dd($attributes['schedule']);
         if (request()->has('image')) {
             // File::delete($employee->image);
             if($schedule->image){
@@ -82,7 +89,13 @@ class ScheduleController extends Controller
             $imageName = $schedule->image;
         }
         // dd(request()->all());
-        Schedule::where('id', $schedule->id)->update([
+        if($attributes['status'] == 1){
+            $oldScheduleStatus = Schedule::where('status', 1)
+            ->update([
+                'status'=> 0,
+            ]);
+        }
+        $updateSchedule = Schedule::where('id', $schedule->id)->update([
             'schedule'=> request()->input('schedule'),
             'image' => $imageName,
             'status'=> request()->input('status'),

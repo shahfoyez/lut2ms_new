@@ -28,7 +28,7 @@ Route::controller(ChatController::class)->group(function () {
 });
 Route::controller(ApiController::class)->group(function () {
     Route::get('/notices', 'notices');
-    Route::get('/schedules', 'schedules');
+    Route::get('/schedule', 'schedule');
 });
 
 // Protected routes

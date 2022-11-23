@@ -27,8 +27,17 @@ class UserController extends Controller
             'phone'=> 'nullable|numeric',
             'password'=> 'required|min:5|max:10',
             'role' => 'required|numeric',
+            'image' => 'image|max:150',
             'status' => 'required|numeric'
         ]);
+        if (request()->has('image')) {
+            // $fileName='FILE_'.md5(date('d-m-Y H:i:s')).$file->getClientOriginalName();
+            $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.request()->image->extension();
+            request()->image->move(public_path('assets/uploads/users'),$imageName);
+            $imageName = "assets/uploads/users/".$imageName;
+        }else{
+            $imageName = "";
+        }
 
         // dd(request()->input('fname'));
         $user= User::create([
@@ -37,6 +46,7 @@ class UserController extends Controller
             'phone'=> request()->input('phone'),
             'password'=> request()->input('password'),
             'role' => request()->input('role'),
+            'image' => $imageName,
             'status' => request()->input('status'),
         ]);
 

@@ -42,7 +42,7 @@ class EmployeeController extends Controller
             'name'=> 'required | min:3 | max:255',
             'idNumber'=> ['required', Rule::unique('employees', 'idNumber')],
             'phone'=> 'required',
-            'image' => 'max:150'
+            'image' => 'image|max:150'
         ]);
 
         if (request()->has('image')) {

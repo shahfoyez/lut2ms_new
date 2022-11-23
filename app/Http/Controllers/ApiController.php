@@ -10,14 +10,12 @@ class ApiController extends Controller
 {
     public function notices()
     {
-        $notices = Notice::latest()->first();
-        dd($notices);
+        $notices = Notice::latest()->get();
         return $notices;
     }
-    public function schedules()
+    public function schedule()
     {
-        $schedules = Schedule::latest()->first();
+        $schedules = Schedule::where('status', 1)->first();
         return $schedules;
-
     }
 }
