@@ -63,17 +63,17 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function update(Schedule $notice)
+    public function update(Schedule $schedule)
     {
         $attributes=request()->validate([
-            'title'=> 'required | min:3 | max:255',
-            'desc'=> 'nullable',
-            'image' => 'max:150'
+            'schedule'=> 'required | min:3 | max:255',
+            'image' => 'image|max:500',
+            'status'=> 'required | boolean',
         ]);
         if (request()->has('image')) {
             // File::delete($employee->image);
             if($schedule->image){
-                unlink(public_path($notice->image));
+                unlink(public_path($schedule->image));
             }
             $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.request()->image->extension();
             request()->image->move(public_path('assets/uploads/notices'),$imageName);
@@ -83,11 +83,11 @@ class ScheduleController extends Controller
         }
         // dd(request()->all());
         Schedule::where('id', $schedule->id)->update([
-            'title'=> request()->input('title'),
-            'desc'=> request()->input('desc'),
+            'schedule'=> request()->input('schedule'),
             'image' => $imageName,
+            'status'=> request()->input('status'),
         ]);
-        return redirect('/notice/notices')->with('success', 'Notice has been updated');
+        return redirect('/schedule/schedules')->with('success', 'Schedule has been updated');
     }
 
     public function destroy($schedule)
