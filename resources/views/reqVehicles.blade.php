@@ -178,7 +178,6 @@
                                                     $status = ucfirst($list->status);
                                                     $statusClass = "badge-danger";
                                                 }
-
                                             @endphp
                                             <span class="badge {{ $statusClass }} fs-7 fw-bold">{{ $status }}</span>
                                         </td>

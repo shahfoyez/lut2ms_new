@@ -44,8 +44,9 @@
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                     <th class="w-20px">Sl</th>
-                                    <th class="max-w-325px">Schedule</th>
+                                    <th >Schedule</th>
                                     <th>image</th>
+                                    <th>status</th>
                                     <th class="min-w-125px text-end rounded-end"> </th>
                                 </tr>
                             </thead>
@@ -73,6 +74,21 @@
                                             @else
                                             <p href="#" class="text-muted">{{ 'No Data' }}</p>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @php
+                                                if($schedule->status == 1){
+                                                    $status = ucfirst("Active");
+                                                    $statusClass = "badge-success";
+                                                }elseif($schedule->status == 0){
+                                                    $status =  "In ".ucfirst("Inactive");
+                                                    $statusClass = "badge-warning";
+                                                }else{
+                                                    $status = ucfirst($schedule->status);
+                                                    $statusClass = "badge-danger";
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $statusClass }} fs-7 fw-bold">{{ $status }}</span>
                                         </td>
 
                                         <td class="text-end">

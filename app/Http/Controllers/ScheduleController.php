@@ -9,11 +9,6 @@ use App\Http\Requests\UpdateScheduleRequest;
 
 class ScheduleController extends Controller
 {
-      /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $schedules = Schedule::latest()->get();
@@ -23,22 +18,11 @@ class ScheduleController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('scheduleAdd');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreNoticeRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $added_by= auth()->user()->id;
@@ -66,38 +50,19 @@ class ScheduleController extends Controller
         return redirect('/schedule/schedules')->with('success', 'Schedule has been added');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Notice  $notice
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(schedule $schedule)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Notice  $notice
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Schedule $schedule)
     {
-        // dd(bcrypt($user->password));
-        return view('noticeEdit', [
-            'notice' => $schedule
+        return view('scheduleEdit', [
+            'schedule' => $schedule
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateNoticeRequest  $request
-     * @param  \App\Models\Notice  $notice
-     * @return \Illuminate\Http\Response
-     */
     public function update(Schedule $notice)
     {
         $attributes=request()->validate([
@@ -125,16 +90,9 @@ class ScheduleController extends Controller
         return redirect('/notice/notices')->with('success', 'Notice has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Notice  $notice
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($schedule)
     {
         $data = Schedule::find($schedule);
-        // dd($data);
         if($data){
             if ($data->image) {
                 unlink(public_path($data->image));

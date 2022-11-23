@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Add Schedule
+    Edit Schedule
 @endsection
 @section('content')
     <!--begin::Content-->
@@ -21,9 +21,9 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/schedule/scheduleAdd" class="form mb-15" method="post" id="" enctype="multipart/form-data">
+                                <form action="/schedule/scheduleUpdate/{{ $schedule->id }}" class="form mb-15" method="post" id="" enctype="multipart/form-data">
                                     @csrf
-                                    <h1 class="fw-bolder text-dark mb-9">Add Schedule</h1>
+                                    <h1 class="fw-bolder text-dark mb-9">Edit Schedule</h1>
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
@@ -33,23 +33,25 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="schedule" class="form-control mb-3 mb-lg-0" placeholder="Schedule" value="{{ old('schedule') ? old('schedule') : ''  }}" />
+                                            <input type="text" name="schedule" class="form-control mb-3 mb-lg-0" placeholder="Schedule" value="{{ old('schedule') ?? $schedule->schedule  }}" />
                                             @error('schedule')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                         <!--begin::Col-->
+                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label class="required form-label fs-6 mb-2">Status</label>
                                             <!--end::Label-->
                                             <!--begin::Select2-->
                                             <select class="form-select" name="status" data-control="select2" data-placeholder="Status" data-hide-search="true">2
-                                                <option></option>
-                                                <option value='1' {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
-                                                <option value='0' {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
+                                                <?php
+                                                    $status = old('status') ? old('status') : $schedule->status;
+                                                ?>
+                                                <option value="1" {{ $status == '1' ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ $status == '0' ? 'selected' : '' }}>Inactive</option>
                                             </select>
                                             @error('status')
                                                 <p class="fv-plugins-message-container invalid-feedback">
@@ -67,7 +69,11 @@
                                         <!--begin::Col-->
                                         <div class="col fv-row mt-5">
                                             <!--begin::Image input-->
-                                            <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('/assets/media/avatars/blank.png')">
+                                            <?php
+                                                $imageURL = $schedule->image ? asset($schedule->image) : asset('/assets/media/avatars/blank.png');
+                                            ?>
+                                        <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('{{ $imageURL }}')">
+
                                                 <!--begin::Image preview wrapper-->
                                                 <div class="image-input-wrapper w-125px h-125px"></div>
                                                 <!--end::Image preview wrapper-->
@@ -79,14 +85,12 @@
                                                 data-bs-dismiss="click"
                                                 title="Upload Image">
                                                     <i class="bi bi-pencil-fill fs-7"></i>
-
                                                     <!--begin::Inputs-->
                                                     <input type="file" name="image" accept=".png, .jpg, .jpeg" />
                                                     <input type="hidden" name="avatar_remove" />
                                                     <!--end::Inputs-->
                                                 </label>
                                                 <!--end::Edit button-->
-
                                                 <!--begin::Cancel button-->
                                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
                                                 data-kt-image-input-action="cancel"
@@ -116,11 +120,10 @@
                                     </div>
                                     <!--end::Input group-->
 
-
                                     <!--begin::Submit-->
                                     <button type="submit" class="btn btn-primary mt-5">
                                         <!--begin::Indicator-->
-                                        <span class="indicator-label">Submit</span>
+                                        <span class="indicator-label">Update</span>
                                         {{-- <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> --}}
                                         <!--end::Indicator-->
