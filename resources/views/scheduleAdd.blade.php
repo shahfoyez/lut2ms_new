@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Edit Notice
+    Add Schedule
 @endsection
 @section('content')
     <!--begin::Content-->
@@ -21,52 +21,53 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/notice/noticeUpdate/{{ $notice->id }}" class="form mb-15" method="post" id="" enctype="multipart/form-data">
+                                <form action="/schedule/scheduleAdd" class="form mb-15" method="post" id="" enctype="multipart/form-data">
                                     @csrf
-                                    <h1 class="fw-bolder text-dark mb-9">Edit Notice</h1>
+                                    <h1 class="fw-bolder text-dark mb-9">Add Schedule</h1>
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-12 fv-row">
+                                        <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Title</label>
+                                            <label class="required fw-bold fs-6 mb-2">Schedule</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="title" class="form-control mb-3 mb-lg-0" placeholder="Title" value="{{ old('title') ?? $notice->title  }}" />
-                                            @error('title')
+                                            <input type="text" name="schedule" class="form-control mb-3 mb-lg-0" placeholder="Schedule" value="{{ old('schedule') ? old('schedule') : ''  }}" />
+                                            @error('schedule')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-6 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="required form-label fs-6 mb-2">Status</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select2-->
+                                            <select class="form-select" name="status" data-control="select2" data-placeholder="Status" data-hide-search="true">2
+                                                <option></option>
+                                                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
+                                            </select>
+                                            @error('status')
+                                                <p class="fv-plugins-message-container invalid-feedback">
+                                                    {{  $message }}
+                                                </p>
+                                            @enderror
+                                            <!--begin::Select2-->
                                         </div>
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6">
-                                        <!--begin::Col-->
-                                        <div class="col-md-12 fv-row">
-                                            <!--begin::Label-->
-                                            <label for="" class="form-label">Description</label>
-                                            <textarea type="text-area" class="form-control" placeholder="Description" name="desc" value="{{ old('desc') }}" rows="3">{{ old('desc') ?? $notice->desc }}</textarea>
-                                            @error('desc')
-                                                @include('components.validation')
-                                            @enderror
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input-->
+
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col fv-row mt-5">
                                             <!--begin::Image input-->
-                                            <?php
-                                                $imageURL = $notice->image ? asset($notice->image) : asset('/assets/media/avatars/blank.png');
-                                            ?>
-                                        <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('{{ $imageURL }}')">
-
+                                            <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url('/assets/media/avatars/blank.png')">
                                                 <!--begin::Image preview wrapper-->
                                                 <div class="image-input-wrapper w-125px h-125px"></div>
                                                 <!--end::Image preview wrapper-->
@@ -78,12 +79,14 @@
                                                 data-bs-dismiss="click"
                                                 title="Upload Image">
                                                     <i class="bi bi-pencil-fill fs-7"></i>
+
                                                     <!--begin::Inputs-->
                                                     <input type="file" name="image" accept=".png, .jpg, .jpeg" />
                                                     <input type="hidden" name="avatar_remove" />
                                                     <!--end::Inputs-->
                                                 </label>
                                                 <!--end::Edit button-->
+
                                                 <!--begin::Cancel button-->
                                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
                                                 data-kt-image-input-action="cancel"
@@ -113,10 +116,11 @@
                                     </div>
                                     <!--end::Input group-->
 
+
                                     <!--begin::Submit-->
                                     <button type="submit" class="btn btn-primary mt-5">
                                         <!--begin::Indicator-->
-                                        <span class="indicator-label">Update</span>
+                                        <span class="indicator-label">Submit</span>
                                         {{-- <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> --}}
                                         <!--end::Indicator-->

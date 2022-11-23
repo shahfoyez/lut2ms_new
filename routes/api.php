@@ -27,7 +27,8 @@ Route::controller(ChatController::class)->group(function () {
     Route::post('/message/send', 'store');
 });
 Route::controller(ApiController::class)->group(function () {
-    Route::get('/notices', 'index');
+    Route::get('/notices', 'notices');
+    Route::get('/schedules', 'schedules');
 });
 
 // Protected routes

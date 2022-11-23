@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
+            $table->string('schedule');
             $table->string('image');
             $table->unsignedBigInteger('added_by');
             $table->foreign('added_by')
@@ -22,6 +23,7 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('No Action');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

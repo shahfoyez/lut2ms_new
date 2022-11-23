@@ -27,7 +27,7 @@
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-12 fv-row">
                                             <!--begin::Label-->
                                             <label class="required fw-bold fs-6 mb-2">Title</label>
                                             <!--end::Label-->
@@ -40,14 +40,15 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-12 fv-row">
                                             <!--begin::Label-->
-                                            <label class="fw-bold fs-6 mb-2">Description</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <input type="text" name="desc" class="form-control mb-3 mb-lg-0" placeholder="Description" value="{{ old('desc') ? old('desc') : '' }}" />
+                                            <label for="" class="form-label">Description</label>
+                                            <textarea type="text-area" class="form-control" placeholder="Description" name="desc" value="{{ old('desc') }}" rows="3"></textarea>
                                             @error('desc')
                                                 @include('components.validation')
                                             @enderror
@@ -55,10 +56,10 @@
                                         </div>
                                         <!--end::Col-->
                                     </div>
-                                    <!--end::Input group-->
+                                    <!--end::Input-->
 
-                                       <!--begin::Input group-->
-                                       <div class="row mb-6">
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col fv-row mt-5">
                                             <!--begin::Image input-->

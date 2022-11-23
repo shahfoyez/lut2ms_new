@@ -13,6 +13,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StoppageController;
 use App\Http\Controllers\MaintenanceController;
 
@@ -226,12 +227,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/notice/noticeAdd', 'create');
         Route::post('/notice/noticeAdd', 'store');
 
-        // new added
+        // EUD
         Route::get('/notice/noticeEdit/{notice}', 'edit');
         Route::post('/notice/noticeUpdate/{notice}', 'update');
         Route::delete('/notice/delete/{notice}', 'destroy');
 
-        Route::get('/notice/notices/filter', 'filter');
+        // Route::get('/notice/notices/filter', 'filter');
+    });
+    // ScheduleController Group
+    Route::controller(ScheduleController::class)->group(function () {
+        Route::get('/schedule/schedules', 'index');
+        Route::get('/schedule/scheduleAdd', 'create');
+        Route::post('/schedule/scheduleAdd', 'store');
+
+        // EUD
+        Route::get('/schedule/scheduleEdit/{schedule}', 'edit');
+        Route::post('/schedule/scheduleUpdate/{schedule}', 'update');
+        Route::delete('/schedule/delete/{schedule}', 'destroy');
+
+        // Route::get('/notice/notices/filter', 'filter');
     });
 
     // logout
