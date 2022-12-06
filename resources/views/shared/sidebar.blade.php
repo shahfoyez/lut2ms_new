@@ -330,6 +330,33 @@
                 </div>
                 {{-- end::Maintenance Requisition --}}
 
+                 {{-- start::Maintenance Requisition --}}
+                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'summery' ? 'here show' : '' }}">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <!--begin::Icon-->
+                            <i class="fas fa-money-bill"></i>
+                            <!--end::Icon-->
+                        </span>
+                        <span class="menu-title">Summery</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <?php
+                            $summery_table = array('table', 'filter');
+                        ?>
+                        <div class="menu-item">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $summery_table) ? 'active' : '' }}" href="/summery/table">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Table</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{-- end::Maintenance Requisition --}}
+
                 {{-- start::Reminder --}}
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'reminder' ? 'here show' : '' }}">
                     <span class="menu-link">

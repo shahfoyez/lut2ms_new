@@ -30,6 +30,17 @@ class VehicleLocationController extends Controller
             ->latest()->get()->pluck('vehicle');
         return $trips;
     }
+    public function vehiclesLocation()
+    {
+        $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
+                $query->with('driver')->where('status', 0);
+            }])
+            ->with('employee')
+            ->where('status', 0)
+            ->latest()->get()->pluck('vehicle');
+        return $trips;
+    }
+
 
     /**
      * Show the form for creating a new resource.

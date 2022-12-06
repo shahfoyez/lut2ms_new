@@ -42,6 +42,11 @@ Route::middleware(['auth'])->group(function () {
     // GeneralController Group
     Route::controller(GeneralController::class)->group(function () {
         Route::get('/dashboard', 'index');
+        Route::get('/summery/table', 'logbook');
+        Route::get('/summery/filter', 'summeryFilter');
+
+
+
         // Route::get('/vehicleByRoute/{rout}', 'vehicleByRoute');
     });
 

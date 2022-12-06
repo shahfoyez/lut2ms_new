@@ -181,13 +181,13 @@
                                             @endphp
                                             <span class="badge {{ $statusClass }} fs-7 fw-bold">{{ $status }}</span>
                                         </td>
-                                        <td class="text-end">
+                                        <td class="text-end d-flex justify-content-end">
                                             @if($list->status == 'available')
-                                                <a href="/requisition/send/{{ $list->id }}" class=" btn btn-primary p-2">
+                                                <a href="/requisition/send/{{ $list->id }}" class="btn btn-primary p-2 me-2">
                                                     Send
                                                 </a>
                                             @elseif($list->status == 'trip')
-                                                <a href="/requisition/edit/{{ $list->activeTrip->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                {{-- <a href="/requisition/edit/{{ $list->activeTrip->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                     <span class="svg-icon svg-icon-3">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -212,7 +212,17 @@
                                                           </svg>
                                                     </span>
                                                     <!--end::Svg Icon-->
-                                                </a>
+                                                </a> --}}
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle foy-action-button me-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                      Action
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                      <li><a href="/requisition/edit/{{ $list->activeTrip->id }}" class="dropdown-item pt-2 pb-2" href="#">Edit</a></li>
+                                                      <li><a href="/requisition/reach/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Reach</a></li>
+                                                      <li><a href="/requisition/cancel/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Cancel</a></li>
+                                                    </ul>
+                                                  </div>
                                             @endif
                                             <a href="/trip/vehicleTrips/{{ $list->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->

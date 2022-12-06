@@ -33,7 +33,15 @@ class Vehicle extends Model
     {
         return $this->hasMany(Fuel::class, 'vid');
     }
+    public function totalFuels()
+    {
+        return $this->hasMany(Fuel::class, 'vid');
+    }
     public function meterEntries()
+    {
+        return $this->hasMany(Meter::class, 'vid');
+    }
+    public function firstLastEntries()
     {
         return $this->hasMany(Meter::class, 'vid');
     }

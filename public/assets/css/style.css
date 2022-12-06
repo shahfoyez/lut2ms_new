@@ -63,3 +63,6 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
 .foy-top-40 {
     top: 40%;
 }
+.foy-action-button{
+    padding: 7px 10px 7px 10px !important;
+}
