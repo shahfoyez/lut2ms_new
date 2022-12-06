@@ -14,7 +14,7 @@
 						<!--begin::Brand-->
 						<div class="header-brand">
 							<!--begin::Logo-->
-							<a href="#">
+							<a href="/">
 								<img alt="Logo" src="{{ asset('assets/media/logos/logo2.png') }}" class="h-25px h-lg-35px" />
 							</a>
 							<!--end::Logo-->
