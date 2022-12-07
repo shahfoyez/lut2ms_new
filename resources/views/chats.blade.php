@@ -9,6 +9,7 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
+            @include('components.flashMessage')
             @include('components.success')
             @include('components.error')
             <!--begin::Layout-->
@@ -147,18 +148,23 @@
                 </div>
             </div>
             <div class="card-footer pt-4" id="kt_chat_messenger_footer">
-                <textarea readonly class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" placeholder="Reply (Upcoming)"></textarea>
-                <div class="d-flex flex-stack">
-                    <div class="d-flex align-items-center me-2">
-                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
-                            <i class="bi bi-paperclip fs-3"></i>
-                        </button>
-                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
-                            <i class="bi bi-upload fs-3"></i>
-                        </button>
+                <form action="/chat/reply" class="form mb-15" method="post" id="">
+                    @csrf
+                    <textarea name="message" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" placeholder="Reply (Upcoming)"></textarea>
+                    <input name="name" value="${chat.name}"hidden>
+                    <input name="email" value="${chat.email}"hidden>
+                    <div class="d-flex flex-stack">
+                        <div class="d-flex align-items-center me-2">
+                            <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
+                                <i class="bi bi-paperclip fs-3"></i>
+                            </button>
+                            <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
+                                <i class="bi bi-upload fs-3"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" type="submit" data-kt-element="send">Send</button>
                     </div>
-                    <button class="btn btn-primary" type="button" data-kt-element="send">Send</button>
-                </div>
+                </form>
             </div>`;
 
         });

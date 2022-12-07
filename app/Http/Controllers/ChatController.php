@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Mail\ChatResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreChatRequest;
 use App\Http\Requests\UpdateChatRequest;
 
@@ -49,47 +52,40 @@ class ChatController extends Controller
             return response($content)->setStatusCode(500);
         }
     }
+    public function reply(Request $request)
+    {
+        // dd(request()->all());
+        $attributes= $request->validate([
+            'name' => 'required|string',
+            'message'=> 'required',
+            'email'=>  'required|email'
+        ]);
+        $receiver = $attributes['email'];
+        Mail::to($receiver)->send(new ChatResponse($attributes));
+        // dd($attributes['email']);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
+        return redirect('/chat/chats')->with('success', 'Mail send successfully');
+
+
+    }
+
     public function show(Chat $chat)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Chat $chat)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateChatRequest  $request
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(UpdateChatRequest $request, Chat $chat)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Chat $chat)
     {
         //
