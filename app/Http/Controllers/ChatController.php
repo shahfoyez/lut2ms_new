@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreChatRequest;
 use App\Http\Requests\UpdateChatRequest;
+use Illuminate\Support\Str;
 
 class ChatController extends Controller
 {
@@ -28,12 +29,15 @@ class ChatController extends Controller
     public function store(StoreChatRequest $request)
     {
         $data = request()->all();
+        $token = Str::random(10);
+        // $token = md5(microtime());
         try {
             $chat= Chat::create([
                 'name'=> $data['name'],
                 'email'=> $data['email'],
                 'student_id'=> $data['student_id'],
                 'message'=> $data['message'],
+                'token' => $token,
                 'status' => 0
             ]);
             $content = array(
@@ -58,7 +62,10 @@ class ChatController extends Controller
         $attributes= $request->validate([
             'name' => 'required|string',
             'message'=> 'required',
-            'email'=>  'required|email'
+            'email'=>  'required|email',
+            'token' => 'required|string',
+            'user_message' => 'required|string'
+
         ]);
         $receiver = $attributes['email'];
         Mail::to($receiver)->send(new ChatResponse($attributes));

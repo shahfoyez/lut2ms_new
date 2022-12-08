@@ -67,26 +67,57 @@ class VehicleLocationController extends Controller
         //     'lat' => 'required',
         //     'status' => 'required'
         // ]);
-        $location  = VehicleLocation::where('vid',  $vid)->first();
+        // $location  = VehicleLocation::where('vid',  $vid)->first();
 
-        if($location){
-            VehicleLocation::where('vid',  $vid)
-            ->update([
-                'vid' => $vid,
-                'long' => $long,
-                'lat' => $lat,
-                'date' =>  $date,
-                'status' => 1
-            ]);
-        }else{
-            VehicleLocation::create([
-                'vid' => $vid,
-                'long' => $long,
-                'lat' => $lat,
-                'date' => $date,
-                'status' => 1
-            ]);
+        // if($location){
+        //     VehicleLocation::where('vid',  $vid)
+        //     ->update([
+        //         'vid' => $vid,
+        //         'long' => $long,
+        //         'lat' => $lat,
+        //         'date' =>  $date,
+        //         'status' => 1
+        //     ]);
+        // }else{
+        //     VehicleLocation::create([
+        //         'vid' => $vid,
+        //         'long' => $long,
+        //         'lat' => $lat,
+        //         'date' => $date,
+        //         'status' => 1
+        //     ]);
+        // }
+
+        try {
+            $location = VehicleLocation::updateOrCreate(
+                [
+                    'vid' => $vid
+                ],
+                [
+                    'vid' => $vid,
+                    'long' => $long,
+                    'lat' => $lat,
+                    'date' => $date,
+                    'status' => 1
+                ]
+            );
+
+            $content = array(
+                'success' => true,
+                'data' => $location,
+                'message' => trans('Location Updated successfully')
+            );
+            return response($content)->setStatusCode(200);
+        } catch (\Exception $e) {
+            $content = array(
+                'success' => false,
+                'data' => 'something went wrong.',
+                'message' => 'There was an error while processing your request: ' .
+                    $e->getMessage()
+            );
+            return response($content)->setStatusCode(500);
         }
+
     }
 
     /**

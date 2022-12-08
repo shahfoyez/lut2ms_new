@@ -32,7 +32,7 @@ class ChatResponse extends Mailable
     public function build()
     {
         return $this->subject('Chat Response')
-                    ->markdown('email.chatResponse');
+                    ->markdown('emails.chatResponse');
 
     }
 
@@ -46,7 +46,7 @@ class ChatResponse extends Mailable
     // public function content()
     // {
     //     return new Content(
-    //         view: 'view.name',
+    //         view: 'email.chatResponse',
     //     );
     // }
 

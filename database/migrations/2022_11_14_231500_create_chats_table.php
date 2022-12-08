@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('student_id');
             $table->longText('message');
+            $table->string('token')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
