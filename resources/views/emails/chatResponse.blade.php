@@ -9,16 +9,9 @@ Dear {{$data['name']}},
 Thank you for contacting us.
 {{$data['message']}}
 
-@component('mail::promotion')
-    <button title="Copy promo code" id="copy" onClick="CopyToClipboard('to-copy')">
-@endcomponent
-
 Use this token for further inquiry.
-@component('mail::panel')
-    {{$data['token']}}
-@endcomponent
+@include('vendor.mail.html.promotion')
 
-
-Thanks,<br>
+<br>Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

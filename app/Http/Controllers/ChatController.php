@@ -28,8 +28,16 @@ class ChatController extends Controller
 
     public function store(StoreChatRequest $request)
     {
+        // return response($request)->setStatusCode(200);
+        // dd($request);
         $data = request()->all();
-        $token = Str::random(10);
+        $token = Str::upper(Str::random(10));
+        $receiver = $request['email'];
+        // $foo = (array)$request;
+        // $request['token'] = $token;
+        // $attributes = (object)$foo;
+        // return response($request['email'])->setStatusCode(200);
+
         // $token = md5(microtime());
         try {
             $chat= Chat::create([
@@ -45,6 +53,7 @@ class ChatController extends Controller
                 'data' => $chat,
                 'message' => trans('Message send successfully')
             );
+            // Mail::to($receiver)->send(new ChatResponse($request));
             return response($content)->setStatusCode(200);
         } catch (\Exception $e) {
             $content = array(
