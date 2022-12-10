@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\ChatReply;
 use App\Mail\ChatResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreChatRequest;
 use App\Http\Requests\UpdateChatRequest;
-use Illuminate\Support\Str;
 
 class ChatController extends Controller
 {
@@ -19,7 +20,9 @@ class ChatController extends Controller
 
     public function create()
     {
-        $chats = Chat::latest()->get();
+        // $chats = Chat::latest()->with('chatReply.admin')->get();
+        $chats = Chat::latest()->with('chatReply.admin')->get();
+
         // dd($chats);
         return view('chats', [
             'chats' => $chats
@@ -73,20 +76,26 @@ class ChatController extends Controller
     {
         // dd(request()->all());
         $attributes= $request->validate([
-            'name' => 'required|string',
             'message'=> 'required',
+            'chat_id' => 'required',
+            'name' => 'required|string',
             'email'=>  'required|email',
             'token' => 'required|string',
             'user_message' => 'required|string'
-
         ]);
-        $receiver = $attributes['email'];
-        Mail::to($receiver)->send(new ChatResponse($attributes));
-        // dd($attributes['email']);
 
-        return redirect('/chat/chats')->with('success', 'Mail send successfully');
-
-
+        $reply = ChatReply::create([
+            'chat_id' => $attributes['chat_id'],
+            'message'=> $attributes['message'],
+            'admin_id'=>  auth()->user()->id,
+        ]);
+        if($reply){
+            $receiver = $attributes['email'];
+            Mail::to($receiver)->send(new ChatResponse($attributes));
+            return redirect('/chat/chats')->with('success', 'Mail send successfully');
+        }else{
+            return redirect('/chat/chats')->with('error', 'Something went wrong!');
+        }
     }
 
     public function show(Chat $chat)

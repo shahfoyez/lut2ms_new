@@ -19,8 +19,15 @@ class User extends Authenticatable
     // ];
     protected $guarded = [];
 
+
     protected $hidden = [
+        'id',
+        'username',
+        'phone',
+        'role',
+        'status',
         'password',
+        'image',
         'remember_token',
     ];
 

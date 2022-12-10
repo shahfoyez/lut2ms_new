@@ -46,6 +46,17 @@
                                 @if($chats && $chats->count()>0)
                                     @foreach ($chats as $chat)
                                     <?php
+                                        // dd($chat);
+                                        $reply = $chat->chatReply;
+                                        if($reply){
+                                            if($reply->admin_id == auth()->user()->id){
+                                                $chat->chatReply['admin_name'] = "You";
+                                            }else{
+                                                $chat->chatReply['admin_name'] = $reply->admin->name;
+                                            }
+                                            $chat->chatReply['time'] = $reply->created_at->diffForHumans();
+                                        }
+                                        // dd($chat);
                                         $new= $chat->toJson();
                                     ?>
                                         <!--begin::User-->
@@ -116,7 +127,46 @@
     <script>
         $(document).on("click", ".foy-chat", function () {
             var data= $(this).attr('data-item');
-            let chat = JSON.parse(data)
+            let chat = JSON.parse(data);
+            let reply = chat.chat_reply;
+            // console.log();
+            if(reply !== null){
+                var buttonAttr = "disabled";
+                var inputAttr = "readonly";
+                var inputPlaceholder = "Responded";
+
+                var replyHtml = `<div class="d-flex justify-content-end mb-10">
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column align-items-end">
+                        <!--begin::User-->
+                        <div class="d-flex align-items-center mb-2">
+                            <!--begin::Details-->
+                            <div class="me-3">
+                                <span class="text-muted fs-7 mb-1">${reply.time}</span>
+                                <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">${reply.admin_name}</a>
+                            </div>
+                            <!--end::Details-->
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-35px symbol-circle">
+                                <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">${reply.admin.name.charAt(0)}</span>
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::User-->
+                        <!--begin::Text-->
+                        <div class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end" data-kt-element="message-text">${reply.message}</div>
+                        <!--end::Text-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>`;
+                console.log(reply);
+            }else{
+                var replyHtml = "";
+                var buttonAttr = "";
+                var inputAttr = "";
+                var inputPlaceholder = "Reply";
+            }
+
             console.log(data);
             document.getElementById("chat-box").innerHTML =
             `<div class="card-header" id="kt_chat_messenger_header">
@@ -132,6 +182,7 @@
             </div>
             <div class="card-body" id="kt_chat_messenger_body">
                 <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer" data-kt-scroll-wrappers="#kt_content, #kt_chat_messenger_body" data-kt-scroll-offset="-2px">
+                    <!--begin::Message(in)-->
                     <div class="d-flex justify-content-start mb-10">
                         <div class="d-flex flex-column align-items-start">
                             <div class="d-flex align-items-center mb-2">
@@ -145,12 +196,17 @@
                             <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">${chat.message}</div>
                         </div>
                     </div>
+                    <!--end::Message(in)-->
+                    <!--begin::Message(out)-->
+                        ${replyHtml}
+                    <!--end::Message(out)-->
                 </div>
             </div>
             <div class="card-footer pt-4" id="kt_chat_messenger_footer">
                 <form action="/chat/reply" class="form mb-15" method="post" id="">
                     @csrf
-                    <textarea name="message" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" placeholder="Reply"></textarea>
+                    <textarea name="message" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" placeholder="${inputPlaceholder}" ${inputAttr}></textarea>
+                    <input name="chat_id" value="${chat.id}" hidden>
                     <input name="name" value="${chat.name}" hidden>
                     <input name="email" value="${chat.email}" hidden>
                     <input name="token" value="${chat.token}" hidden>
@@ -165,18 +221,17 @@
                                 <i class="bi bi-upload fs-3"></i>
                             </button>
                         </div>
-                        <button class="btn btn-primary" type="submit" data-kt-element="send">Send</button>
+                        <button class="btn btn-primary" type="submit" data-kt-element="send" ${buttonAttr}>Send</button>
                     </div>
                 </form>
             </div>`;
-
         });
     </script>
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/modals/create-app.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/modals/create-app.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/modals/upgrade-plan.js') }}"></script>
     <!--end::Page Custom Javascript-->
 @endsection
 
