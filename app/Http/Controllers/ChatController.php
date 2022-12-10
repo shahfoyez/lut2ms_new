@@ -28,7 +28,7 @@ class ChatController extends Controller
 
     public function store(StoreChatRequest $request)
     {
-        // return response($request)->setStatusCode(200);
+        return response($request)->setStatusCode(200);
         // dd($request);
         $data = request()->all();
         $token = Str::upper(Str::random(10));
