@@ -19,7 +19,7 @@ class StoreChatRequest extends FormRequest
             'name'=> 'required',
             'email'=>  'required',
             'student_id' => 'required',
-            'message'=> 'required'
+            'user_message'=> 'required'
         ];
     }
     public function failedValidation(Validator $validator)

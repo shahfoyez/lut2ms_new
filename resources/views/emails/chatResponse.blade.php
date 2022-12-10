@@ -7,7 +7,11 @@
 Dear {{$data['name']}},
 
 Thank you for contacting us.
-{{$data['message']}}
+@if ($data['message'])
+    {{$data['message']}}
+@else
+    The concerned team will contact you shortly.
+@endif
 
 Use this token for further inquiry.
 @include('vendor.mail.html.promotion')

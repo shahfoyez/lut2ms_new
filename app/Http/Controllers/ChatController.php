@@ -28,11 +28,15 @@ class ChatController extends Controller
 
     public function store(StoreChatRequest $request)
     {
-        return response($request)->setStatusCode(200);
+        // return response($request)->setStatusCode(200);
         // dd($request);
         $data = request()->all();
         $token = Str::upper(Str::random(10));
         $receiver = $request['email'];
+
+        $request['token'] = $token;
+        // return response($request)->setStatusCode(200);
+
         // $foo = (array)$request;
         // $request['token'] = $token;
         // $attributes = (object)$foo;
@@ -44,7 +48,7 @@ class ChatController extends Controller
                 'name'=> $data['name'],
                 'email'=> $data['email'],
                 'student_id'=> $data['student_id'],
-                'message'=> $data['message'],
+                'message'=> $data['user_message'],
                 'token' => $token,
                 'status' => 0
             ]);
@@ -53,7 +57,7 @@ class ChatController extends Controller
                 'data' => $chat,
                 'message' => trans('Message send successfully')
             );
-            // Mail::to($receiver)->send(new ChatResponse($request));
+            Mail::to($receiver)->send(new ChatResponse($request));
             return response($content)->setStatusCode(200);
         } catch (\Exception $e) {
             $content = array(

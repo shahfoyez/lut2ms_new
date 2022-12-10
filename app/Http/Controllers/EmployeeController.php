@@ -45,6 +45,11 @@ class EmployeeController extends Controller
             'image' => 'image|max:150'
         ]);
 
+        $new_array = array('token' => '123');
+
+        $final_array=array_merge($attributes, $new_array);
+        dd($final_array);
+
         if (request()->has('image')) {
             // $fileName='FILE_'.md5(date('d-m-Y H:i:s')).$file->getClientOriginalName();
             $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.$request->image->extension();
