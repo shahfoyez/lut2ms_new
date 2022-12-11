@@ -148,7 +148,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ $list->image ? asset($list->image) : asset('assets/uploads/default/defaultVehicle.webp') }}" class="" alt="" />
+                                                    <img src="{{ $list->image ? asset($list->image) : asset('/assets/uploads/default/defaultVehicle.webp') }}" class="" alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
                                                     <p href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{ $list->codeName }}</p>

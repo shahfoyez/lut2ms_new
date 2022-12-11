@@ -180,6 +180,6 @@
 </script>
 @endsection
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset(' assets/js/custom/modals/create-account.js') }}"></script>
+<script src="{{ asset('/assets/js/custom/modals/create-account.js') }}"></script>
 <!--end::Page Custom Javascript-->
 

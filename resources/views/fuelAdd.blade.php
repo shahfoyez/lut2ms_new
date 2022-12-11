@@ -9,10 +9,8 @@
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
-
                     @include('components.success')
                     @include('components.error')
-
                 <!--begin::Contact-->
                 <div class="card">
                     <!--begin::Body-->
@@ -178,7 +176,7 @@
     <!--end::Content-->
 @endsection
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset(' assets/js/custom/modals/create-account.js') }}"></script>
+<script src="{{ asset('/assets/js/custom/modals/create-account.js') }}"></script>
 <!--end::Page Custom Javascript-->
 
 

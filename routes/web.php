@@ -28,7 +28,7 @@ use App\Http\Controllers\MaintenanceController;
 |
 */
 Route::get('/landing', function(){
-    return view('landing');
+    return view('hello');
 });
 Route::middleware(['guest'])->group(function () {
     Route::controller(SessionController::class)->group(function () {

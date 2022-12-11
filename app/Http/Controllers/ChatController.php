@@ -23,7 +23,7 @@ class ChatController extends Controller
         // $chats = Chat::latest()->with('chatReply.admin')->get();
         $chats = Chat::latest()->with('chatReply.admin')->get();
 
-        // dd($chats);
+        // dd(json_encode($chats));
         return view('chats', [
             'chats' => $chats
         ]);

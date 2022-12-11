@@ -21,7 +21,7 @@
                         <!--begin::Card header-->
                         <div class="card-header pt-7" id="kt_chat_contacts_header">
                             <!--begin::Form-->
-                            <form class="w-100 position-relative" autocomplete="off">
+                            <form class="w-100 position-relative" autocomplete="on" >
                                 <!--begin::Icon-->
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                 <span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute foy-top-40 ms-5 translate-middle-y">
@@ -33,7 +33,7 @@
                                 <!--end::Svg Icon-->
                                 <!--end::Icon-->
                                 <!--begin::Input-->
-                                <input type="text" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by username or email..." />
+                                <input type="text" id="user_search" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by email or token..."  />
                                 <!--end::Input-->
                             </form>
                             <!--end::Form-->
@@ -42,7 +42,8 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-5" id="kt_chat_contacts_body">
                             <!--begin::List-->
-                            <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px">
+                            <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px" id="foy_user_card_main">
+                                {{-- <a href="#" id="chats" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2 stretched-link foy-chat" data-item="{{ $chats }}"  hidden>{{ $chats }}</a> --}}
                                 @if($chats && $chats->count()>0)
                                     @foreach ($chats as $chat)
                                     <?php
@@ -59,8 +60,8 @@
                                         // dd($chat);
                                         $new= $chat->toJson();
                                     ?>
-                                        <!--begin::User-->
-                                        <div class="d-flex flex-stack py-4 position-relative">
+                                        <!--begin::Users-->
+                                        <div class="d-flex flex-stack py-4 position-relative" id="foy_user_card">
                                             <!--begin::Details-->
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Avatar-->
@@ -72,12 +73,13 @@
                                                 <!--begin::Details-->
                                                 <div class="ms-5">
                                                     <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2 stretched-link foy-chat" data-item="{{ $new }}"  >{{ $chat->name }}</a>
-                                                    <div class="fw-bold text-muted">{{ $chat->email }}</div>
+                                                    <div class="fw-bold text-muted">{{ $chat->token }}</div>
                                                 </div>
+
                                                 <!--end::Details-->
                                             </div>
                                             <!--end::Details-->
-                                            <!--begin::Lat seen-->
+                                            <!--begin::Last seen-->
                                             <div class="d-flex flex-column align-items-end ms-2">
                                                 <span class="text-muted fs-7 mb-1">{{ $chat->created_at->diffForHumans() }}</span>
                                                 <?php
@@ -87,9 +89,9 @@
                                                     <span class="badge badge-sm badge-circle badge-light-success">{{ $status }}</span>
                                                 @endif
                                             </div>
-                                            <!--end::Lat seen-->
+                                            <!--end::Last seen-->
                                         </div>
-                                        <!--end::User-->
+                                        <!--end::Users-->
                                         <!--begin::Separator-->
                                         <div class="separator separator-dashed foy-chat-us"></div>
                                         <!--end::Separator-->
@@ -124,10 +126,37 @@
 <!--end::Content-->
 @endsection
 @section('scripts')
+{{-- <script>
+    $( document ).ready(function() {
+        var new_data= document.getElementById('chats').innerText;
+        let chats = JSON.parse(new_data);
+        console.log(chats);
+        document.getElementById('user_search').addEventListener('keyup', (event) =>{
+            let inputValue = document.getElementById("user_search").value.toLowerCase();
+            const chatFilter = chats.filter((chat) => (
+                chat.email.toLowerCase().includes(inputValue) || chat.token.toUpperCase().includes(inputValue.toUpperCase())
+            ));
+            console.log(chatFilter);
+            const chatlist = document.querySelector("#foy_user_card_main");
+            if (chatFilter.length > 0) {
+                chatlist.innerHTML = ``
+            }
+            chatFilter.forEach((item) => {
+                const listItem = document.createElement("div");
+                listItem.innerHTML = `
+                 Hello
+                `;
+                chatlist.append(listItem);
+            })
+        });
+    });
+</script> --}}
+
     <script>
         $(document).on("click", ".foy-chat", function () {
             var data= $(this).attr('data-item');
             let chat = JSON.parse(data);
+            console.log(chat);
             let reply = chat.chat_reply;
             // console.log();
             if(reply !== null){
@@ -159,7 +188,7 @@
                     </div>
                     <!--end::Wrapper-->
                 </div>`;
-                console.log(reply);
+                // console.log(reply);
             }else{
                 var replyHtml = "";
                 var buttonAttr = "";
@@ -167,7 +196,7 @@
                 var inputPlaceholder = "Reply";
             }
 
-            console.log(data);
+            // console.log(data);
             document.getElementById("chat-box").innerHTML =
             `<div class="card-header" id="kt_chat_messenger_header">
                 <div class="card-title">
@@ -228,10 +257,10 @@
         });
     </script>
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
+    {{-- <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script>
     <script src="{{ asset('/assets/js/custom/modals/create-app.js') }}"></script>
-    <script src="{{ asset('/assets/js/custom/modals/upgrade-plan.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom/modals/upgrade-plan.js') }}"></script> --}}
     <!--end::Page Custom Javascript-->
 @endsection
 

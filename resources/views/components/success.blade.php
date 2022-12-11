@@ -1,8 +1,4 @@
 @if (session()->has('success'))
-    {{-- <div class="alert alert-success" role="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        {{ session('success') }}
-    </div> --}}
    	<!--begin::Alert-->
        <div class="alert alert-dismissible bg-success d-flex flex-column flex-sm-row w-100 p-4 mb-10">
         <!--begin::Icon-->
@@ -37,10 +33,3 @@
     <!--end::Alert-->
 
 @endif
-<!--begin::Page Vendors Javascript(used by this page)-->
-<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-<!--end::Page Vendors Javascript-->
-<!--begin::Page Custom Javascript(used by this page)-->
-<script src="assets/js/custom/documentation/documentation.js"></script>
-<script src="assets/js/custom/documentation/search.js"></script>
-<!--end::Page Custom Javascript-->

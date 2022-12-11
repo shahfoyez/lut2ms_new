@@ -29,7 +29,7 @@
          <div class="d-flex align-items-center overflow-auto pt-3 pt-lg-0">
             <!--begin::Action wrapper-->
             <div class="d-flex align-items-center">
-                @include('components/searchbar')
+                {{-- @include('components/searchbar') --}}
             </div>
             <!--end::Action wrapper-->
         </div>
