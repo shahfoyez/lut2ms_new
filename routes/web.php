@@ -226,6 +226,9 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(ChatController::class)->group(function () {
         Route::get('/chat/chats', 'create');
         Route::post('/chat/reply', 'reply');
+        // search
+        Route::post('/chat/chatSearch', 'search');
+
     });
     // NoticeController Group
     Route::controller(NoticeController::class)->group(function () {

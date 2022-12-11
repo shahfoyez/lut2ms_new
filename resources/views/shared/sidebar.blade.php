@@ -425,57 +425,8 @@
                 </div>
                 {{-- end::Notice & Schedule --}}
 
-
-                {{-- start::Report --}}
-                {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'report' ? 'here show' : '' }}">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <!--begin::Icon-->
-                            <i class="fas fa-print"></i>
-                            <!--end::Icon-->
-                        </span>
-                        <span class="menu-title">Report</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
-                        ?>
-                        <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'reportKpl') ? 'active' : '' }}" href="/report/reportKpl">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">KPL Report</span>
-                            </a>
-                        </div>
-                        <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
-                        ?>
-                        <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'reportExpense') ? 'active' : '' }}" href="/report/reportExpense">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Expense Report</span>
-                            </a>
-                        </div>
-                        <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
-                        ?>
-                        <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'reportAll') ? 'active' : '' }}" href="/report/reportAll">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">All Report</span>
-                            </a>
-                        </div>
-                    </div>
-                </div> --}}
-                {{-- end::Report --}}
-                 {{-- start::Report --}}
-                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'chat' ? 'here show' : '' }}">
+                {{-- start::Chat --}}
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $segment_1 == 'chat' ? 'here show' : '' }}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <!--begin::Icon-->
@@ -487,10 +438,10 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <?php
-                            $employees = array('employees', 'employeeAdd', 'employeeEdit');
+                            $chats = array('chats', 'chatSearch');
                         ?>
                         <div class="menu-item">
-                            <a class="menu-link {{ (request()->segment(2) == 'chats') ? 'active' : '' }}" href="/chat/chats">
+                            <a class="menu-link {{ $segment_2 == in_array($segment_2,  $chats) ? 'active' : '' }}" href="/chat/chats">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

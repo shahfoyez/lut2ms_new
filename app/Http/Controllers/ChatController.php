@@ -97,23 +97,26 @@ class ChatController extends Controller
             return redirect('/chat/chats')->with('error', 'Something went wrong!');
         }
     }
-
-    public function show(Chat $chat)
+    public function search(Request $request)
     {
-        //
+         // dd(request()->all());
+         $attributes= $request->validate([
+            'search'=> 'required|string',
+        ]);
+        $search = $request['search'];
+        // $chats = Chat::latest()->with('chatReply.admin')->get();
+        $chats = Chat::latest()->with('chatReply.admin')
+        ->where('email', 'like', '%' .$search. '%')
+        ->orWhere('token', 'like', '%' .$search. '%')
+        ->get();
+        // dd($chats);
+
+        // dd(json_encode($chats));
+        return view('chats', [
+            'chats' => $chats
+        ]);
+
     }
-
-    public function edit(Chat $chat)
-    {
-        //
-    }
-
-
-    public function update(UpdateChatRequest $request, Chat $chat)
-    {
-        //
-    }
-
 
     public function destroy(Chat $chat)
     {
