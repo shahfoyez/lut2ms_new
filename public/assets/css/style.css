@@ -66,3 +66,11 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
 .foy-action-button{
     padding: 7px 10px 7px 10px !important;
 }
+.foy-textarea {
+    border: 1px solid #eff2f5 !important;
+    border-radius: 6px !important;
+    -webkit-border-radius: 6px !important;
+    -moz-border-radius: 6px !important;
+    -ms-border-radius: 6px !important;
+    -o-border-radius: 6px !important;
+}

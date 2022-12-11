@@ -70,7 +70,7 @@
                                         $new= $chat->toJson();
                                     ?>
                                         <!--begin::Users-->
-                                        <div class="d-flex flex-stack py-4 position-relative" id="foy_user_card">
+                                        <div class="d-flex flex-stack py-4 position-relative foy_user_card"  >
                                             <!--begin::Details-->
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Avatar-->
@@ -243,7 +243,7 @@
             <div class="card-footer pt-4" id="kt_chat_messenger_footer">
                 <form action="/chat/reply" class="form mb-15" method="post" id="">
                     @csrf
-                    <textarea name="message" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" placeholder="${inputPlaceholder}" ${inputAttr}></textarea>
+                    <textarea name="message" class="form-control form-control-flush mb-3 foy-textarea" rows="1" data-kt-element="input" placeholder="${inputPlaceholder}" ${inputAttr}></textarea>
                     <input name="chat_id" value="${chat.id}" hidden>
                     <input name="name" value="${chat.name}" hidden>
                     <input name="email" value="${chat.email}" hidden>

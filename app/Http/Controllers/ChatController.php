@@ -38,14 +38,6 @@ class ChatController extends Controller
         $receiver = $request['email'];
 
         $request['token'] = $token;
-        // return response($request)->setStatusCode(200);
-
-        // $foo = (array)$request;
-        // $request['token'] = $token;
-        // $attributes = (object)$foo;
-        // return response($request['email'])->setStatusCode(200);
-
-        // $token = md5(microtime());
         try {
             $chat= Chat::create([
                 'name'=> $data['name'],
@@ -92,6 +84,12 @@ class ChatController extends Controller
         if($reply){
             $receiver = $attributes['email'];
             Mail::to($receiver)->send(new ChatResponse($attributes));
+
+            $statusUpdate = Chat::where('id', $request['chat_id'])
+                ->Where('status', 0)
+                ->update([
+                    'status' => 1
+                ]);
             return redirect('/chat/chats')->with('success', 'Mail send successfully');
         }else{
             return redirect('/chat/chats')->with('error', 'Something went wrong!');
