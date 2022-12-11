@@ -17,7 +17,7 @@
                     <p>{{ session('message') }}</p>
                 </div>
             @endif
-            <h4 class="pb-2">User Based Reservation</h4>
+            <h4 class="pb-2">Vehicle Monitor</h4>
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
                 <div class="col-xl-4">
@@ -34,8 +34,8 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">Seat Request by Students</div>
-                            <div class="fw-bold text-gray-400">Today:   Requests</div>
+                            <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">On Board Vehicles</div>
+                            <div class="fw-bold text-gray-400">{{ $data['onBoard'] }} Vehicles</div>
                         </div>
                         <!--end::Body-->
                     </a>
@@ -56,8 +56,8 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <div class="text-white fw-bolder fs-2 mb-2 mt-5">Seat Request By Teachers</div>
-                            <div class="fw-bold text-white">Today:   Requests</div>
+                            <div class="text-white fw-bolder fs-2 mb-2 mt-5">On Road Vehicles</div>
+                            <div class="fw-bold text-white">{{ $data['onRoad'] }} Vehicles</div>
                         </div>
                         <!--end::Body-->
                     </a>
@@ -78,8 +78,8 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">Seat Request by Staffs</div>
-                            <div class="fw-bold text-gray-100">Today:   Requests</div>
+                            <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">Vehicles in Maintenance</div>
+                            <div class="fw-bold text-gray-100">{{ $data['maintenance'] }} Vehicles</div>
                         </div>
                         <!--end::Body-->
                     </a>

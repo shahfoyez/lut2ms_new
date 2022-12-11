@@ -10,7 +10,20 @@ class GeneralController extends Controller
 {
     public function index(){
         // dd($stuReq);
-        return view('dashboard');
+        $onRoad =  $vehicles = Vehicle::where('status', 'trip')
+        ->latest()
+        ->get()->count();
+        $onBoard = Vehicle::where('status', 'available')
+        ->latest()
+        ->get()->count();
+        $maintenance = Vehicle::where('status', 'maintenance')
+        ->latest()
+        ->get()->count();
+        $data = array('onRoad' => $onRoad, 'onBoard' => $onBoard, 'maintenance' => $maintenance);
+        // dd($data);
+        return view('dashboard', [
+            'data' => $data
+        ]);
     }
     public function logbook(){
         $vehicles = Vehicle::withSum('fuels', 'quantity')
