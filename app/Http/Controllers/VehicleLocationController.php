@@ -16,8 +16,9 @@ class VehicleLocationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return Routex::latest()->with('stoppages')->get();
+    {0000000000
+        // return Routex::latest()->with('stoppages')->get();
+        return Routex::with('stoppages')->orderBy('route', 'ASC')->get();
     }
     public function routeVehicles($route)
     {
