@@ -114,7 +114,7 @@
 
 
                                     <!--begin::Submit-->
-                                    <button type="submit" class="btn btn-primary mt-5">
+                                    <button type="submit" class="btn btn-primary mt-5" onClick="this.form.submit(); this.disabled=true; this.innerText='Wait...'; ">
                                         <!--begin::Indicator-->
                                         <span class="indicator-label">Submit</span>
                                         {{-- <span class="indicator-progress">Please wait...
@@ -140,4 +140,3 @@
     </div>
     <!--end::Content-->
 @endsection
-
