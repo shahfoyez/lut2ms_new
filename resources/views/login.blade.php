@@ -38,6 +38,9 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input class="form-control form-control-lg form-control-solid" type="text" name="username" autocomplete="off" />
+                            @error('username')
+                                @include('components.validation')
+                            @enderror
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -52,6 +55,9 @@
                             <!--end::Wrapper-->
                             <!--begin::Input-->
                             <input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
+                            @error('password')
+                                @include('components.validation')
+                            @enderror
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -61,10 +67,11 @@
                             {{-- <a href="/register" class="link-primary fs-6 fw-bolder">Don't have an account? Sign Up</a> --}}
                             <!--end::Link-->
                             <!--begin::Submit button-->
-                            <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5 mt-2" onClick="this.form.submit(); ">
+                            {{-- onClick="this.form.submit();" --}}
+                            <button type="submit" class="btn btn-lg btn-primary w-100 mb-5 mt-2" onClick="this.form.submit(); this.disabled=true; this.innerText='Please Wait…';">
                                 <span class="indicator-label">Sign In</span>
-                                <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                {{-- <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> --}}
                             </button>
                             <!--end::Submit button-->
                         </div>
@@ -78,9 +85,13 @@
         </div>
         <!--end::Authentication - Sign-in-->
     </div>
+
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
     <!--start::Page Custom Javascript-->
-    <script src="/assets/js/sign-in/general.js"></script>
-    {{-- <script src="/assets/js/sign-in/two-steps.js"></script> --}}
+    <script src="{{ asset('/assets/js/sign-in/general.js') }}"></script>
+    {{-- <script src="{{ asset('/assets/js/sign-in/two-steps.js') }}"></script> --}}
     <!--end::Page Custom Javascript-->
 
 </body>
