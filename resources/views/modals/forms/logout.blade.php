@@ -11,10 +11,10 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <form method="post" action="/logout">
             @csrf
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" type="submit">Logout</button>
-            </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit"  onClick="this.form.submit(); this.disabled=true; this.innerText='Wait...'; ">Logout</button>
+                </div>
             </form>
         </div>
     </div>

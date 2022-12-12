@@ -192,18 +192,7 @@
     @include('modals.deleteModal')
 @endsection
 @section('scripts')
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    {{-- <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script> --}}
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    {{-- <script src="{{ asset('assets/js/custom/documentation/documentation.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/js/custom/documentation/search.js') }}"></script> --}}
     <script src="{{ asset('/assets/js/custom/documentation/forms/daterangepicker.js') }}"></script>
     <!--end::Page Custom Javascript-->
 @endsection
-<script type="text/javascript">
-    @if (count($errors) > 0)
-        $('#validationError').modal('show');
-    @endif
-</script>
 

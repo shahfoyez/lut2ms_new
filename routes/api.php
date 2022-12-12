@@ -21,6 +21,8 @@ use App\Http\Controllers\VehicleLocationController;
 Route::controller(VehicleLocationController::class)->group(function () {
     Route::get('/routes', 'index');
     Route::get('/route/vehicles/{route}', 'routeVehicles');
+    Route::get('/trip/vehicles', 'tripVehicles');
+
     Route::get('/vehicles/location', 'vehiclesLocation');
     Route::get('/vehicle/locationUpdate/{vid}/{long}/{lat}', 'store');
 });

@@ -61,10 +61,10 @@
                             {{-- <a href="/register" class="link-primary fs-6 fw-bolder">Don't have an account? Sign Up</a> --}}
                             <!--end::Link-->
                             <!--begin::Submit button-->
-                            <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5 mt-2">
+                            <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5 mt-2" onClick="this.form.submit(); ">
                                 <span class="indicator-label">Sign In</span>
-                                {{-- <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> --}}
+                                <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                             <!--end::Submit button-->
                         </div>
@@ -78,14 +78,11 @@
         </div>
         <!--end::Authentication - Sign-in-->
     </div>
-    <!--end::Main-->
-    <script>var hostUrl = "assets/";</script>
-    <!--begin::Javascript-->
-    <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="/assets/js/scripts.bundle.js"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--end::Javascript-->
+    <!--start::Page Custom Javascript-->
+    <script src="/assets/js/sign-in/general.js"></script>
+    {{-- <script src="/assets/js/sign-in/two-steps.js"></script> --}}
+    <!--end::Page Custom Javascript-->
+
 </body>
 <!--end::Body-->
 </html>

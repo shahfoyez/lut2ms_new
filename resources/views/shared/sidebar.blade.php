@@ -164,7 +164,7 @@
                             </a>
                         </div>
                         <?php
-                            $vehicleTypes = array('vehicleTypes', 'typeEdit');
+                            $vehicleTypes = array('vehicleTypes', 'typeEdit', 'typeAdd');
                         ?>
                         <div class="menu-item">
                             <a class="menu-link {{ $segment_2 == in_array($segment_2,  $vehicleTypes) ? 'active' : '' }}" href="/vehicle/vehicleTypes">

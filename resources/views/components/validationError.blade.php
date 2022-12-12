@@ -1,4 +1,4 @@
-@if (session()->has('error'))
+@if (count($errors) > 0)
     <!--begin::Alert-->
     <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row w-100 p-4 mb-10">
         <!--begin::Icon-->
@@ -14,7 +14,7 @@
         <!--begin::Content-->
         <div class="d-flex flex-column text-light pe-0 pe-sm-10">
             <h4 class="mb-2 text-light">Failed!</h4>
-            <span> {{ session('error') }}</span>
+            <span> Please check the input again.</span>
         </div>
         <!--end::Content-->
         <!--begin::Close-->

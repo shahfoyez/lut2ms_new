@@ -12,6 +12,8 @@
             @include('components.flashMessage')
             @include('components.success')
             @include('components.error')
+            @include('components.validationError')
+
             <!--begin::Layout-->
             <div class="d-flex flex-column flex-lg-row">
                 <!--begin::Sidebar-->
@@ -261,13 +263,15 @@
                                 <i class="bi bi-upload fs-3"></i>
                             </button>
                         </div>
-                        <button class="btn btn-primary" type="submit" data-kt-element="send" ${buttonAttr}>Send</button>
+                        <button class="btn btn-primary" type="submit" data-kt-element="send" ${buttonAttr} onClick="this.form.submit(); this.disabled=true; this.innerText='Sending…'; ">Send</button>
                     </div>
                 </form>
             </div>`;
         });
     </script>
     <!--begin::Page Custom Javascript(used by this page)-->
+		<script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script>
+
     {{-- <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script>
     <script src="{{ asset('/assets/js/custom/modals/create-app.js') }}"></script>

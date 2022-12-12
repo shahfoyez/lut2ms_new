@@ -69,7 +69,7 @@
                     @method('DELETE')
                     @csrf
                     <!--begin::Button-->
-                    <button type="submit" id="kt_modal_create_api_key_submit" class="btn btn-primary">
+                    <button type="submit" id="kt_modal_create_api_key_submit" class="btn btn-primary"  onClick="this.form.submit(); this.disabled=true; this.innerText='Wait...'; ">
                         <span class="indicator-label"> Delete</span>
                     </button>
                     <!--end::Button-->

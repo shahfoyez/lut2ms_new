@@ -70,7 +70,7 @@
                                     </div>
                                     <!--end::Input-->
                                     <!--begin::Submit-->
-                                    <button type="submit" class="btn btn-primary mt-5">
+                                    <button type="submit" class="btn btn-primary mt-5" onClick="this.form.submit(); this.disabled=true; this.innerText='Wait...'; ">
                                         <!--begin::Indicator-->
                                         <span class="indicator-label">Submit</span>
                                         {{-- <span class="indicator-progress">Please wait...
@@ -96,8 +96,5 @@
     </div>
     <!--end::Content-->
 @endsection
-<!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset('/assets/js/custom/modals/create-account.js') }}"></script>
-<!--end::Page Custom Javascript-->
 
 

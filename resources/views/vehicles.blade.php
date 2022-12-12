@@ -246,9 +246,4 @@
 @section('modals')
     @include('modals.deleteModal')
 @endsection
-<script type="text/javascript">
-    @if (count($errors) > 0)
-        $('#validationError').modal('show');
-    @endif
-</script>
 

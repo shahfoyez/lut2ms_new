@@ -81,7 +81,6 @@
 		@include('components.scrolltop')
 
 		<!--end::Main-->
-		<script>var hostUrl = "/assets/";</script>
 
 		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
@@ -95,11 +94,11 @@
 
 		<!--begin::Page Custom Javascript(used by this page)-->
         <script src="{{ asset('/assets/js/deleteModal.js') }}"></script>
-		<script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
-		<script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script>
-		<script src="{{ asset('/assets/js/custom/modals/create-app.js') }}"></script>
+		{{-- <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script> --}}
+		{{-- <script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script> --}}
+		{{-- <script src="{{ asset('/assets/js/custom/modals/create-app.js') }}"></script>
 		<script src="{{ asset('/assets/js/custom/modals/upgrade-plan.js') }}"></script>
-        <script src="{{ asset('/assets/js/custom/pages/company/contact.js') }}"></script>
+        <script src="{{ asset('/assets/js/custom/pages/company/contact.js') }}"></script> --}}
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
 

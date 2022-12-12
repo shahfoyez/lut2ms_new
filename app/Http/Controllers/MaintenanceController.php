@@ -35,8 +35,10 @@ class MaintenanceController extends Controller
     public function store(Request $request)
     {
         $added_by= auth()->user()->id;
-        $from = $request->input('from');
-        $from = Carbon::createFromFormat('Y-m-d\TH:i', $from)->format('Y-m-d H:i A');
+        if($request->input('from')){
+            $from = $request->input('from');
+            $from = Carbon::createFromFormat('Y-m-d\TH:i', $from)->format('Y-m-d H:i A');
+        }
 
         $attributes= $request->validate([
             'vid'=> 'required',

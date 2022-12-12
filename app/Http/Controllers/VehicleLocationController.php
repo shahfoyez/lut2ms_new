@@ -31,6 +31,18 @@ class VehicleLocationController extends Controller
             ->latest()->get()->pluck('vehicle');
         return $trips;
     }
+
+    public function tripVehicles()
+    {
+        $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
+                $query->with('driver')->where('status', 0);
+            }])
+            ->with('employee')
+            ->where('status', 0)
+            ->latest()->get()->pluck('vehicle');
+        return $trips;
+    }
+
     public function vehiclesLocation()
     {
         $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
@@ -62,33 +74,6 @@ class VehicleLocationController extends Controller
     public function store($vid, $long, $lat)
     {
         $date = date("Y-m-d H:i:s");
-        // request()->validate([
-        //     'vid' => 'required',
-        //     'long' => 'required',
-        //     'lat' => 'required',
-        //     'status' => 'required'
-        // ]);
-        // $location  = VehicleLocation::where('vid',  $vid)->first();
-
-        // if($location){
-        //     VehicleLocation::where('vid',  $vid)
-        //     ->update([
-        //         'vid' => $vid,
-        //         'long' => $long,
-        //         'lat' => $lat,
-        //         'date' =>  $date,
-        //         'status' => 1
-        //     ]);
-        // }else{
-        //     VehicleLocation::create([
-        //         'vid' => $vid,
-        //         'long' => $long,
-        //         'lat' => $lat,
-        //         'date' => $date,
-        //         'status' => 1
-        //     ]);
-        // }
-
         try {
             $location = VehicleLocation::updateOrCreate(
                 [
