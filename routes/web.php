@@ -27,8 +27,14 @@ use App\Http\Controllers\MaintenanceController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/landing', function(){
+Route::get('/a', function(){
     return view('lists');
+});
+Route::get('/b', function(){
+    return view('mixed');
+});
+Route::get('/c', function(){
+    return view('statistics');
 });
 Route::middleware(['guest'])->group(function () {
     Route::controller(SessionController::class)->group(function () {
@@ -204,6 +210,9 @@ Route::middleware(['auth'])->group(function () {
         // Filter
         Route::get('/maintenance/maintenanceVehicles/filter', 'maintenanceVehiclesFilter');
         Route::get('/maintenance/maintenanceRecords/filter', 'maintenanceRecordsFilter');
+
+        Route::get('/ms', 'maintenanceStats');
+
     });
 
     // ReminderController Group

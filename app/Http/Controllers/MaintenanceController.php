@@ -8,6 +8,7 @@ use App\Models\Meter;
 use App\Models\Vehicle;
 use App\Models\Maintenance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreMaintenanceRequest;
 use App\Http\Requests\UpdateMaintenanceRequest;
 
@@ -158,6 +159,36 @@ class MaintenanceController extends Controller
             'start' => $start,
             'end' => $end
         ]);
+    }
+    public function maintenanceStats()
+    {
+        // $maintenance = Maintenance::selectRaw('*', 'DATE(created_at) as date')
+        //     ->latest()
+        //     ->get()
+        //     ->groupByRaw('DATE(created_at)', true);
+        // $maintenance = Maintenance::get()
+        // ->groupBy('MONTH(from)', true);
+        // dd(date);
+        $maintenance= Maintenance::whereYear('from', date('Y'))
+            ->get()
+            ->groupBy(function($val) {
+                return Carbon::parse($val->from)->format('F');
+            })->take(7);
+
+        // $maintenance = Maintenance::select(
+        //     "*" , DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month_year"))
+        //     ->groupBy(DB::raw("DATE_FORMAT(created_at, 'M')"))
+        //     ->get();
+        // $maintenance = DB::table('maintenances')
+        //     ->select('*')
+        //     ->groupByRaw('MONTH(created_at)')
+        //     ->get();
+        dd($maintenance);
+
+        // return view('maintenanceAdd', [
+        //     'vehicles' => $vehicles,
+        //     'selVehicle' => $vehicle
+        // ]);
     }
 
     public function destroy($maintenance)
