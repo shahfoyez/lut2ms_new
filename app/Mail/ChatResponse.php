@@ -21,7 +21,6 @@ class ChatResponse extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
-
     }
 
       /**
@@ -31,17 +30,17 @@ class ChatResponse extends Mailable
      */
     public function build()
     {
-        return $this->subject('Chat Response')
+        return $this->subject($this->data['token'])
                     ->markdown('emails.chatResponse');
 
     }
 
-    // public function envelope()
-    // {
-    //     return new Envelope(
-    //         subject: 'Chat Response',
-    //     );
-    // }
+    public function envelope()
+    {
+        return new Envelope(
+            subject: $this->data['token'],
+        );
+    }
 
     // public function content()
     // {

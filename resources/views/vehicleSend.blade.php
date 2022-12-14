@@ -84,11 +84,14 @@
                                                 $maxdate = date("Y-m-d", strtotime("+7 Days"));
                                                 $maxtime = date("h:i");
                                                 $max = $maxdate."T".$maxtime;
-                                                $ds = date("d-m-Y, h:i:a");
+
+                                                $maxInputDate = date("Y-m-d");
+                                                $maxInputTime= date("h:i", strtotime("+1 hour"));
+                                                $maxInput = $maxInputDate."T".$maxInputTime;
                                             ?>
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">Start date and time</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="start" min="{{  $min }}" max="{{ $max }}" value="{{ old('start') }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="start" min="{{  $min }}" max="{{ $max }}" value="{{ old('start') ??  $min  }}"/>
                                             @error('start')
                                                 @include('components.validation')
                                             @enderror
@@ -99,9 +102,9 @@
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">End date and time</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="end" min="{{  $min }}" max="{{ $max }}" value="{{ old('end') }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="end" min="{{  $min }}" max="{{ $max }}" value="{{ old('end') ?? $maxInput }}"/>
                                             @error('end')
-                                            @include('components.validation')
+                                                @include('components.validation')
                                             @enderror
                                             <!--begin::Select2-->
                                         </div>
