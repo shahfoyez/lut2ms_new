@@ -61,7 +61,8 @@ class EmployeeController extends Controller
             'address'=> request()->input('address'),
             'department'=> request()->input('department'),
             'designation'=> request()->input('designation'),
-            'added_by' => $added_by
+            'added_by' => $added_by,
+            'status' => 0
         ]);
         return redirect('/employee/employees')->with('success', 'Employee has been created');
     }

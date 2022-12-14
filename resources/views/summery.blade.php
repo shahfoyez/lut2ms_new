@@ -112,7 +112,7 @@
                                     <th>LE</th>
                                     <th>Run</th>
                                     <th>AKPL</th>
-                                    <th>KPL</th>
+                                    <th class="text-end">KPL</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -284,5 +284,6 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('/assets/js/custom/documentation/forms/daterangepicker.js') }}"></script>
+
 @endsection
 

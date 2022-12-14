@@ -22,7 +22,8 @@ class EmployeeFactory extends Factory
             'phone' => $this->faker->numerify('013-########'),
             'designation' => 1,
             'department' => 1,
-            'added_by' => 1
+            'added_by' => 1,
+            'status' => 0
         ];
     }
 }

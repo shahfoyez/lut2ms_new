@@ -36,11 +36,11 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Vehicle ID</label>
+                                            <label class="required fw-bold fs-6 mb-2">Vehicle</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="vid" class="form-control mb-3 mb-lg-0" name="vid" value="{{ $vehicle->id }}" readonly />
+                                            <input type="text" name="vid" class="form-control mb-3 mb-lg-0" name="vid" value="{{ $vehicle->codeName }}" readonly />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
@@ -118,9 +118,21 @@
                                             <!--begin::Label-->
                                             <label class="fw-bold fs-6 mb-2 required">From</label>
                                             <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <input type="text"  name="from" class="form-control mb-3 mb-lg-0" placeholder="From" value="{{ old('from') }}"/>
+                                            <!--begin::Select2-->
+                                            <select class="form-select" name="from" data-control="select2" data-placeholder="From" >
+                                                <?php
+                                                if($stoppages->count()>0){
+                                                    foreach($stoppages as $stoppage){
+                                                    $stopLabel = ucfirst($stoppage->slabel);
+                                                    ?>
+                                                        <option value="{{ $stopLabel }}" {{ old('from') == $stopLabel ? 'selected' : ( $stopLabel ==  ucfirst('Tilagor') ? 'selected' : '') }} > {{ $stopLabel }} </option>
+                                                    <?php
+                                                    }
+                                                }
+                                            ?>
+                                            </select>
+                                            {{-- <!--begin::Input-->
+                                            <input type="text"  name="from" class="form-control mb-3 mb-lg-0" placeholder="From" value="{{ old('from') }}"/> --}}
                                             @error('from')
                                             @include('components.validation')
                                             @enderror
@@ -133,8 +145,20 @@
                                             <label class="fw-bold fs-6 mb-2 required">Destination</label>
                                             <!--end::Label-->
 
-                                            <!--begin::Input-->
-                                            <input type="text"  name="dest" class="form-control mb-3 mb-lg-0" placeholder="Destination" value="{{ old('dest') }}"/>
+                                            <select class="form-select" name="dest" data-control="select2" data-placeholder="Destination" >
+                                                <?php
+                                                    if($stoppages->count()>0){
+                                                        foreach($stoppages as $stoppage){
+                                                            $stopLabel = ucfirst($stoppage->slabel);
+                                                            ?>
+                                                                <option value="{{ $stopLabel }}" {{ old('dest') == ucfirst($stoppage->slabel) ? 'selected' : ( $stopLabel ==  ucfirst('Kamal Bazar') ? 'selected' : '') }} > {{ $stopLabel }} </option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                {{-- <option value="Kamal Bazar" selected>Kamal Bazar</option> --}}
+
+                                            </select>
                                             @error('dest')
                                             @include('components.validation')
                                             @enderror
@@ -154,7 +178,7 @@
                                                 if($drivers->count()>0){
                                                     foreach($drivers as $driver){
                                                     ?>
-                                                        <option value="{{ $driver->id }}" {{ old('driver') == $driver->id ? 'selected' : '' }}>{{ $driver->name }}</option>
+                                                        <option value="{{ $driver->id }}" {{ old('driver') == $driver->id ? 'selected' : '' }} {{ $driver->status == 1 ? 'disabled' : '' }}> {{ $driver->name }}{{ $driver->status == 1 ? '(In Trip)' : '' }} </option>
                                                     <?php
                                                     }
                                                 }

@@ -67,11 +67,20 @@
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
+                                        <?php
+                                            $mindate = date("Y-m-d");
+                                            $mintime = date("H:i");
+                                            $min = $mindate."T".$mintime;
+
+                                            $maxInputDate = date("Y-m-d", strtotime("+1 Days"));
+                                            $maxInputTime= date("h:i");
+                                            $maxInput = $maxInputDate."T".$maxInputTime;
+                                        ?>
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">From</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="from" value="{{  old('from') }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="from" value="{{  old('from') ?? $min }}"/>
                                             @error('from')
                                                 @include('components.validation')
                                             @enderror
@@ -82,7 +91,7 @@
                                          <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label">To</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="to" value="{{  old('to') }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="to" value="{{  old('to') ??  $maxInput }}"/>
                                             @error('to')
                                                 @include('components.validation')
                                             @enderror

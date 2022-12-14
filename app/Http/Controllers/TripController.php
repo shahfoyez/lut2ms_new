@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Trip;
 use App\Models\Routex;
 use App\Models\Vehicle;
 use App\Models\Employee;
+use App\Models\Stoppage;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
-use Carbon\Carbon;
 
 class TripController extends Controller
 {
@@ -73,10 +74,12 @@ class TripController extends Controller
         $vehicle = Vehicle::with('vehicleType:id,name')->find($vehicle);
         $routes = Routex::get();
         $drivers = Employee::get()->where('designation', 1);
+        $stoppages = Stoppage::latest()->get();
         return view('vehicleSend', [
             'vehicle' => $vehicle,
             'routes' => $routes,
-            'drivers' => $drivers
+            'drivers' => $drivers,
+            'stoppages' => $stoppages
         ]);
     }
     public function vehicleSend()
@@ -102,9 +105,16 @@ class TripController extends Controller
             'status' => 0
         ]);
 
-        $vehicle = Vehicle::where('id', $trip->vid)->update([
-            'status' => 'trip'
-        ]);
+        if($trip){
+            $vehicle = Vehicle::where('id', $trip->vid)->update([
+                'status' => 'trip'
+            ]);
+            $driver = Employee::where('id', $trip->driver)
+            ->Where('status', 0)
+            ->update([
+                'status' => 1
+            ]);
+        }
 
         return redirect('/requisition/vehicles')->with('success', 'Trip has been send');
     }

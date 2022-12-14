@@ -42,9 +42,14 @@
                                         <!--end::Col-->
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
+                                            <?php
+                                                $mindate = date("Y-m-d");
+                                                $mintime = date("H:i");
+                                                $min = $mindate."T".$mintime;
+                                            ?>
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">Date & Time</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="date" value="{{  old('date') }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="date" value="{{  old('date') ??  $min }}"/>
                                             @error('date')
                                                 @include('components.validation')
                                             @enderror

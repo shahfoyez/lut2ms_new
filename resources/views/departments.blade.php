@@ -45,7 +45,7 @@
                                     <th class="w-20px">Sl</th>
                                     <th>Department</th>
                                     <th>Employees</th>
-                                    <th></th></th>
+                                    <th class="text-end"></th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->

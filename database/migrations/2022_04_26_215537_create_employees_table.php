@@ -37,7 +37,7 @@ return new class extends Migration
             ->on('users')
             ->onDelete('cascade')
             ->onUpdate('No Action');
-
+            $table->string('status')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,21 +3,12 @@ $("#kt_datatable_example_5").DataTable({
     language:{lengthMenu:"Show _MENU_"},
     dom:"<'row'<'col-sm-6 d-flex align-items-center justify-conten-start'f><'col-sm-6 d-flex align-items-center justify-content-end'B>><'table-responsive'tr><'row'<'col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start'l><'col-sm-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-start'i><'col-sm-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-end'p>>",
     buttons: [
-        {
-            extend: 'copy',
-            text: 'Copy',
-            exportOptions: {
 
-            }
-        },
+        'copy',
         'csv',
         'excel',
-        {
-            extend: 'pdfHtml5',
-            exportOptions: {
-
-            }
-        },
+        'pdf',
         'print',
+        'colvis'
     ],
 })}};KTUtil.onDOMContentLoaded((function(){KTDatatablesAdvanced.init()}));
