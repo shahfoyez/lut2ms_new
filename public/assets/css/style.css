@@ -74,3 +74,6 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
     -ms-border-radius: 6px !important;
     -o-border-radius: 6px !important;
 }
+.foy-reload span{
+    margin-right: 0px !important;
+}

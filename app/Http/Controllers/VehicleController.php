@@ -204,8 +204,9 @@ class VehicleController extends Controller
                 ->with('vehicleType:id,name')
                 ->latest()->get();
         }
-        return view('vehicles',[
-            'vehicles' => $$vehicles
+        return view('vehicles', [
+            'lists' => $vehicles,
+            'filter' => request()->input('status')
         ]);
     }
 }
