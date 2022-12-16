@@ -97,9 +97,12 @@ class ChatController extends Controller
     }
     public function search(Request $request)
     {
-         // dd(request()->all());
-         $attributes= $request->validate([
-            'search'=> 'required|string',
+        // dd(request()->all());
+        if($request->input('search') == ''){
+            return back();
+        }
+        $attributes= $request->validate([
+            'search'=> 'required|string|min:1',
         ]);
         $search = $request['search'];
         // $chats = Chat::latest()->with('chatReply.admin')->get();
@@ -111,7 +114,8 @@ class ChatController extends Controller
 
         // dd(json_encode($chats));
         return view('chats', [
-            'chats' => $chats
+            'chats' => $chats,
+            'keyword' => $search
         ]);
 
     }

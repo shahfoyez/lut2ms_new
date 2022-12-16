@@ -65,12 +65,6 @@ class VehicleLocationController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreVehicleLocationRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store($vid, $long, $lat)
     {
         $date = date("Y-m-d H:i:s");

@@ -9,7 +9,6 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
-            @include('components.flashMessage')
             @include('components.success')
             @include('components.error')
             @include('components.validationError')
@@ -23,8 +22,8 @@
                         <!--begin::Card header-->
                         <div class="card-header pt-7" id="kt_chat_contacts_header">
                             <!--begin::Form-->
-                            <form class="w-100 position-relative" autocomplete="on" action="/chat/chatSearch" method="post">
-                                @csrf
+                            <form class="w-100 position-relative" autocomplete="on" action="/chat/chatSearch" method="get">
+                                {{-- @csrf --}}
                                 <!--begin::Icon-->
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                 <span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute foy-top-40 ms-5 translate-middle-y">
@@ -37,7 +36,8 @@
                                 <!--end::Icon-->
                                 <!--begin::Input-->
                                 <div class="d-flex align-items-center justify-content-between gap-2">
-                                    <input type="text" id="user_search" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by email or token..."  />
+                                    <input type="text" id="user_search" class="form-control form-control-solid px-15" name="search" value="{{ old('search') ?? ($keyword ?? '') }}" placeholder="Search by email or token..." minlength=""/>
+
                                     <a href="/chat/chats" class="foy-reload btn btn-icon btn-bg-light btn-active-color-primary btn-sm px-4">
                                         <span class="svg-icon svg-icon-3">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,6 +54,9 @@
                         <!--end::Card header-->
                         <!--begin::Card body-->
                         <div class="card-body pt-5" id="kt_chat_contacts_body">
+                            @include('components.noData',[
+                                'data' => $chats
+                            ])
                             <!--begin::List-->
                             <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px" id="foy_user_card_main">
                                 {{-- <a href="#" id="chats" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2 stretched-link foy-chat" data-item="{{ $chats }}"  hidden>{{ $chats }}</a> --}}

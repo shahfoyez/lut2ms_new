@@ -27,6 +27,12 @@ use App\Http\Controllers\MaintenanceController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/f', function(){
+    return view('feeds');
+});
+Route::get('/d', function(){
+    return view('charts');
+});
 Route::get('/a', function(){
     return view('lists');
 });
@@ -210,6 +216,7 @@ Route::middleware(['auth'])->group(function () {
         // Filter
         Route::get('/maintenance/maintenanceVehicles/filter', 'maintenanceVehiclesFilter');
         Route::get('/maintenance/maintenanceRecords/filter', 'maintenanceRecordsFilter');
+        // Route::get('/maintenance/vehicleMaintenanceRecords/{vehicle}', 'vehicleMaintenanceEntriesFilter');
 
         Route::get('/ms', 'maintenanceStats');
 
@@ -233,7 +240,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/chat/chats', 'create');
         Route::post('/chat/reply', 'reply');
         // search
-        Route::post('/chat/chatSearch', 'search');
+        Route::get('/chat/chatSearch', 'search');
 
     });
     // NoticeController Group

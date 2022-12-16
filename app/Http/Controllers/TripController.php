@@ -120,7 +120,7 @@ class TripController extends Controller
     }
     public function vehicleReach($vid)
     {
-        $vehicle = Vehicle::where('id', $vid)->first();
+        $vehicle = Vehicle::find($vid);
         $trip = Trip::orderBy('created_at', 'desc')->where('vid', $vid)->first();
         if($vehicle && $trip){
             $vehicleUpdate = Vehicle::where('id', $vid)->update([
@@ -131,6 +131,9 @@ class TripController extends Controller
                 'end' => $end,
                 'status' => 1
             ]);
+            $driverStatus = Employee::where('id', $trip->driver)->update([
+                'status' => 0
+            ]);
         }else{
             abort(404, 'Invalid Action!');
             // return back()->with('error', 'Oops! Something went wrong!');
@@ -140,7 +143,7 @@ class TripController extends Controller
 
     public function vehicleCancel($vid)
     {
-        $vehicle = Vehicle::where('id', $vid)->first();
+        $vehicle = Vehicle::find($vid);
         $trip = Trip::orderBy('created_at', 'desc')->where('vid', $vid)->first();
         if($vehicle && $trip){
             $vehicleUpdate = Vehicle::where('id', $vid)->update([
@@ -150,6 +153,9 @@ class TripController extends Controller
             $tripUpdate = Trip::where('id', $trip->id)->update([
                 'end' => $end,
                 'status' => 2
+            ]);
+            $driverStatus = Employee::where('id', $trip->driver)->update([
+                'status' => 0
             ]);
         }else{
             abort(404, 'Invalid Action!');

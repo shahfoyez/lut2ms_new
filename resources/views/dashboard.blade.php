@@ -22,7 +22,7 @@
             <div class="row g-5 g-xl-8">
                 <div class="col-xl-4">
                     <!--begin::Statistics Widget 5-->
-                    <a href="#" class="card bg-body-white hoverable card-xl-stretch mb-xl-8">
+                    <a href="/requisition/vehicles/filter?status=available" class="card bg-success hoverable card-xl-stretch mb-xl-8">
                         <!--begin::Body-->
                         <div class="card-body">
                             <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
@@ -34,8 +34,8 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">On Board Vehicles</div>
-                            <div class="fw-bold text-gray-400">{{ $data['onBoard'] }} Vehicles</div>
+                            <div class="text-white fw-bolder fs-2 mb-2 mt-5">On Board Vehicles</div>
+                            <div class="fw-bold text-white">{{ $data['onBoard'] }} Vehicles</div>
                         </div>
                         <!--end::Body-->
                     </a>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-xl-4">
                     <!--begin::Statistics Widget 5-->
-                    <a href="#" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
+                    <a href="/requisition/vehicles/filter?status=trip" class="card bg-warning hoverable card-xl-stretch mb-xl-8">
                         <!--begin::Body-->
                         <div class="card-body">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-xl-4">
                     <!--begin::Statistics Widget 5-->
-                    <a href="#" class="card bg-dark hoverable card-xl-stretch mb-5 mb-xl-8">
+                    <a href="/requisition/vehicles/filter?status=maintenance" class="card bg-danger hoverable card-xl-stretch mb-5 mb-xl-8">
                         <!--begin::Body-->
                         <div class="card-body">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr070.svg-->
@@ -84,6 +84,49 @@
                         <!--end::Body-->
                     </a>
                     <!--end::Statistics Widget 5-->
+                </div>
+            </div>
+            <!--end::Row-->
+
+             <!--begin::Row-->
+             <div class="row g-5 g-xl-8">
+                <div class="col-xl-4">
+                    <!--begin::List Widget 4-->
+                    <div class="card card-xl-stretch mb-xl-8">
+                        <!--begin::Header-->
+                        <div class="card-header border-0 pt-5">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder text-dark">Top Drivers</span>
+                                <span class="text-muted mt-1 fw-bold fs-7">Latest tech trends</span>
+                            </h3>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body pt-5">
+                            @foreach ($drivers as $driver)
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-sm-center mb-7">
+                                <!--begin::Symbol-->
+                                <div class="symbol symbol-50px me-5">
+                                    <img src="{{ $driver->image ? asset($driver->image) : asset('assets/uploads/default/defaultProfile.webp') }}" class="align-self-center" alt="" />
+                                </div>
+                                <!--end::Symbol-->
+                                <!--begin::Section-->
+                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                    <div class="flex-grow-1 me-2">
+                                        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">{{ $driver->name }}</a>
+                                        <span class="text-muted fw-bold d-block fs-7">ID: {{ $driver->idNumber }}</span>
+                                    </div>
+                                    <span class="badge badge-light fw-bolder my-2">{{ $driver->trips_count }} Trips</span>
+                                </div>
+                                <!--end::Section-->
+                            </div>
+                            <!--end::Item-->
+                            @endforeach
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end::List Widget 4-->
                 </div>
             </div>
             <!--end::Row-->

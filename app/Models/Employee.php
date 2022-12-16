@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Trip;
 use App\Models\Department;
 use App\Models\Designation;
 use Illuminate\Database\Eloquent\Model;
@@ -18,5 +19,8 @@ class Employee extends Model
     }
     public function designationR(){
         return $this->belongsTo(Designation::class, 'designation');
+    }
+    public function trips(){
+        return $this->hasMany(Trip::class, 'driver');
     }
 }

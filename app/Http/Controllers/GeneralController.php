@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Vehicle;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class GeneralController extends Controller
@@ -19,10 +20,24 @@ class GeneralController extends Controller
         $maintenance = Vehicle::where('status', 'maintenance')
         ->latest()
         ->get()->count();
-        $data = array('onRoad' => $onRoad, 'onBoard' => $onBoard, 'maintenance' => $maintenance);
+        $drivers = Employee::where('designation', 1)
+            ->withCount(['trips' => function($query) {
+                $query->where('status', 1);
+            }])
+            ->orderBy('trips_count', 'DESC')
+            ->take(6)
+            ->get();
+
+        // dd($drivers);
+        $data = array(
+            'onRoad' => $onRoad,
+            'onBoard' => $onBoard,
+            'maintenance' => $maintenance
+        );
         // dd($data);
         return view('dashboard', [
-            'data' => $data
+            'data' => $data,
+            'drivers' => $drivers
         ]);
     }
     public function logbook(){

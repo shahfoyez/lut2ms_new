@@ -40,7 +40,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="vid" class="form-control mb-3 mb-lg-0" name="vid" value="{{ $vehicle->codeName }}" readonly />
+                                            <input type="text" name="vid" class="form-control mb-3 mb-lg-0" name="vid" value="{{ $vehicle->id }}" readonly />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
