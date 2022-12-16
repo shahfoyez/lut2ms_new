@@ -97,7 +97,7 @@
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bolder text-dark">Top Drivers</span>
-                                <span class="text-muted mt-1 fw-bold fs-7">Latest tech trends</span>
+                                <span class="text-muted mt-1 fw-bold fs-7">With Highest Number of Trips</span>
                             </h3>
                         </div>
                         <!--end::Header-->
@@ -114,7 +114,7 @@
                                 <!--begin::Section-->
                                 <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                     <div class="flex-grow-1 me-2">
-                                        <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bolder">{{ $driver->name }}</a>
+                                        <a href="/employee/employeeEdit/{{ $driver->id }}" class="text-gray-800 text-hover-primary fs-6 fw-bolder">{{ $driver->name }}</a>
                                         <span class="text-muted fw-bold d-block fs-7">ID: {{ $driver->idNumber }}</span>
                                     </div>
                                     <span class="badge badge-light fw-bolder my-2">{{ $driver->trips_count }} Trips</span>
