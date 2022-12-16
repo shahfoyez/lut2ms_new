@@ -38,7 +38,7 @@ class TripController extends Controller
 
         // dd($vehicles);
         return view('reqVehicles', [
-            'lists' => $vehicles,
+            'lists' => $vehicles
         ]);
     }
     public function show()
@@ -199,8 +199,9 @@ class TripController extends Controller
     {
         // dd(request()->all());
         $query = Vehicle::query();
+        $status = request()->input('status');
         if(request()->input('status')){
-            $vehicles = $query->where('status', request()->input('status'))
+            $vehicles = $query->where('status', $status)
             ->with(['activeTrip' => function ($query) {
                 $query->where('status', 0);
             }])
@@ -209,7 +210,8 @@ class TripController extends Controller
             ->get();
         }
         return view('reqVehicles', [
-            'lists' => $vehicles
+            'lists' => $vehicles,
+            'filter' =>  $status
         ]);
     }
 

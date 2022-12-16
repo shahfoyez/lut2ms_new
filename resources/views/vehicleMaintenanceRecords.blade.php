@@ -24,7 +24,7 @@
                     </h3>
                     <div class="card-toolbar">
                         <!--begin::Menu-->
-                        <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary ms-4" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary ms-4 border border-secondary py-4" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">

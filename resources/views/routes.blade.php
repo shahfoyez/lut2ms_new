@@ -21,7 +21,7 @@
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $lists->count() }} Routes</span>
                     </h3>
                     <div class="card-toolbar">
-                        <a href="/route/routeAdd" class="btn btn-sm btn-light-primary">
+                        <a href="/route/routeAdd" class="btn btn-sm btn-light-primary border border-secondary py-4">
                         <span class="svg-icon svg-icon-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />

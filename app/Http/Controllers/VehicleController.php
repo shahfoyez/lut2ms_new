@@ -199,14 +199,15 @@ class VehicleController extends Controller
     public function filter()
     {
         // dd(request()->all());
-        if(request()->input('status')){
-            $vehicles = Vehicle::where('status', request()->input('status'))
+        $status = request()->input('status');
+        if($status){
+            $vehicles = Vehicle::where('status',  $status)
                 ->with('vehicleType:id,name')
                 ->latest()->get();
         }
         return view('vehicles', [
             'lists' => $vehicles,
-            'filter' => request()->input('status')
+            'filter' =>  $status
         ]);
     }
 }

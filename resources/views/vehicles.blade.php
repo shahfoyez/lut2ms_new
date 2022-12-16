@@ -24,7 +24,7 @@
                         <span class="text-muted mt-1 fw-bold fs-7">Total {{ $lists->count() }} Vehicles</span>
                     </h3>
                     <div class="card-toolbar">
-                        <a href="/vehicle/vehicleAdd" class="btn btn-sm btn-light-primary me-2">
+                        <a href="/vehicle/vehicleAdd" class="btn btn-sm btn-light-primary me-2 border border-secondary py-4">
                         <span class="svg-icon svg-icon-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
@@ -32,97 +32,14 @@
                             </svg>
                         </span>
                         New Vehicle</a>
-
-                        <!--begin::Filter-->
-                        <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
-                        <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->Filter</button>
-                        <!--begin::Menu 1-->
-                        <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
-                            <!--begin::Header-->
-                            <div class="px-7 py-5">
-                                <div class="fs-4 text-dark fw-bolder">Filter Options</div>
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Separator-->
-                            <div class="separator border-gray-200"></div>
-                            <!--end::Separator-->
-                            <!--begin::Content-->
-                            <div class="px-7 py-5">
-                                <!--begin::Input group-->
-                                <div class="">
-                                    <!--begin::Input group-->
-                                    <form action="/vehicle/vehicles/filter" class="form" method="get" id="" >
-                                        {{-- @csrf --}}
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fs-5 fw-bold mb-3">Vehicle Status:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Options-->
-                                            <div class="d-flex flex-column flex-wrap fw-bold" data-kt-docs-table-filter="payment_type">
-                                                <!--begin::Option-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                                    <input class="form-check-input" type="radio" name="status" value="all" {{ !isset($filter) ? 'checked' : '' }} />
-                                                    <span class="form-check-label text-gray-600">All</span>
-                                                </label>
-                                                <!--end::Option-->
-                                                <!--begin::Option-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-                                                    <input class="form-check-input" type="radio" name="status" value="available"  />
-                                                    <span class="form-check-label text-gray-600">Available</span>
-                                                </label>
-                                                <!--end::Option-->
-                                                <!--begin::Option-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-                                                    <input class="form-check-input" type="radio" name="status" value="trip" />
-                                                    <span class="form-check-label text-gray-600">In Trip</span>
-                                                </label>
-                                                <!--end::Option-->
-                                                <!--begin::Option-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="radio" name="status" value="maintenance" />
-                                                    <span class="form-check-label text-gray-600">Maintenance</span>
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">Cancel</button>
-
-                                            <button type="submit" class="btn btn-primary">Apply</button>
-                                            {{-- <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">Apply</button> --}}
-
-                                        </div>
-                                    </form>
-                                    <!--end::Actions-->
-                                </div>
-                                <!--end::Input group-->
-                            </div>
-                            <!--end::Content-->
-                        </div>
-                        <!--end::Menu 1-->
-                        <!--end::Filter-->
-                        <a href="/vehicle/vehicles" class="foy-reload btn btn-sm btn-light-primary">
-                            <span class="svg-icon svg-icon-3">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14.5 20.7259C14.6 21.2259 14.2 21.826 13.7 21.926C13.2 22.026 12.6 22.0259 12.1 22.0259C9.5 22.0259 6.9 21.0259 5 19.1259C1.4 15.5259 1.09998 9.72592 4.29998 5.82592L5.70001 7.22595C3.30001 10.3259 3.59999 14.8259 6.39999 17.7259C8.19999 19.5259 10.8 20.426 13.4 19.926C13.9 19.826 14.4 20.2259 14.5 20.7259ZM18.4 16.8259L19.8 18.2259C22.9 14.3259 22.7 8.52593 19 4.92593C16.7 2.62593 13.5 1.62594 10.3 2.12594C9.79998 2.22594 9.4 2.72595 9.5 3.22595C9.6 3.72595 10.1 4.12594 10.6 4.02594C13.1 3.62594 15.7 4.42595 17.6 6.22595C20.5 9.22595 20.7 13.7259 18.4 16.8259Z" fill="black"/>
-                                    <path opacity="0.3" d="M2 3.62592H7C7.6 3.62592 8 4.02592 8 4.62592V9.62589L2 3.62592ZM16 14.4259V19.4259C16 20.0259 16.4 20.4259 17 20.4259H22L16 14.4259Z" fill="black"/>
-                                </svg>
-                            </span>
-                        </a>
-
+                        <?php
+                            $formAction = '/vehicle/vehicles/filter';
+                            $refreshAction = '/vehicle/vehicles';
+                        ?>
+                        @include('components.filter.statusFilter')
+                        @include('components.filter.filterRefresh')
                         <!--end::Toolbar-->
                     </div>
-
-
                 </div>
                 <!--end::Header-->
                 <!--begin::Body-->
