@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Vehicle;
 use App\Models\Employee;
+use App\Models\Maintenance;
 use Illuminate\Http\Request;
 
 class GeneralController extends Controller
@@ -25,10 +26,20 @@ class GeneralController extends Controller
                 $query->where('status', 1);
             }])
             ->orderBy('trips_count', 'DESC')
-            ->take(6)
-            ->get();
+            ->having('trips_count', '>', 0)
+            ->get()
+            ->take(6);
 
-        // dd($drivers);
+        $MaintenanceStats= Maintenance::whereYear('from', date('Y'))
+            ->oldest()
+            ->get()
+            ->groupBy(function($val) {
+                return Carbon::parse($val->from)->format('F');
+            })
+            ->take(7);
+
+
+        // dd($MaintenanceStats);
         $data = array(
             'onRoad' => $onRoad,
             'onBoard' => $onBoard,

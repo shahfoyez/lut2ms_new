@@ -149,9 +149,9 @@
                                                 <?php
                                                     if($stoppages->count()>0){
                                                         foreach($stoppages as $stoppage){
-                                                            $stopLabel = ucfirst($stoppage->slabel);
+                                                            $destLabel = ucfirst($stoppage->slabel);
                                                             ?>
-                                                                <option value="{{ $stopLabel }}" {{ old('dest') == ucfirst($stoppage->slabel) ? 'selected' : ( $stopLabel ==  ucfirst('Kamal Bazar') ? 'selected' : '') }} > {{ $stopLabel }} </option>
+                                                                <option value="{{ $destLabel }}" {{ old('dest') == ucfirst($stoppage->slabel) ? 'selected' : ( $destLabel ==  ucfirst('Kamal Bazar') ? 'selected' : '') }} > {{ $destLabel }} </option>
                                                             <?php
                                                         }
                                                     }

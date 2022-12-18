@@ -183,7 +183,7 @@ class MaintenanceController extends Controller
         //     ->select('*')
         //     ->groupByRaw('MONTH(created_at)')
         //     ->get();
-        dd($maintenance);
+        // dd($maintenance);
 
         // return view('maintenanceAdd', [
         //     'vehicles' => $vehicles,

@@ -42,6 +42,9 @@ Route::get('/b', function(){
 Route::get('/c', function(){
     return view('statistics');
 });
+Route::get('/landing', function(){
+    return view('landing');
+});
 Route::middleware(['guest'])->group(function () {
     Route::controller(SessionController::class)->group(function () {
         Route::get('/', 'loginCreate')->name('login');

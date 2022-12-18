@@ -4804,7 +4804,8 @@ License: For each use you must have a valid license purchased only from above li
 											<!--begin::Body-->
 											<div class="card-body p-0">
 												<!--begin::Chart-->
-												<div class="mixed-widget-12-chart card-rounded-bottom bg-info" data-kt-color="info" style="height: 250px"></div>
+												<div class="mixed-widget-12-chart card-rounded-bottom bg-info" data-kt-color="info" style="height: 250px">
+                                                </div>
 												<!--end::Chart-->
 												<!--begin::Stats-->
 												<div class="card-rounded bg-body mt-n10 position-relative card-px py-15">
