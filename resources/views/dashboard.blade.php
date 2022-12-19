@@ -130,7 +130,7 @@
                 </div>
 
                 <!--begin::Col-->
-                <div class="col-xl-4">
+                <div class="col-xl-8">
                     <!--begin::Mixed Widget 12-->
                     <div class="card card-xl-stretch mb-xl-8">
                         <!--begin::Header-->
@@ -179,10 +179,13 @@
                         <!--begin::Body-->
                         <div class="card-body p-0">
                             <!--begin::Chart-->
-                            <div class="mixed-widget-12-chart card-rounded-bottom bg-info" data-kt-color="info" style="height: 250px"></div>
+                            {{-- <div class="mixed-widget-12-chart card-rounded-bottom bg-info" data-kt-color="info" style="height: 250px">
+                            </div> --}}
+                            <div id="chart" class="p-5">
+                            </div>
                             <!--end::Chart-->
                             <!--begin::Stats-->
-                            <div class="card-rounded bg-body mt-n10 position-relative card-px py-15">
+                            {{-- <div class="card-rounded bg-body mt-n10 position-relative card-px py-15">
                                 <!--begin::Row-->
                                 <div class="row g-0 mb-7">
                                     <!--begin::Col-->
@@ -215,7 +218,7 @@
                                     <!--end::Col-->
                                 </div>
                                 <!--end::Row-->
-                            </div>
+                            </div> --}}
                             <!--end::Stats-->
                         </div>
                         <!--end::Body-->
@@ -233,6 +236,84 @@
 <!--end::Content-->
 @endsection
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
+     <script>
+        let maintenanceStats ={!! json_encode($MaintenanceStats) !!};
+        // for(maintenanceStat in )
+
+        //  var maintenance = {{ Illuminate\Support\Js::from($MaintenanceStats) }};
+        // var maintenance = <?php echo json_encode($MaintenanceStats); ?>;
+        //  var maintenance = {{ Js::from($MaintenanceStats) }};
+       var labels = [];
+       var data = [];
+
+       for(let months in maintenanceStats){
+            var costSum = 0;
+            let label= months;
+            labels.push(label);
+            console.log(maintenanceStats[months]);
+
+            for(let month of maintenanceStats[months]){
+                costSum += month['cost'];
+                var cost = month['cost'];
+                console.log(cost);
+            }
+            data.push(costSum);
+            // console.log(var1);
+        }
+        console.log(maintenanceStats);
+        console.log(data);
+
+
+        var options = {
+          series: [
+            {
+            name: 'Taka',
+            type: 'column',
+            data: data
+            },
+            {
+            name: 'Taka',
+            type: 'line',
+            data: data
+            }
+        ],
+          chart: {
+          height: 350,
+          type: 'line',
+        },
+        stroke: {
+          width: [0, 4]
+        },
+        // title: {
+        //   text: 'Test'
+        // },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1]
+        },
+        labels: labels,
+        xaxis: {
+          type: 'text'
+        },
+        yaxis: [
+            {
+                title: {
+                    text: 'Taka',
+                },
+            },
+            // {
+            //     opposite: true,
+            //     title: {
+            //         text: 'Social Media'
+            //     }
+            // }
+        ]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+     </script>
 @endsection
 

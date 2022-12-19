@@ -26,7 +26,7 @@ class GeneralController extends Controller
                 $query->where('status', 1);
             }])
             ->orderBy('trips_count', 'DESC')
-            ->having('trips_count', '>', 0)
+            // ->having('trips_count', '>', 0)
             ->get()
             ->take(6);
 
@@ -48,7 +48,8 @@ class GeneralController extends Controller
         // dd($data);
         return view('dashboard', [
             'data' => $data,
-            'drivers' => $drivers
+            'drivers' => $drivers,
+            'MaintenanceStats' => $MaintenanceStats
         ]);
     }
     public function logbook(){

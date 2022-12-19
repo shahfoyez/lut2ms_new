@@ -172,7 +172,7 @@
         $(document).on("click", ".foy-chat", function () {
             var data= $(this).attr('data-item');
             let chat = JSON.parse(data);
-            console.log(chat);
+            // console.log(chat);
             let reply = chat.chat_reply;
             // console.log();
             if(reply !== null){
