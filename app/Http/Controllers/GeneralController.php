@@ -30,26 +30,77 @@ class GeneralController extends Controller
             ->get()
             ->take(6);
 
-        $MaintenanceStats= Maintenance::whereYear('from', date('Y'))
-            ->oldest()
-            ->get()
-            ->groupBy(function($val) {
-                return Carbon::parse($val->from)->format('F');
-            })
-            ->take(7);
+        // $MaintenanceStats = Maintenance::whereYear('from', date('Y'))
+        //     ->oldest()
+        //     ->get()
+        //     ->groupBy(function($val) {
+        //         return Carbon::parse($val->from)->format('F');
+        //     })
+        //     ->take(7);
+        $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")
+            ->groupByRaw("monthName(`from`)")
+            ->groupByRaw("year(`from`)")
+            ->groupByRaw("month(`from`)")
+            ->orderBy('year', "DESC")
+            ->orderBy('month', "DESC")
+            ->get()->take(12);
+
+        $labels = array();
+        $costValues = array();
+        $totalCost = 0;
+        $avgCost = 0;
+        $curCost = 0;
+        $lastCost = 0;
+        $curFound = 0;
+        $now = Carbon::now();
+        $curYear = $now->year;
+        $curMonth = $now->month;
+        $lastMonth = '';
+        $thisMonth = '';
 
 
-        // dd($MaintenanceStats);
+        // dd($month);
+        if($maintenanceStats->count() > 0){
+            foreach($maintenanceStats as $stats){
+                if($curMonth == $stats->month && $curYear == $stats->year){
+                    $curCost = $stats->totalCost;
+                    $thisMonth = $stats->monthName;
+                    $curFound = 1;
+                }elseif($curFound == 1){
+                    $lastCost = $stats->totalCost;
+                    $curFound = 2;
+                    $lastMonth = $stats->monthName;
+                }
+                $year = substr($stats->year, -2);
+                $month = $stats->monthName;
+                $label = $month." ".$year;
+                $totalCost += $stats->totalCost;
+                array_push($labels, $label);
+                array_push($costValues, $stats->totalCost);
+            }
+            $avgCost = $totalCost/sizeof($labels);
+        }
+
         $data = array(
             'onRoad' => $onRoad,
             'onBoard' => $onBoard,
-            'maintenance' => $maintenance
+            'maintenance' => $maintenance,
+            'totalCost' => (int)$totalCost,
+            'avgCost' =>  (int)$avgCost,
+            'curCost' => $curCost,
+            'lastCost' => $lastCost,
+            'thisMonth' => $thisMonth,
+            'lastMonth' => $lastMonth
         );
+        // dd($data);
         // dd($data);
         return view('dashboard', [
             'data' => $data,
             'drivers' => $drivers,
-            'MaintenanceStats' => $MaintenanceStats
+            'MaintenanceStats' => $maintenanceStats,
+            'labels' => $labels,
+            'costValues' => $costValues,
+            'totalCost' => $totalCost
         ]);
     }
     public function logbook(){
