@@ -45,6 +45,7 @@ class GeneralController extends Controller
             ->orderBy('month', "DESC")
             ->get()->take(12);
 
+
         $labels = array();
         $costValues = array();
         $totalCost = 0;
@@ -58,8 +59,6 @@ class GeneralController extends Controller
         $lastMonth = '';
         $thisMonth = '';
 
-
-        // dd($month);
         if($maintenanceStats->count() > 0){
             foreach($maintenanceStats as $stats){
                 if($curMonth == $stats->month && $curYear == $stats->year){
@@ -92,8 +91,6 @@ class GeneralController extends Controller
             'thisMonth' => $thisMonth,
             'lastMonth' => $lastMonth
         );
-        // dd($data);
-        // dd($data);
         return view('dashboard', [
             'data' => $data,
             'drivers' => $drivers,
