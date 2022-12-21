@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Fuel;
+use App\Models\Trip;
 use App\Models\Vehicle;
 use App\Models\Employee;
 use App\Models\Maintenance;
@@ -29,6 +31,60 @@ class GeneralController extends Controller
             // ->having('trips_count', '>', 0)
             ->get()
             ->take(6);
+        // $vehicles = Vehicle::withSum('fuels', 'quantity')
+        //     ->with('fuels')
+        //     ->withCount('fuels')
+        //     ->withSum('fuels', 'cost')
+        //     ->withMax('fuels', 'date')
+        //     ->withMax('meterEntries', 'meter_entry')
+        //     ->withMin('meterEntries', 'meter_entry')
+        //     ->get();
+        // $vehicles = Vehicle::withSum('fuels', 'quantity')
+        //     ->with(['fuels' => function ($query) {
+        //         $query->selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
+        //         ->groupByRaw("monthName(`date`)")
+        //         ->groupByRaw("year(`date`)")
+        //         ->groupByRaw("month(`date`)")
+        //         ->orderBy('year', "DESC")
+        //         ->orderBy('month', "DESC")
+        //         ->get()->take(12);
+        //     }])
+        //     // ->with('fuels')
+        //     ->withSum('fuels', 'cost')
+        //     ->withMax('meterEntries', 'meter_entry')
+        //     ->withMin('meterEntries', 'meter_entry')
+        //     ->get();
+        $vehicles = Vehicle::withSum('fuels', 'quantity')
+            ->withSum('fuels', 'cost')
+            ->withMax('meterEntries', 'meter_entry')
+            ->withMin('meterEntries', 'meter_entry')
+            ->get();
+
+        $fuels = Fuel::selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
+            ->groupByRaw("monthName(`date`)")
+            ->groupByRaw("year(`date`)")
+            ->groupByRaw("month(`date`)")
+            ->orderBy('year', "DESC")
+            ->orderBy('month', "DESC")
+            ->get()->take(12);
+
+        // $trips = Trip::selectRaw("year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
+        //     ->groupByRaw("monthName(`start`)")
+        //     ->groupByRaw("year(`start`)")
+        //     ->groupByRaw("month(`start`)")
+        //     ->orderBy('year', "DESC")
+        //     ->orderBy('month', "DESC")
+        //     ->get()->keyBy('monthName')->take(12);
+        // dd($trips);
+
+        // $vehicles = Vehicle::with('fuels', 'cost')
+        //     ->withSum('fuels', 'cost')
+        //     ->withMax('meterEntries', 'meter_entry')
+        //     ->withMin('meterEntries', 'meter_entry')
+        //     ->get();
+        // dd($vehicles);
+
+
 
         // $MaintenanceStats = Maintenance::whereYear('from', date('Y'))
         //     ->oldest()
@@ -37,13 +93,13 @@ class GeneralController extends Controller
         //         return Carbon::parse($val->from)->format('F');
         //     })
         //     ->take(7);
-        $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")
+        $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")->whereYear('from', date('Y'))
             ->groupByRaw("monthName(`from`)")
             ->groupByRaw("year(`from`)")
             ->groupByRaw("month(`from`)")
             ->orderBy('year', "DESC")
             ->orderBy('month', "DESC")
-            ->get()->take(12);
+            ->get()->keyBy('monthName')->take(12);
 
 
         $labels = array();
