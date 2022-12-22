@@ -34,14 +34,7 @@ class GeneralController extends Controller
             // ->having('trips_count', '>', 0)
             ->get()
             ->take(6);
-        // $vehicles = Vehicle::withSum('fuels', 'quantity')
-        //     ->with('fuels')
-        //     ->withCount('fuels')
-        //     ->withSum('fuels', 'cost')
-        //     ->withMax('fuels', 'date')
-        //     ->withMax('meterEntries', 'meter_entry')
-        //     ->withMin('meterEntries', 'meter_entry')
-        //     ->get();
+
         // $vehicles = Vehicle::withSum('fuels', 'quantity')
         //     ->with(['fuels' => function ($query) {
         //         $query->selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
@@ -52,16 +45,16 @@ class GeneralController extends Controller
         //         ->orderBy('month', "DESC")
         //         ->get()->take(12);
         //     }])
-        //     // ->with('fuels')
+        //     ->with('fuels')
         //     ->withSum('fuels', 'cost')
         //     ->withMax('meterEntries', 'meter_entry')
         //     ->withMin('meterEntries', 'meter_entry')
         //     ->get();
-        $vehicles = Vehicle::withSum('fuels', 'quantity')
-            ->withSum('fuels', 'cost')
-            ->withMax('meterEntries', 'meter_entry')
-            ->withMin('meterEntries', 'meter_entry')
-            ->get();
+        // $vehicles = Vehicle::withSum('fuels', 'quantity')
+        //     ->withSum('fuels', 'cost')
+        //     ->withMax('meterEntries', 'meter_entry')
+        //     ->withMin('meterEntries', 'meter_entry')
+        //     ->get();
 
         $fuels = Fuel::selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
             ->groupByRaw("monthName(`date`)")
@@ -72,32 +65,8 @@ class GeneralController extends Controller
             ->get()->take(12);
 
         // app/Helpers/helper
-        // $maintenanceData = maintenanceData();
         $tripsData = tripsData();
-
-
-        // dd($tripsData);
-
-
-
-
-
-        // $vehicles = Vehicle::with('fuels', 'cost')
-        //     ->withSum('fuels', 'cost')
-        //     ->withMax('meterEntries', 'meter_entry')
-        //     ->withMin('meterEntries', 'meter_entry')
-        //     ->get();
-        // dd($vehicles);
-
-
-
-        // $MaintenanceStats = Maintenance::whereYear('from', date('Y'))
-        //     ->oldest()
-        //     ->get()
-        //     ->groupBy(function($val) {
-        //         return Carbon::parse($val->from)->format('F');
-        //     })
-        //     ->take(7);
+        $fuelsData = fuelsData();
 
         $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")
             ->groupByRaw("monthName(`from`)")

@@ -419,6 +419,113 @@
             </div>
             <!--end::Row-->
             <!--end::drivers-->
+
+             <!--begin::fuel-->
+            <!--begin::Row-->
+            <div class="row g-5 g-xl-8">
+                <!--begin::Col-->
+                <div class="col-xl-4">
+                    <!--begin::List Widget 4-->
+                    <div class="card card-xl-stretch mb-xl-8">
+                        <!--begin::Header-->
+                        <div class="card-header border-0 pt-5">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder text-dark">Top Drivers</span>
+                                <span class="text-muted mt-1 fw-bold fs-7">With Highest Number of Trips</span>
+                            </h3>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body pt-5">
+                            @foreach ($drivers as $driver)
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-sm-center mb-7">
+                                <!--begin::Symbol-->
+                                <div class="symbol symbol-50px me-5">
+                                    <img src="{{ $driver->image ? asset($driver->image) : asset('assets/uploads/default/defaultProfile.webp') }}" class="align-self-center" alt="" />
+                                </div>
+                                <!--end::Symbol-->
+                                <!--begin::Section-->
+                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                    <div class="flex-grow-1 me-2">
+                                        <a href="/employee/employeeEdit/{{ $driver->id }}" class="text-gray-800 text-hover-primary fs-6 fw-bolder">{{ $driver->name }}</a>
+                                        <span class="text-muted fw-bold d-block fs-7">ID: {{ $driver->idNumber }}</span>
+                                    </div>
+                                    <span class="badge badge-light fw-bolder my-2">{{ $driver->trips_count }} Trips</span>
+                                </div>
+                                <!--end::Section-->
+                            </div>
+                            <!--end::Item-->
+                            @endforeach
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end::List Widget 4-->
+                </div>
+                <!--end::Col-->
+
+                <!--begin::Col-->
+                <div class="col-xl-8">
+                    <!--begin::Mixed Widget 12-->
+                    <div class="card card-xl-stretch mb-xl-8">
+                        <!--begin::Header-->
+                        <div class="card-header border-0 bg-info py-5">
+                            <h3 class="card-title fw-bolder text-white">Trips Stats</h3>
+                            <div class="card-toolbar">
+                                <!--begin::Menu-->
+                                <button type="button" class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color- border-0 me-n3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000" />
+                                                <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
+                                                <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
+                                                <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </button>
+                                <!--begin::Menu 3-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true">
+                                    <!--begin::Heading-->
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Fuel</div>
+                                    </div>
+                                    <!--end::Heading-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="/requisition/vehicles" class="menu-link px-3">Vehicles</a>
+                                    </div>
+                                    <!--end::Menu item-->
+
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="/trip/history" class="menu-link px-3">Trip History</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu 3-->
+                                <!--end::Menu-->
+                            </div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body p-0">
+                            <!--begin::Chart-->
+                            <div id="fuelssChart" class="p-5">
+                            </div>
+                            <!--end::Chart-->
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end::Mixed Widget 12-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--end::fuel-->
         </div>
         <!--end::Container-->
     </div>
@@ -517,6 +624,53 @@
         ]
         };
         var chart = new ApexCharts(document.querySelector("#tripsChart"), options);
+        chart.render();
+     </script>
+
+      {{-- Trips Chart --}}
+      <script>
+        let tripsData = {!! json_encode($tripsData) !!};
+        var fuels_labels = fuelsData.trips_labels;
+        var fuels_count_values = fuelsData.trips_count_values;
+        console.log(fuels_count_values);
+
+        var options = {
+          series: [
+            {
+            name: 'Number',
+            type: 'column',
+            data: fuels_count_values
+            },
+            {
+            name: 'Number',
+            type: 'line',
+            data: fuels_count_values
+            }
+        ],
+          chart: {
+          height: 350,
+          type: 'line',
+        },
+        stroke: {
+          width: [0, 4]
+        },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1]
+        },
+        labels: fuels_labels,
+        xaxis: {
+          type: 'text'
+        },
+        yaxis: [
+            {
+                title: {
+                    text: 'Taka',
+                },
+            },
+        ]
+        };
+        var chart = new ApexCharts(document.querySelector("#fuelsChart"), options);
         chart.render();
      </script>
 @endsection
