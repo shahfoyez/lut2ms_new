@@ -590,12 +590,12 @@
         var trips = {
           series: [
             {
-            name: 'Number',
+            name: 'Trips',
             type: 'column',
             data: trips_count_values
             },
             {
-            name: 'Number',
+            name: 'Trips',
             type: 'line',
             data: trips_count_values
             }

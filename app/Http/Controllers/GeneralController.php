@@ -101,7 +101,7 @@ class GeneralController extends Controller
                     $lastMonth = $stats->monthName;
                 }
                 $year = substr($stats->year, -2);
-                $month = $stats->monthName;
+                $month = substr($stats->monthName, 0, 3);
                 $label = $month." ".$year;
                 $totalCost += $stats->totalCost;
                 array_push($labels, $label);

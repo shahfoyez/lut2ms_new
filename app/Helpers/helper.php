@@ -42,7 +42,7 @@ function tripsData(){
                 $trip_last_month = $trip->monthName;
             }
             $year = substr($trip->year, -2);
-            $month = $trip->monthName;
+            $month = substr($trip->monthName, 0, 3);
             $trip_label = $month." ".$year;
             $total_trips += $trip->totalTrips;
             array_push($trips_labels, $trip_label);
@@ -102,7 +102,7 @@ function fuelsData(){
                 $fuel_last_month = $fuel->monthName;
             }
             $year = substr($fuel->year, -2);
-            $month = $fuel->monthName;
+            $month = substr($fuel->monthName, 0, 3);
             $fuel_label = $month." ".$year;
             $total_fuels += $fuel->totalFuels;
             array_push($fuels_labels, $fuel_label);
