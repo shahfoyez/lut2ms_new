@@ -1,4 +1,4 @@
-    @if ($data['curCost'] > $data['lastCost'])
+    @if ($maintenanceData['curCost'] > $maintenanceData['lastCost'])
           <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
         <span class="svg-icon svg-icon-5 svg-icon-danger ms-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

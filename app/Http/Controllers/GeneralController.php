@@ -9,6 +9,9 @@ use App\Models\Vehicle;
 use App\Models\Employee;
 use App\Models\Maintenance;
 use Illuminate\Http\Request;
+use App\Helpers\TripsHelper;
+
+
 
 class GeneralController extends Controller
 {
@@ -68,14 +71,16 @@ class GeneralController extends Controller
             ->orderBy('month', "DESC")
             ->get()->take(12);
 
-        // $trips = Trip::selectRaw("year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
-        //     ->groupByRaw("monthName(`start`)")
-        //     ->groupByRaw("year(`start`)")
-        //     ->groupByRaw("month(`start`)")
-        //     ->orderBy('year', "DESC")
-        //     ->orderBy('month', "DESC")
-        //     ->get()->keyBy('monthName')->take(12);
-        // dd($trips);
+        // app/Helpers/helper
+        // $maintenanceData = maintenanceData();
+        $tripsData = tripsData();
+
+
+        // dd($tripsData);
+
+
+
+
 
         // $vehicles = Vehicle::with('fuels', 'cost')
         //     ->withSum('fuels', 'cost')
@@ -93,13 +98,14 @@ class GeneralController extends Controller
         //         return Carbon::parse($val->from)->format('F');
         //     })
         //     ->take(7);
-        $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")->whereYear('from', date('Y'))
+
+        $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")
             ->groupByRaw("monthName(`from`)")
             ->groupByRaw("year(`from`)")
             ->groupByRaw("month(`from`)")
             ->orderBy('year', "DESC")
             ->orderBy('month', "DESC")
-            ->get()->keyBy('monthName')->take(12);
+            ->get()->take(12);
 
 
         $labels = array();
@@ -109,9 +115,9 @@ class GeneralController extends Controller
         $curCost = 0;
         $lastCost = 0;
         $curFound = 0;
-        $now = Carbon::now();
-        $curYear = $now->year;
-        $curMonth = $now->month;
+        $curYear = date("Y");
+        $curMonth = date("m");
+
         $lastMonth = '';
         $thisMonth = '';
 
@@ -135,11 +141,7 @@ class GeneralController extends Controller
             }
             $avgCost = $totalCost/sizeof($labels);
         }
-
-        $data = array(
-            'onRoad' => $onRoad,
-            'onBoard' => $onBoard,
-            'maintenance' => $maintenance,
+        $maintenanceData = array(
             'totalCost' => (int)$totalCost,
             'avgCost' =>  (int)$avgCost,
             'curCost' => $curCost,
@@ -147,15 +149,25 @@ class GeneralController extends Controller
             'thisMonth' => $thisMonth,
             'lastMonth' => $lastMonth
         );
+
+        $data = array(
+            'onRoad' => $onRoad,
+            'onBoard' => $onBoard,
+            'maintenance' => $maintenance,
+        );
         return view('dashboard', [
             'data' => $data,
+            'maintenanceData' => $maintenanceData,
             'drivers' => $drivers,
             'MaintenanceStats' => $maintenanceStats,
             'labels' => $labels,
             'costValues' => $costValues,
-            'totalCost' => $totalCost
+            'totalCost' => $totalCost,
+            'tripsData' => $tripsData
         ]);
     }
+
+
     public function logbook(){
         $vehicles = Vehicle::withSum('fuels', 'quantity')
             ->withSum('totalFuels', 'quantity')
