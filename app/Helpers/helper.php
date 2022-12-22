@@ -14,16 +14,63 @@ function tripsData(){
         ->orderBy('month', "DESC")
         ->get()->take(12);
 
-    // $trips = Trip::selectRaw("DATE_FORMAT(`start`, '%M-%y') as monthYear, year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
-    //     ->groupByRaw("monthName(`start`)")
-    //     ->groupByRaw("DATE_FORMAT(`start`, '%M-%y')")
+    $trips_labels = array();
+    $trips_count_values = array();
+    $total_trips = 0;
+    $avg_trips = 0;
+    $cur_month_trips = 0;
+    $last_month_trips = 0;
+    // for use in loop
+    $cur_month_trip_found = 0;
 
-    //     ->groupByRaw("year(`start`)")
-    //     ->groupByRaw("month(`start`)")
-    //     ->orderBy('year', "DESC")
-    //     ->orderBy('month', "DESC")
-    //     ->get()->take(12);
-    // dd($trips);
+    $curYear = date("Y");
+    $curMonth = date("m");
+    $trip_cur_month = '';
+    $trip_last_month = '';
+
+    if($trips->count() > 0){
+        foreach($trips as $trip){
+            if($curMonth == $trip->month && $curYear == $trip->year){
+                // calculate current month's trip and month name
+                $cur_month_trips = $trip->totalTrips;
+                $trip_cur_month = $trip->monthName;
+                $cur_month_trip_found = 1;
+            }elseif($cur_month_trip_found == 1){
+                $last_month_trips = $trip->totalTrips;
+                $cur_month_trip_found = 2;
+                $trip_last_month = $trip->monthName;
+            }
+            $year = substr($trip->year, -2);
+            $month = $trip->monthName;
+            $trip_label = $month." ".$year;
+            $total_trips += $trip->totalTrips;
+            array_push($trips_labels, $trip_label);
+            array_push($trips_count_values, $trip->totalTrips);
+        }
+        $avg_trips = $total_trips/sizeof($trips_labels);
+    }
+    $tripsData = array(
+        'trips_labels' => $trips_labels,
+        'trips_count_values' => $trips_count_values,
+        'total_trips' => $total_trips,
+        'avg_trips' =>  $avg_trips,
+        'cur_month_trips' => $cur_month_trips,
+        'last_month_trips' => $last_month_trips,
+        'trip_cur_month' => $trip_cur_month,
+        'trip_last_month' => $trip_last_month
+    );
+    return $tripsData;
+}
+function tripsData(){
+    $trips = Trip::selectRaw("DATE_FORMAT(`start`, '%M-%y') as monthYear, year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
+        ->where('status', 1)
+        ->groupByRaw("monthName")
+        ->groupByRaw("monthYear")
+        ->groupByRaw("year")
+        ->groupByRaw("month")
+        ->orderBy('year', "DESC")
+        ->orderBy('month', "DESC")
+        ->get()->take(12);
     $trips_labels = array();
     $trips_count_values = array();
     $total_trips = 0;
