@@ -407,10 +407,9 @@
                         <!--begin::Body-->
                         <div class="card-body p-0">
                             <!--begin::Chart-->
-                            {{-- <div class="mixed-widget-12-chart card-rounded-bottom bg-info" data-kt-color="info" style="height: 250px">
-                            </div> --}}
                             <div id="tripsChart" class="p-5">
                             </div>
+                            <!--end::Chart-->
                         </div>
                         <!--end::Body-->
                     </div>
@@ -419,7 +418,7 @@
                 <!--end::Col-->
             </div>
             <!--end::Row-->
-            <!--begin::maintenance-->
+            <!--end::drivers-->
         </div>
         <!--end::Container-->
     </div>

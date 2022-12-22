@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Fuel;
 use App\Models\Trip;
 use App\Models\Maintenance;
 function tripsData(){
@@ -61,8 +62,8 @@ function tripsData(){
     );
     return $tripsData;
 }
-function tripsData(){
-    $trips = Trip::selectRaw("DATE_FORMAT(`start`, '%M-%y') as monthYear, year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
+function fuelData(){
+    $trips = Fuel::selectRaw("DATE_FORMAT(`start`, '%M-%y') as monthYear, year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
         ->where('status', 1)
         ->groupByRaw("monthName")
         ->groupByRaw("monthYear")
