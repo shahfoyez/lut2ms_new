@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-xl-4">
                     <!--begin::Statistics Widget 5-->
-                    <a href="/requisition/vehicles/filter?status=maintenance" class="card bg-danger hoverable card-xl-stretch mb-5 mb-xl-8">
+                    <a href="/vehicle/vehicles/filter?status=maintenance" class="card bg-danger hoverable card-xl-stretch mb-5 mb-xl-8">
                         <!--begin::Body-->
                         <div class="card-body">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr070.svg-->
