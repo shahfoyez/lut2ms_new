@@ -1,5 +1,4 @@
 <?php
-
 use Carbon\Carbon;
 use App\Models\Fuel;
 use App\Models\Trip;

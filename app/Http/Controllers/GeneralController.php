@@ -50,20 +50,9 @@ class GeneralController extends Controller
         //     ->withMax('meterEntries', 'meter_entry')
         //     ->withMin('meterEntries', 'meter_entry')
         //     ->get();
-        // $vehicles = Vehicle::withSum('fuels', 'quantity')
-        //     ->withSum('fuels', 'cost')
-        //     ->withMax('meterEntries', 'meter_entry')
-        //     ->withMin('meterEntries', 'meter_entry')
-        //     ->get();
 
-        // $fuels = Fuel::selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
-        //     ->groupByRaw("monthName(`date`)")
-        //     ->groupByRaw("year(`date`)")
-        //     ->groupByRaw("month(`date`)")
-        //     ->orderBy('year', "DESC")
-        //     ->orderBy('month', "DESC")
-        //     ->get()->take(12);
         // app/Helpers/helper
+        // to get trips & fuels data
         $tripsData = tripsData();
         $fuelsData = fuelsData();
 
@@ -135,8 +124,6 @@ class GeneralController extends Controller
             'fuelsData' =>  $fuelsData
         ]);
     }
-
-
     public function logbook(){
         $vehicles = Vehicle::withSum('fuels', 'quantity')
             ->withSum('totalFuels', 'quantity')
