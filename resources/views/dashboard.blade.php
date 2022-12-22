@@ -420,7 +420,7 @@
             <!--end::Row-->
             <!--end::drivers-->
 
-             <!--begin::fuel-->
+            <!--begin::fuel-->
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
                 <!--begin::Col-->
@@ -470,7 +470,7 @@
                     <div class="card card-xl-stretch mb-xl-8">
                         <!--begin::Header-->
                         <div class="card-header border-0 bg-info py-5">
-                            <h3 class="card-title fw-bolder text-white">Trips Stats</h3>
+                            <h3 class="card-title fw-bolder text-white">Fuels Stats</h3>
                             <div class="card-toolbar">
                                 <!--begin::Menu-->
                                 <button type="button" class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color- border-0 me-n3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -514,7 +514,7 @@
                         <!--begin::Body-->
                         <div class="card-body p-0">
                             <!--begin::Chart-->
-                            <div id="fuelssChart" class="p-5">
+                            <div id="fuelsChart" class="p-5">
                             </div>
                             <!--end::Chart-->
                         </div>
@@ -578,16 +578,16 @@
         };
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
-     </script>
+    </script>
 
-     {{-- Trips Chart --}}
-     <script>
+    {{-- Trips Chart --}}
+    <script>
         let tripsData = {!! json_encode($tripsData) !!};
         var trips_labels = tripsData.trips_labels;
         var trips_count_values = tripsData.trips_count_values;
         console.log(trips_count_values);
 
-        var options = {
+        var trips = {
           series: [
             {
             name: 'Number',
@@ -618,35 +618,33 @@
         yaxis: [
             {
                 title: {
-                    text: 'Taka',
+                    text: 'Number of Trips',
                 },
             },
         ]
         };
-        var chart = new ApexCharts(document.querySelector("#tripsChart"), options);
+        var chart = new ApexCharts(document.querySelector("#tripsChart"), trips);
         chart.render();
-     </script>
+    </script>
 
-      {{-- Trips Chart --}}
-      <script>
-        let tripsData = {!! json_encode($tripsData) !!};
-        var fuels_labels = fuelsData.trips_labels;
-        var fuels_count_values = fuelsData.trips_count_values;
+    {{-- Fuels Chart --}}
+    <script>
+        let fuelsData = {!! json_encode($fuelsData) !!};
+        var fuels_labels = fuelsData.fuels_labels;
+        var fuels_count_values = fuelsData.fuels_count_values;
+        var fuels_cost_values = fuelsData.fuels_cost_values;
         console.log(fuels_count_values);
 
-        var options = {
-          series: [
-            {
-            name: 'Number',
-            type: 'column',
-            data: fuels_count_values
-            },
-            {
-            name: 'Number',
-            type: 'line',
-            data: fuels_count_values
-            }
-        ],
+        var fuels = {
+          series: [{
+          name: 'Cost',
+          type: 'column',
+          data: fuels_cost_values
+        }, {
+          name: 'Quantity',
+          type: 'line',
+          data: fuels_count_values
+        }],
           chart: {
           height: 350,
           type: 'line',
@@ -662,16 +660,23 @@
         xaxis: {
           type: 'text'
         },
-        yaxis: [
-            {
-                title: {
-                    text: 'Taka',
-                },
-            },
-        ]
+        yaxis: [{
+          title: {
+            text: 'Cost',
+          },
+
+        }, {
+          opposite: true,
+          title: {
+            text: 'Quantity'
+          }
+        }]
         };
-        var chart = new ApexCharts(document.querySelector("#fuelsChart"), options);
-        chart.render();
+
+        var fuelsChart = new ApexCharts(document.querySelector("#fuelsChart"), fuels);
+        fuelsChart.render();
      </script>
+
+
 @endsection
 

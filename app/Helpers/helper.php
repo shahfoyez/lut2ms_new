@@ -72,9 +72,11 @@ function fuelsData(){
         ->orderBy('year', "DESC")
         ->orderBy('month', "DESC")
         ->get()->take(12);
-    // dd($fuels);
+
     $fuels_labels = array();
     $fuels_count_values = array();
+    $fuels_cost_values = array();
+
     $total_fuels = 0;
     $avg_fuels = 0;
     $cur_month_fuels = 0;
@@ -105,12 +107,15 @@ function fuelsData(){
             $total_fuels += $fuel->totalFuels;
             array_push($fuels_labels, $fuel_label);
             array_push($fuels_count_values, $fuel->totalFuels);
+            array_push( $fuels_cost_values, $fuel->totalCosts);
         }
         $avg_fuels = $total_fuels/sizeof($fuels_labels);
     }
     $tripsData = array(
+        'fuels' => $fuels,
         'fuels_labels' => $fuels_labels,
         'fuels_count_values' => $fuels_count_values,
+        'fuels_cost_values' => $fuels_cost_values,
         'total_fuels' => $total_fuels,
         'avg_fuels' =>  $avg_fuels,
         'cur_month_fuels' => $cur_month_fuels,
