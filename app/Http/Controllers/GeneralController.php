@@ -56,14 +56,13 @@ class GeneralController extends Controller
         //     ->withMin('meterEntries', 'meter_entry')
         //     ->get();
 
-        $fuels = Fuel::selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
-            ->groupByRaw("monthName(`date`)")
-            ->groupByRaw("year(`date`)")
-            ->groupByRaw("month(`date`)")
-            ->orderBy('year', "DESC")
-            ->orderBy('month', "DESC")
-            ->get()->take(12);
-
+        // $fuels = Fuel::selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
+        //     ->groupByRaw("monthName(`date`)")
+        //     ->groupByRaw("year(`date`)")
+        //     ->groupByRaw("month(`date`)")
+        //     ->orderBy('year', "DESC")
+        //     ->orderBy('month', "DESC")
+        //     ->get()->take(12);
         // app/Helpers/helper
         $tripsData = tripsData();
         $fuelsData = fuelsData();
@@ -132,7 +131,8 @@ class GeneralController extends Controller
             'labels' => $labels,
             'costValues' => $costValues,
             'totalCost' => $totalCost,
-            'tripsData' => $tripsData
+            'tripsData' => $tripsData,
+            'fuelsData' =>  $fuelsData
         ]);
     }
 
