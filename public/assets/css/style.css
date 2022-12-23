@@ -77,3 +77,7 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
 .foy-reload span{
     margin-right: 0px !important;
 }
+.foy-req-action{
+    left: -7px !important;
+    transition: opacity 5s;
+}

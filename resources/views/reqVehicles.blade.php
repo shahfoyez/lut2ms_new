@@ -118,15 +118,15 @@
                                                 </a>
                                             @elseif($list->status == 'trip')
                                                 <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle foy-action-button me-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="btn btn-warning dropdown-toggle foy-action-button me-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                       Action
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <ul class="dropdown-menu foy-req-action" aria-labelledby="dropdownMenuButton1">
                                                       <li><a href="/requisition/edit/{{ $list->activeTrip->id }}" class="dropdown-item pt-2 pb-2" href="#">Edit</a></li>
                                                       <li><a href="/requisition/reach/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Reach</a></li>
                                                       <li><a href="/requisition/cancel/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Cancel</a></li>
                                                     </ul>
-                                                  </div>
+                                                </div>
                                             @endif
                                             <a href="/trip/vehicleTrips/{{ $list->id }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
