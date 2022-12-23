@@ -55,6 +55,7 @@ class GeneralController extends Controller
         // to get trips & fuels data
         $tripsData = tripsData();
         $fuelsData = fuelsData();
+        // dd($fuelsData);
 
         $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")
             ->groupByRaw("monthName(`from`)")

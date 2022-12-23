@@ -111,7 +111,6 @@ function fuelsData(){
         $avg_fuels = $total_fuels/sizeof($fuels_labels);
     }
     $tripsData = array(
-        'fuels' => $fuels,
         'fuels_labels' => $fuels_labels,
         'fuels_count_values' => $fuels_count_values,
         'fuels_cost_values' => $fuels_cost_values,
