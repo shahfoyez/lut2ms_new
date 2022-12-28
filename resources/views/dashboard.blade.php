@@ -566,6 +566,20 @@
             </div>
             <!--end::Row-->
             <!--end::maintenance-->
+
+             <!--begin::maintenance-->
+            <!--begin::Row-->
+            <div class="row g-5 g-xl-8">
+                <!--begin::Col-->
+                <div class="col-xl-12">
+                    <div class="fv-row">
+                        <div id="map" style="height: 500px; width: 100%; border-radius: 10px" class="my-3"></div>
+                    </div>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--end::maintenance-->
         </div>
         <!--end::Container-->
     </div>
@@ -574,6 +588,63 @@
 <!--end::Content-->
 @endsection
 @section('scripts')
+    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script>
+        var map;
+        var markers = [];
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 24.8949, lng: 91.8687},
+                zoom: 14
+            });
+            var i =0;
+            function addMarker(lat, lng) {
+                var marker = new google.maps.Marker({
+                    position: {lat: lat, lng: lng},
+                    map: map,
+                    icon: {
+                        url: "{{ asset('/assets/uploads/default/mapVehicle.png') }}",
+                        scaledSize: new google.maps.Size(30, 30),
+                        // origin: new google.maps.Point(0, 0),
+                        // anchor: new google.maps.Point(0, 0)
+                    },
+                });
+                // hideMarkers();
+
+                markers.push(marker);
+            }
+            function getLocations() {
+                $.ajax({
+                    url: '/api/vehicles/location',
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data);
+                        for (var i = 0; i < data.length; i++) {
+                            var newlat = parseFloat(data[i].location['lat']);
+                            var newlong = parseFloat(data[i].location['long']);
+                            addMarker(newlat, newlong);
+                            // hideMarkers();
+                            markers = [];
+
+                        }
+                    }
+                });
+            }
+            setInterval(function() {
+                deleteMarkers();
+                getLocations();
+            }, 5000);
+        }
+        function deleteMarkers() {
+            gmarkers[0].setVisible(false);
+            markers = [];
+        }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
     <script>
@@ -619,7 +690,6 @@
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
     </script>
-
     {{-- Trips Chart --}}
     <script>
         let tripsData = {!! json_encode($tripsData) !!};
@@ -663,8 +733,8 @@
             },
         ]
         };
-        var chart = new ApexCharts(document.querySelector("#tripsChart"), trips);
-        chart.render();
+        var tripsChart = new ApexCharts(document.querySelector("#tripsChart"), trips);
+        tripsChart.render();
     </script>
 
     {{-- Fuels Chart --}}
@@ -715,8 +785,6 @@
 
         var fuelsChart = new ApexCharts(document.querySelector("#fuelsChart"), fuels);
         fuelsChart.render();
-     </script>
-
-
+    </script>
 @endsection
 
