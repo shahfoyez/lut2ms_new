@@ -26,30 +26,17 @@ class GeneralController extends Controller
         $maintenance = Vehicle::where('status', 'maintenance')
         ->latest()
         ->get()->count();
+
+
+
         $drivers = Employee::where('designation', 1)
             ->withCount(['trips' => function($query) {
                 $query->where('status', 1);
             }])
             ->orderBy('trips_count', 'DESC')
             // ->having('trips_count', '>', 0)
-            ->get()
-            ->take(6);
-
-        // $vehicles = Vehicle::withSum('fuels', 'quantity')
-        //     ->with(['fuels' => function ($query) {
-        //         $query->selectRaw("year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, sum(cost) AS totalCost")
-        //         ->groupByRaw("monthName(`date`)")
-        //         ->groupByRaw("year(`date`)")
-        //         ->groupByRaw("month(`date`)")
-        //         ->orderBy('year', "DESC")
-        //         ->orderBy('month', "DESC")
-        //         ->get()->take(12);
-        //     }])
-        //     ->with('fuels')
-        //     ->withSum('fuels', 'cost')
-        //     ->withMax('meterEntries', 'meter_entry')
-        //     ->withMin('meterEntries', 'meter_entry')
-        //     ->get();
+            ->take(6)
+            ->get();
 
         // app/Helpers/helper
         // to get trips & fuels data
@@ -63,7 +50,8 @@ class GeneralController extends Controller
             ->groupByRaw("month(`from`)")
             ->orderBy('year', "DESC")
             ->orderBy('month', "DESC")
-            ->get()->take(12);
+            ->take(12)
+            ->get();
 
 
         $labels = array();
@@ -126,7 +114,8 @@ class GeneralController extends Controller
         ]);
     }
     public function logbook(){
-        $vehicles = Vehicle::withSum('fuels', 'quantity')
+        $vehicles = Vehicle::with('vehicleType')
+            ->withSum('fuels', 'quantity')
             ->withSum('totalFuels', 'quantity')
             ->withSum('fuels', 'cost')
             ->withCount('trips')

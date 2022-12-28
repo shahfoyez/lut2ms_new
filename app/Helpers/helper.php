@@ -12,7 +12,8 @@ function tripsData(){
         ->groupByRaw("month")
         ->orderBy('year', "DESC")
         ->orderBy('month', "DESC")
-        ->get()->take(12);
+        ->take(12)
+        ->get();
 
     $trips_labels = array();
     $trips_count_values = array();
@@ -70,7 +71,8 @@ function fuelsData(){
         ->groupByRaw("month")
         ->orderBy('year', "DESC")
         ->orderBy('month', "DESC")
-        ->get()->take(12);
+        ->take(12)
+        ->get();
 
     $fuels_labels = array();
     $fuels_count_values = array();
@@ -125,57 +127,3 @@ function fuelsData(){
     return $tripsData;
 
 }
-
-//function maintenanceData(){
-    //     $maintenanceStats = Maintenance::selectRaw("year(`from`) AS year, month(`from`) AS month, monthname(`from`) AS monthName, sum(cost) AS totalCost")
-    //         ->groupByRaw("monthName(`from`)")
-    //         ->groupByRaw("year(`from`)")
-    //         ->groupByRaw("month(`from`)")
-    //         ->orderBy('year', "DESC")
-    //         ->orderBy('month', "DESC")
-    //         ->get()->take(12);
-    //     // variables
-    //     $labels = array();
-    //     $costValues = array();
-    //     $totalCost = 0;
-    //     $avgCost = 0;
-    //     $curCost = 0;
-    //     $lastCost = 0;
-    //     $curFound = 0;
-    //     $curYear = date("Y");
-    //     $curMonth = date("m");
-
-    //     $lastMonth = '';
-    //     $thisMonth = '';
-
-    //     if($maintenanceStats->count() > 0){
-    //         foreach($maintenanceStats as $stats){
-    //             if($curMonth == $stats->month && $curYear == $stats->year){
-    //                 $curCost = $stats->totalCost;
-    //                 $thisMonth = $stats->monthName;
-    //                 $curFound = 1;
-    //             }elseif($curFound == 1){
-    //                 $lastCost = $stats->totalCost;
-    //                 $curFound = 2;
-    //                 $lastMonth = $stats->monthName;
-    //             }
-    //             $year = substr($stats->year, -2);
-    //             $month = $stats->monthName;
-    //             $label = $month." ".$year;
-    //             $totalCost += $stats->totalCost;
-    //             array_push($labels, $label);
-    //             array_push($costValues, $stats->totalCost);
-    //         }
-    //         $avgCost = $totalCost/sizeof($labels);
-    //     }
-    //     $maintenanceData = array(
-    //         'maintenanceStats' => $maintenanceStats,
-    //         'totalCost' => (int)$totalCost,
-    //         'avgCost' =>  (int)$avgCost,
-    //         'curCost' => $curCost,
-    //         'lastCost' => $lastCost,
-    //         'thisMonth' => $thisMonth,
-    //         'lastMonth' => $lastMonth
-    //     );
-    //     return $maintenanceData;
-    // }
