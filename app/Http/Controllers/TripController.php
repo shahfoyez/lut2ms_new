@@ -8,6 +8,7 @@ use App\Models\Routex;
 use App\Models\Vehicle;
 use App\Models\Employee;
 use App\Models\Stoppage;
+use App\Models\OnTripVehicle;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
 
@@ -114,6 +115,11 @@ class TripController extends Controller
             ->update([
                 'status' => 1
             ]);
+            $OnTripVehicle= OnTripVehicle::create([
+                'trip_id'=> $trip->id,
+                'vid'=> request()->input('vid'),
+                'show_map' => 1
+            ]);
         }
 
         return redirect('/requisition/vehicles')->with('success', 'Trip has been send');
@@ -134,6 +140,9 @@ class TripController extends Controller
             $driverStatus = Employee::where('id', $trip->driver)->update([
                 'status' => 0
             ]);
+            $OnTripVehicle = OnTripVehicle::where('trip_id', '=', $trip->id)
+                ->where('vid', '=', $vid)
+                ->delete();
         }else{
             abort(404, 'Invalid Action!');
             // return back()->with('error', 'Oops! Something went wrong!');

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Trip;
 use App\Models\Routex;
+use App\Models\OnTripVehicle;
 use App\Models\VehicleLocation;
 use App\Http\Requests\StoreVehicleLocationRequest;
 use App\Http\Requests\UpdateVehicleLocationRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class VehicleLocationController extends Controller
 {
@@ -17,41 +19,80 @@ class VehicleLocationController extends Controller
      */
     public function index()
     {
-        // return Routex::latest()->with('stoppages')->get();
         return Routex::with('stoppages')->orderBy('route', 'ASC')->get();
     }
     public function routeVehicles($route)
     {
-        $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
+        $trips = Trip::with([
+            'vehicle',
+            'vehicle.location',
+            'vehicle.activeTrip' => function ($query) {
                 $query->with('driver')->where('status', 0);
             }])
             ->with('employee')
             ->where('route', $route)
             ->where('status', 0)
             ->latest()->get()->pluck('vehicle');
-        return $trips;
+        if($trips->count() > 10) {
+            return response()->json($trips);
+        } else {
+            throw new HttpResponseException(response()->json([
+                'success'   => false,
+            ]));
+        }
     }
 
-    public function tripVehicles()
-    {
-        $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
-                $query->with('driver')->where('status', 0);
-            }])
-            ->with('employee')
-            ->where('status', 0)
-            ->latest()->get()->pluck('vehicle');
-        return $trips;
-    }
+    // public function tripVehicles()
+    // {
+    //     $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
+    //             $query->with('driver')->where('status', 0);
+    //         }])
+    //         ->with('employee')
+    //         ->where('status', 0)
+    //         ->latest()->get()->pluck('vehicle');
+    //     return $trips;
+    // }
 
     public function vehiclesLocation()
     {
-        $trips = Trip::with(['vehicle', 'vehicle.location', 'vehicle.activeTrip' => function ($query) {
-                $query->with('driver')->where('status', 0);
+        $trips = OnTripVehicle::with([
+            'vehicle' => function ($query) {
+                $query->select('id', 'codename', 'license', 'capacity');
+            },
+            'vehicle.location' => function ($query) {
+                $query->select('id', 'vid', 'long', 'lat', 'date');
+            },
+            'vehicle.activeTrip' => function ($query) {
+                $query->with(['driver'  => function ($query) {
+                    $query->select('id', 'name', 'idNumber', 'phone', 'image');
+                }])->where('status', 0);
             }])
-            ->with('employee')
-            ->where('status', 0)
+            ->where('show_map', 1)
             ->latest()->get()->pluck('vehicle');
-        return $trips;
+
+        // without pluck(works), need to change view if implimented
+        // $trips = OnTripVehicle::with([
+        //         'vehicle' => function ($query) {
+        //             $query->select('id', 'codename', 'license', 'capacity');
+        //         },
+        //         'vehicle.location' => function ($query) {
+        //             $query->select('id', 'vid', 'long', 'lat', 'date');
+        //         }
+
+        //     ])
+        //     ->with(['trip' => function($query){
+        //         $query->with(['driver'  => function ($query) {
+        //             $query->select('id', 'name', 'idNumber', 'phone', 'image');
+        //         }]);
+        //     }])
+        //     ->latest()->get(['id', 'vid', 'trip_id']);
+        if($trips->count()>0) {
+            return response()->json($trips);
+        } else {
+            throw new HttpResponseException(response()->json([
+                'error'   => true,
+            ]));
+        }
     }
 
 
