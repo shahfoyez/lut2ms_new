@@ -166,6 +166,9 @@ class TripController extends Controller
             $driverStatus = Employee::where('id', $trip->driver)->update([
                 'status' => 0
             ]);
+            $OnTripVehicle = OnTripVehicle::where('trip_id', '=', $trip->id)
+                ->where('vid', '=', $vid)
+                ->delete();
         }else{
             abort(404, 'Invalid Action!');
             // return back()->with('error', 'Oops! Something went wrong!');

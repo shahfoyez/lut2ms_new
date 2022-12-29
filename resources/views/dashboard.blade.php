@@ -587,7 +587,7 @@
 <!--end::Content-->
 @endsection
 @section('scripts')
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+
     <script>
         var map;
         var markers = [];
@@ -605,7 +605,7 @@
             var route = 'Route '+data.active_trip['route'] ?? 'No Route';
             var from =  data.active_trip['from'] ?? 'No Data';
             var dest =  data.active_trip['dest'] ?? 'No Data';
-            var vehName = data.codeName ?? 'No Name';
+            var vehName = data.codename ?? 'No Name';
             var marker = new google.maps.Marker({
                 position: {lat: newlat, lng: newlong},
                 map: map,
@@ -656,6 +656,7 @@
         $.ajax({
             url: '/api/vehicles/location',
             success: function(data) {
+                console.log(data);
                 if(data.length > 0){
                      // Update the position of the existing markers
                     for (var i = 0; i < data.length; i++) {

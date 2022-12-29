@@ -33,7 +33,7 @@ class VehicleLocationController extends Controller
             ->where('route', $route)
             ->where('status', 0)
             ->latest()->get()->pluck('vehicle');
-        if($trips->count() > 10) {
+        if($trips->count() > 0) {
             return response()->json($trips);
         } else {
             throw new HttpResponseException(response()->json([
