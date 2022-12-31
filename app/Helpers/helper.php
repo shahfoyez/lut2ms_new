@@ -61,6 +61,7 @@ function tripsData(){
         'trip_cur_month' => $trip_cur_month,
         'trip_last_month' => $trip_last_month
     );
+    // dd($tripsData);
     return $tripsData;
 }
 function fuelsData(){
@@ -74,6 +75,8 @@ function fuelsData(){
         ->take(12)
         ->get();
 
+    $curYear = date("Y");
+    $curMonth = date("m");
     $fuels_labels = array();
     $fuels_count_values = array();
     $fuels_cost_values = array();
@@ -85,15 +88,14 @@ function fuelsData(){
     // for use in loop
     $cur_month_fuel_found = 0;
 
-    $curYear = date("Y");
-    $curMonth = date("m");
+
     $fuel_cur_month = '';
     $fuel_last_month = '';
 
     if($fuels->count() > 0){
         foreach($fuels as $fuel){
             if($curMonth == $fuel->month && $curYear == $fuel->year){
-                // calculate current month's trip and month name
+                // calculate current month's fuel and month name
                 $cur_month_fuels = $fuel->totalFuels;
                 $fuel_cur_month = $fuel->monthName;
                 $cur_month_fuel_found = 1;
@@ -112,7 +114,7 @@ function fuelsData(){
         }
         $avg_fuels = $total_fuels/sizeof($fuels_labels);
     }
-    $tripsData = array(
+    $fuelsData = array(
         'fuels_labels' => $fuels_labels,
         'fuels_count_values' => $fuels_count_values,
         'fuels_cost_values' => $fuels_cost_values,
@@ -123,7 +125,7 @@ function fuelsData(){
         'fuel_cur_month' => $fuel_cur_month,
         'fuel_last_month' => $fuel_last_month
     );
-    // dd($tripsData);
-    return $tripsData;
+    // dd($fuelsData);
+    return $fuelsData;
 
 }

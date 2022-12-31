@@ -7,6 +7,7 @@ use App\Models\Fuel;
 use App\Models\Trip;
 use App\Models\Vehicle;
 use App\Models\Employee;
+use App\Models\Stoppage;
 use App\Models\Maintenance;
 use App\Helpers\TripsHelper;
 use Illuminate\Http\Request;
@@ -17,7 +18,6 @@ use App\Models\OnTripVehicle;
 class GeneralController extends Controller
 {
     public function index(){
-        // dd($stuReq);
         $onRoad =  $vehicles = Vehicle::where('status', 'trip')
         ->latest()
         ->get()->count();
@@ -27,9 +27,6 @@ class GeneralController extends Controller
         $maintenance = Vehicle::where('status', 'maintenance')
         ->latest()
         ->get()->count();
-
-
-
         $drivers = Employee::where('designation', 1)
             ->withCount(['trips' => function($query) {
                 $query->where('status', 1);
@@ -38,6 +35,8 @@ class GeneralController extends Controller
             // ->having('trips_count', '>', 0)
             ->take(6)
             ->get();
+        $stoppages = Stoppage::all();
+        // dd($stoppages);
 
         // app/Helpers/helper
         // to get trips & fuels data
@@ -106,6 +105,7 @@ class GeneralController extends Controller
             'data' => $data,
             'maintenanceData' => $maintenanceData,
             'drivers' => $drivers,
+            'stoppages' => $stoppages,
             'MaintenanceStats' => $maintenanceStats,
             'labels' => $labels,
             'costValues' => $costValues,

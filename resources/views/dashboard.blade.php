@@ -92,10 +92,50 @@
             <!--begin::map-->
             <!--begin::Row-->
             <div class="row g-5 g-xl-8 mb-5">
+                 <!--begin::Col-->
+                 <div class="col-xl-4">
+                    <!--begin::List Widget 4-->
+                    <div class="card card-xl-stretch mb-xl-8">
+                        <!--begin::Header-->
+                        <div class="card-header border-0 pt-5">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder text-dark">Top Drivers</span>
+                                <span class="text-muted mt-1 fw-bold fs-7">With Highest Number of Trips</span>
+                            </h3>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body pt-5">
+                            @foreach ($drivers as $driver)
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-sm-center mb-7">
+                                <!--begin::Symbol-->
+                                <div class="symbol symbol-50px me-5">
+                                    <img src="{{ $driver->image ? asset($driver->image) : asset('assets/uploads/default/defaultProfile.webp') }}" class="align-self-center" alt="" />
+                                </div>
+                                <!--end::Symbol-->
+                                <!--begin::Section-->
+                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                    <div class="flex-grow-1 me-2">
+                                        <a href="/employee/employeeEdit/{{ $driver->id }}" class="text-gray-800 text-hover-primary fs-6 fw-bolder">{{ $driver->name }}</a>
+                                        <span class="text-muted fw-bold d-block fs-7">ID: {{ $driver->idNumber }}</span>
+                                    </div>
+                                    <span class="badge badge-light fw-bolder my-2">{{ $driver->trips_count }} Trips</span>
+                                </div>
+                                <!--end::Section-->
+                            </div>
+                            <!--end::Item-->
+                            @endforeach
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end::List Widget 4-->
+                </div>
+                <!--end::Col-->
                 <!--begin::Col-->
-                <div class="col-xl-12">
+                <div class="col-xl-8">
                     <div class="fv-row">
-                        <div id="map" style="height: 500px; width: 100%; border-radius: 10px" class="my-3"></div>
+                        <div id="map" style="height: 490px; width: 100%; border-radius: 10px"></div>
                     </div>
                 </div>
                 <!--end::Col-->
@@ -105,8 +145,8 @@
             <!--begin::fuel-->
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
-                 <!--begin::Col-->
-                 <div class="col-xl-4">
+                <!--begin::Col-->
+                <div class="col-xl-4">
                     <div class="card card-xl-stretch mb-5 mb-xl-8">
                         <!--begin::Header-->
                         <div class="card-header border-0">
@@ -293,42 +333,121 @@
             <div class="row g-5 g-xl-8">
                 <!--begin::Col-->
                 <div class="col-xl-4">
-                    <!--begin::List Widget 4-->
-                    <div class="card card-xl-stretch mb-xl-8">
+                    <div class="card card-xl-stretch mb-5 mb-xl-8">
                         <!--begin::Header-->
-                        <div class="card-header border-0 pt-5">
-                            <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder text-dark">Top Drivers</span>
-                                <span class="text-muted mt-1 fw-bold fs-7">With Highest Number of Trips</span>
-                            </h3>
+                        <div class="card-header border-0">
+                            <h3 class="card-title fw-bolder text-dark">Trip</h3>
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
-                        <div class="card-body pt-5">
-                            @foreach ($drivers as $driver)
+                        <div class="card-body pt-0">
                             <!--begin::Item-->
-                            <div class="d-flex align-items-sm-center mb-7">
-                                <!--begin::Symbol-->
-                                <div class="symbol symbol-50px me-5">
-                                    <img src="{{ $driver->image ? asset($driver->image) : asset('assets/uploads/default/defaultProfile.webp') }}" class="align-self-center" alt="" />
+                            <div class="d-flex align-items-center bg-light-warning rounded p-5 mb-7">
+                                <!--begin::Icon-->
+                                <span class="svg-icon svg-icon-warning me-5">
+                                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="black" />
+                                            <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <!--end::Icon-->
+                                <!--begin::Title-->
+                                <div class="flex-grow-1 me-2">
+                                    <a href="#" class="fw-bolder text-gray-800 text-hover-primary fs-6">Total Trip</a>
+                                    <span class="text-muted fw-bold d-block">Last 12 Months</span>
                                 </div>
-                                <!--end::Symbol-->
-                                <!--begin::Section-->
-                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                                    <div class="flex-grow-1 me-2">
-                                        <a href="/employee/employeeEdit/{{ $driver->id }}" class="text-gray-800 text-hover-primary fs-6 fw-bolder">{{ $driver->name }}</a>
-                                        <span class="text-muted fw-bold d-block fs-7">ID: {{ $driver->idNumber }}</span>
-                                    </div>
-                                    <span class="badge badge-light fw-bolder my-2">{{ $driver->trips_count }} Trips</span>
-                                </div>
-                                <!--end::Section-->
+                                <!--end::Title-->
+                                <!--begin::Lable-->
+                                <span class="fw-bolder text-warning py-1">{{ $tripsData['total_trips'] }} Trips</span>
+                                <!--end::Lable-->
                             </div>
                             <!--end::Item-->
-                            @endforeach
+
+
+                              <!--begin::Item-->
+                              <div class="d-flex align-items-center bg-light-warning rounded p-5 mb-7">
+                                <!--begin::Icon-->
+                                <span class="svg-icon svg-icon-warning me-5">
+                                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="black" />
+                                            <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <!--end::Icon-->
+                                <!--begin::Title-->
+                                <div class="flex-grow-1 me-2">
+                                    <a href="#" class="fw-bolder text-gray-800 text-hover-primary fs-6">Average Per Month</a>
+                                    <span class="text-muted fw-bold d-block">Last 12 Months</span>
+                                </div>
+                                <!--end::Title-->
+                                <!--begin::Lable-->
+                                <span class="fw-bolder text-warning py-1">{{ $tripsData['avg_trips'] }} Liters</span>
+                                <!--end::Lable-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                                <!--begin::Icon-->
+                                <span class="svg-icon svg-icon-success me-5">
+                                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="black" />
+                                            <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <!--end::Icon-->
+                                <!--begin::Title-->
+                                <div class="flex-grow-1 me-2">
+                                    <a href="#" class="fw-bolder text-gray-800 text-hover-primary fs-6">This Month</a>
+                                    <span class="text-muted fw-bold d-block">Month of {{ $tripsData['trip_cur_month'] }}</span>
+                                </div>
+                                <!--end::Title-->
+                                <!--begin::Lable-->
+                                <span class="fw-bolder text-success py-1">{{ $tripsData['cur_month_trips'] }} Trips</span>
+                                @include('components.fuelArrowIndicator')
+                                <!--end::Lable-->
+                            </div>
+                            <!--end::Item-->
+
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                                <!--begin::Icon-->
+                                <span class="svg-icon svg-icon-success me-5">
+                                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="black" />
+                                            <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <!--end::Icon-->
+                                <!--begin::Title-->
+                                <div class="flex-grow-1 me-2">
+                                    <a href="#" class="fw-bolder text-gray-800 text-hover-primary fs-6">Last Month</a>
+                                    <span class="text-muted fw-bold d-block">Month of {{ $tripsData['trip_last_month'] }}</span>
+                                </div>
+                                <!--end::Title-->
+                                <!--begin::Lable-->
+                                <span class="fw-bolder text-success py-1">{{ $tripsData['last_month_trips'] }} Trips</span>
+                                <!--end::Lable-->
+                            </div>
+                            <!--end::Item-->
                         </div>
                         <!--end::Body-->
                     </div>
-                    <!--end::List Widget 4-->
                 </div>
                 <!--end::Col-->
 
@@ -587,20 +706,25 @@
 <!--end::Content-->
 @endsection
 @section('scripts')
-
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+    {{-- <script src="{{ asset('/assets/js/map/map.js') }}"></script> --}}
     <script>
         var map;
         var markers = [];
+        var stoppageMarkers = [];
+        // Convert the Laravel object to a JSON string
+        stoppages = {!! json_encode($stoppages) !!};
+        console.log(stoppages);
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 24.8949, lng: 91.8687},
                 zoom: 12
             });
+            addStoppages();
         }
         // update marker position
         function addMarker(data) {
-            console.log("Hello");
-            console.log(data);
+            console.log("Add marker has called");
             var newlat = parseFloat(data.vehicle.location['lat']);
             var newlong = parseFloat(data.vehicle.location['long']);
             var driverName = data.trip.name ?? 'No Driver';
@@ -608,12 +732,12 @@
             var from =  data.trip['from'] ?? 'No Data';
             var dest =  data.trip['dest'] ?? 'No Data';
             var vehName = data.vehicle.codeName ?? 'No Name';
-
+            var iconPath = '/assets/uploads/default/mapVehicle.png';
             var marker = new google.maps.Marker({
                 position: {lat: newlat, lng: newlong},
                 map: map,
                 icon: {
-                    url: "{{ asset('/assets/uploads/default/mapVehicle.png') }}",
+                    url: iconPath,
                     scaledSize: new google.maps.Size(30, 30),
                     // rotation: 180
                     // origin: new google.maps.Point(0, 0),
@@ -655,6 +779,7 @@
             });
             markers.push(marker);
         }
+
         // Fetch the location data and update the map every 5 seconds
         setInterval(function() {
             $.ajax({
@@ -662,23 +787,21 @@
                 success: function(allData) {
                     let withLocationShow = allData.withLocationShow;
                     let wlsLength = Object.keys(withLocationShow).length;
+                    // refresh the page if new vehicle added to trip
+                    if(wlsLength !== markers.length){
+                        return location.reload();
+                    }
                     if(wlsLength > 0){
                         console.log("Fetching after 5 sec");
                         console.log(withLocationShow);
-                        if(wlsLength !== markers.length){
-                            console.log( "yes");
-                            markerInitialize();
-                        }
                         var i = 0;
                         for (const key in withLocationShow) {
-                            // if(withLocationShow[i].location){
-                                var newlat = parseFloat(withLocationShow[key].vehicle.location['lat']);
-                                var newlong = parseFloat(withLocationShow[key].vehicle.location['long']);
-                                markers[i].setPosition({lat: newlat, lng: newlong});
-                                i++;
-                            // }
+                            var newlat = parseFloat(withLocationShow[key].vehicle.location['lat']);
+                            var newlong = parseFloat(withLocationShow[key].vehicle.location['long']);
+                            markers[i].setPosition({lat: newlat, lng: newlong});
+                            i++;
                         }
-                        // New map variable
+                        // New map variable to center map according to the markers
                         var bounds = new google.maps.LatLngBounds();
                         // Add markers to the bounds object
                         markers.forEach(function(marker) {
@@ -686,6 +809,7 @@
                         });
                         // Center the map and zoom to fit the markers
                         map.fitBounds(bounds);
+                        // set zoom level to 14
                         map.setZoom(14);
                     }else{
                         noVehicle();
@@ -693,23 +817,19 @@
                 }
             });
         }, 5000);
-        // Add new markers to the map and add a static custom infowindow for each marker
+
+        // Add new markers to the map and add a custom infowindow for each marker
         function markerInitialize(){
             console.log("Marker Reset");
-            removeAllMarkers();
             $.ajax({
                 url: '/api/vehicles/location',
                 success: function(allData) {
                     let withLocationShow = allData.withLocationShow;
-                    console.log(withLocationShow);
                     let wlsLength = Object.keys(withLocationShow).length;
                     if(wlsLength > 0){
-                        // for (var i = 1; i <= wlsLength; i++) {
                         for (const key in withLocationShow) {
-                            // if(data[i].location){
                             console.log(withLocationShow[key]);
                             addMarker(withLocationShow[key]);
-                            // }
                         }
                     }else{
                         noVehicle();
@@ -719,41 +839,63 @@
         }
         markerInitialize();
 
+        function addStoppages(){
+            for (const key in stoppages) {
+                var slat = parseFloat(stoppages[key].slat);
+                var slon = parseFloat(stoppages[key].slon);
+                console.log(stoppages[key].slat);
+                var stoppageMarker = new google.maps.Marker({
+                    position: {lat: slat, lng: slon},
+                    map: map,
+                    icon: {
+                        url: "{{ asset('/assets/uploads/default/defaultMarker.png') }}",
+                        scaledSize: new google.maps.Size(25, 25),
+                    },
+
+                });
+
+                // // Info window content
+                // var s_infowindow = new google.maps.InfoWindow({
+                //     content: `<div class="foy_map_infoWindow"><p class='m-0 foy_infoWindow_heading'>Hello</p></div>`,
+                // });
+                // // All marker window open
+                // // infowindow.open(map, marker);
+                // // Click to open window
+                // stoppageMarker.addListener('click', function() {
+                //     // map.setZoom(15);
+                //     // map.setCenter(marker.getPosition());
+                //     s_infowindow.open(map, stoppageMarker);
+                // });
+                stoppageMarkers.push(stoppages[key]);
+            }
+        }
         function noVehicle(){
             // Create a Marker object at the map center
             var marker = new google.maps.Marker({
                 position: map.getCenter(),
                 map: map
             });
-
             // Create an InfoWindow object
             var infowindow = new google.maps.InfoWindow({
                 content: '<h1>No vehicle available!</h1>'
             });
-
             // Open the InfoWindow on the Marker
             infowindow.open(map, marker);
         }
+        // remove all existing markers
         function removeAllMarkers(){
             for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
-                circle.setMap(null);
-                markers[i].circle = null;
             }
-
             // Clear the markers array
             markers = [];
-
-
         }
 
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script>
+    {{-- <script src="{{ asset('/assets/js/charts/maintenance.js') }}"></script>
+    <script src="{{ asset('/assets/js/charts/fuel.js') }}"></script>
+    <script src="{{ asset('/assets/js/charts/trip.js') }}"></script> --}}
     <script>
         let maintenanceStats ={!! json_encode($MaintenanceStats) !!};
         var labels ={!! json_encode($labels) !!};
