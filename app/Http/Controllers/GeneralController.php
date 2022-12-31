@@ -8,8 +8,9 @@ use App\Models\Trip;
 use App\Models\Vehicle;
 use App\Models\Employee;
 use App\Models\Maintenance;
-use Illuminate\Http\Request;
 use App\Helpers\TripsHelper;
+use Illuminate\Http\Request;
+use App\Models\OnTripVehicle;
 
 
 

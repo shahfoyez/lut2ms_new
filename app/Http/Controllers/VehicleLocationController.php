@@ -55,20 +55,56 @@ class VehicleLocationController extends Controller
 
     public function vehiclesLocation()
     {
+
+        // $trips = OnTripVehicle::with([
+        //     'vehicle' => function ($query) {
+        //         $query->select('id', 'codename', 'license', 'capacity');
+        //     },
+        //     'vehicle.location' => function ($query) {
+        //         $query->select('id', 'vid', 'long', 'lat', 'date');
+        //     },
+        //     'vehicle.activeTrip' => function ($query) {
+        //         $query->with('rout')->with(['driver'  => function ($query) {
+        //             $query->select('id', 'name', 'idNumber', 'phone', 'image');
+        //         }])->where('status', 0);
+        //     }])
+        //     ->where('show_map', 1)
+        //     ->latest()->get()->pluck('vehicle');
+
+        // $withLocationShow = $trips->filter(function ($item) {
+        //     return $item['location'] !== null ;
+        // });
+        // $withLocationHide = $trips->filter(function ($item) {
+        //     return $item['location'] !== null && $item['show_map'] === 0;
+        // });
+        // $withoutLocation = $trips->filter(function ($item) {
+        //     return $item['location'] === null;
+        // });
+        // return $withLocationShow;
+
         $trips = OnTripVehicle::with([
-            'vehicle' => function ($query) {
-                $query->select('id', 'codename', 'license', 'capacity');
-            },
-            'vehicle.location' => function ($query) {
-                $query->select('id', 'vid', 'long', 'lat', 'date');
-            },
-            'vehicle.activeTrip' => function ($query) {
-                $query->with(['driver'  => function ($query) {
-                    $query->select('id', 'name', 'idNumber', 'phone', 'image');
-                }])->where('status', 0);
-            }])
-            ->where('show_map', 1)
-            ->latest()->get()->pluck('vehicle');
+                'vehicle',
+                'vehicle.location',
+            ])
+            ->with(['trip.driver'])
+            ->with('rout')
+            ->latest()->get();
+
+        // return $trips;
+        $withLocationShow = $trips->filter(function ($item) {
+            return $item['vehicle']->location !== null && $item['show_map'] === 1;
+        });
+        $withLocationHide = $trips->filter(function ($item) {
+            return $item['vehicle']->location && $item['show_map'] === 0;
+        });
+        $withoutLocation = $trips->filter(function ($item) {
+            return $item['vehicle']->location === null;
+        });
+        $data = array([
+            'withLocationShow' => $withLocationShow,
+            'withLocationHide' => $withLocationHide,
+            'withoutLocation' => $withoutLocation,
+        ]);
 
         // without pluck(works), need to change view if implimented
         // $trips = OnTripVehicle::with([
@@ -86,8 +122,13 @@ class VehicleLocationController extends Controller
         //         }]);
         //     }])
         //     ->latest()->get(['id', 'vid', 'trip_id']);
+
         if($trips->count()>0) {
-            return response()->json($trips);
+            return response()->json([
+                'withLocationShow' => $withLocationShow,
+                'withLocationHide' => $withLocationHide,
+                'withoutLocation' => $withoutLocation,
+            ]);
         } else {
             throw new HttpResponseException(response()->json([
                 'error'   => true,

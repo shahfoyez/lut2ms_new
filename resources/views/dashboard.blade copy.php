@@ -599,16 +599,13 @@
         }
         // update marker position
         function addMarker(data) {
-            console.log("Hello");
-            console.log(data);
-            var newlat = parseFloat(data.vehicle.location['lat']);
-            var newlong = parseFloat(data.vehicle.location['long']);
-            var driverName = data.trip.name ?? 'No Driver';
-            var route = 'Route '+data.rout.route ?? 'No Route';
-            var from =  data.trip['from'] ?? 'No Data';
-            var dest =  data.trip['dest'] ?? 'No Data';
-            var vehName = data.vehicle.codeName ?? 'No Name';
-
+            var newlat = parseFloat(data.location['lat']);
+            var newlong = parseFloat(data.location['long']);
+            var driverName = data.active_trip['driver'].name ?? 'No Driver';
+            var route = 'Route '+data.active_trip['rout'].route ?? 'No Route';
+            var from =  data.active_trip['from'] ?? 'No Data';
+            var dest =  data.active_trip['dest'] ?? 'No Data';
+            var vehName = data.codename ?? 'No Name';
             var marker = new google.maps.Marker({
                 position: {lat: newlat, lng: newlong},
                 map: map,
@@ -659,24 +656,35 @@
         setInterval(function() {
             $.ajax({
                 url: '/api/vehicles/location',
-                success: function(allData) {
-                    let withLocationShow = allData.withLocationShow;
-                    let wlsLength = Object.keys(withLocationShow).length;
-                    if(wlsLength > 0){
-                        console.log("Fetching after 5 sec");
-                        console.log(withLocationShow);
-                        if(wlsLength !== markers.length){
+                success: function(data) {
+                    console.log(data);
+                    console.log("marker"+markers.length);
+
+
+                    if(data.length > 0){
+                        // Update the position of the existing markers
+                        var nameArrayLength = 0;
+
+                        data.forEach(obj => {
+                            if (obj.hasOwnProperty('location') && obj.location !== null) {
+                                nameArrayLength++;
+                            }
+                        });
+
+                        console.log(nameArrayLength);
+                        if(nameArrayLength !== markers.length){
                             console.log( "yes");
                             markerInitialize();
                         }
-                        var i = 0;
-                        for (const key in withLocationShow) {
-                            // if(withLocationShow[i].location){
-                                var newlat = parseFloat(withLocationShow[key].vehicle.location['lat']);
-                                var newlong = parseFloat(withLocationShow[key].vehicle.location['long']);
+                        console.log("after"+nameArrayLength);
+                        console.log(data);
+
+                        for (var i = 0; i < data.length; i++) {
+                            if(data[i].location){
+                                var newlat = parseFloat(data[i].location['lat']);
+                                var newlong = parseFloat(data[i].location['long']);
                                 markers[i].setPosition({lat: newlat, lng: newlong});
-                                i++;
-                            // }
+                            }
                         }
                         // New map variable
                         var bounds = new google.maps.LatLngBounds();
@@ -695,21 +703,17 @@
         }, 5000);
         // Add new markers to the map and add a static custom infowindow for each marker
         function markerInitialize(){
-            console.log("Marker Reset");
+            console.log("hello");
             removeAllMarkers();
+            console.log(markers);
             $.ajax({
                 url: '/api/vehicles/location',
-                success: function(allData) {
-                    let withLocationShow = allData.withLocationShow;
-                    console.log(withLocationShow);
-                    let wlsLength = Object.keys(withLocationShow).length;
-                    if(wlsLength > 0){
-                        // for (var i = 1; i <= wlsLength; i++) {
-                        for (const key in withLocationShow) {
-                            // if(data[i].location){
-                            console.log(withLocationShow[key]);
-                            addMarker(withLocationShow[key]);
-                            // }
+                success: function(data) {
+                    if(data.length > 0){
+                        for (var i = 0; i < data.length; i++) {
+                            if(data[i].location){
+                                addMarker(data[i]);
+                            }
                         }
                     }else{
                         noVehicle();
@@ -737,7 +741,6 @@
         function removeAllMarkers(){
             for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
-                circle.setMap(null);
                 markers[i].circle = null;
             }
 

@@ -27,6 +27,12 @@ return new class extends Migration
                     ->on('vehicles')
                     ->onDelete('cascade')
                     ->onUpdate('No Action');
+            $table->unsignedBigInteger('route');
+            $table->foreign('route')
+                ->references('id')
+                ->on('routexes')
+                ->onDelete('cascade')
+                ->onUpdate('No Action');
             $table->boolean('show_map')->default(1);
             $table->timestamps();
         });

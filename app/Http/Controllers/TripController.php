@@ -107,6 +107,12 @@ class TripController extends Controller
         ]);
 
         if($trip){
+            $OnTripVehicle= OnTripVehicle::create([
+                'trip_id'=> $trip->id,
+                'vid'=> request()->input('vid'),
+                'route'=> request()->input('route'),
+                'show_map' => 1
+            ]);
             $vehicle = Vehicle::where('id', $trip->vid)->update([
                 'status' => 'trip'
             ]);
@@ -114,11 +120,6 @@ class TripController extends Controller
             ->Where('status', 0)
             ->update([
                 'status' => 1
-            ]);
-            $OnTripVehicle= OnTripVehicle::create([
-                'trip_id'=> $trip->id,
-                'vid'=> request()->input('vid'),
-                'show_map' => 1
             ]);
         }
 
