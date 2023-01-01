@@ -79,7 +79,7 @@
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">Fuel Quantity</label>
-                                            <input type="number" step="0.1" class="form-control" placeholder="Fuel Quantity(L)" name="quantity" value="{{ old('quantity') }}" max="100" required/>
+                                            <input type="number" step="0.1" class="form-control" placeholder="Fuel Quantity(L)" name="quantity" value="{{ old('quantity') }}" min="1" max="100" required />
                                             @error('quantity')
                                                 @include('components.validation')
                                             @enderror
@@ -90,7 +90,7 @@
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label">Fuel Cost</label>
-                                            <input type="number" step="0.1" class="form-control" placeholder="Fuel Cost(Taka)" name="cost" value="{{ old('cost') }}"/>
+                                            <input type="number" step="0.1" class="form-control" placeholder="Fuel Cost(Taka)" name="cost" value="{{ old('cost') }}" min="1" max="100000"/>
                                             @error('cost')
                                                 @include('components.validation')
                                             @enderror

@@ -92,3 +92,10 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
     font-weight: 500;
     font-size: 12px;
 }
+.foy_vo_vehicle{
+    color: #333;
+    font-family: Roboto,Arial;
+    font-size: 16px;
+    user-select: text;
+    font-weight: 400;
+}

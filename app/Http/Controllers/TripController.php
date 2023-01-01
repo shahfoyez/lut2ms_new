@@ -85,6 +85,7 @@ class TripController extends Controller
     }
     public function vehicleSend()
     {
+        // dd(request()->input('show_map'));
         $start = request()->input('start');
         $attributes=request()->validate([
             'vid'=> 'required',
@@ -111,7 +112,7 @@ class TripController extends Controller
                 'trip_id'=> $trip->id,
                 'vid'=> request()->input('vid'),
                 'route'=> request()->input('route'),
-                'show_map' => 1
+                'show_map' => request()->input('show_map')
             ]);
             $vehicle = Vehicle::where('id', $trip->vid)->update([
                 'status' => 'trip'

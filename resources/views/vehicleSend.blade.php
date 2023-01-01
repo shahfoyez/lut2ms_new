@@ -114,7 +114,7 @@
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-4 fv-row">
+                                        <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label class="fw-bold fs-6 mb-2 required">From</label>
                                             <!--end::Label-->
@@ -140,7 +140,7 @@
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
-                                        <div class="col-md-4 fv-row">
+                                        <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label class="fw-bold fs-6 mb-2 required">Destination</label>
                                             <!--end::Label-->
@@ -165,8 +165,13 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
+                                    </div>
+                                    <!--end::Input-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-4 fv-row">
+                                        <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label class="required form-label fs-6 mb-2">Driver</label>
                                             <!--end::Label-->
@@ -185,9 +190,31 @@
                                             ?>
                                             </select>
                                             @error('driver')
-                                            @include('components.validation')
+                                                @include('components.validation')
                                             @enderror
                                             <!--begin::Select2-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-6 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="required fw-bold fs-6 mb-2">Show on Map</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <?php
+                                                $oldMapShow = old('show_map') ?? 1;
+
+                                            ?>
+                                            <select class="form-select" name="show_map" data-control="select2" data-placeholder="Select a Driver" data-hide-search="true">
+                                                {{-- <option></option> --}}
+                                                <option value="1" {{ $oldMapShow == 1 ? 'selected' : '' }} >Show</option>
+                                                <option value="0" {{ $oldMapShow == 0 ? 'selected' : '' }} >Hide</option>
+                                            </select>
+                                            @error('show_map')
+                                                @include('components.validation')
+                                            @enderror
+                                            <!--end::Select-->
+                                            <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
                                     </div>

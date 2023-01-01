@@ -52,8 +52,8 @@ class FuelController extends Controller
             $attributes= $request->validate([
                 'vid'=> 'required',
                 'fuelType'=>  'nullable|string',
-                'quantity'=> 'required',
-                'cost'=> 'nullable',
+                'quantity'=> 'required | numeric | min:0 | max:100',
+                'cost'=> 'nullable|numeric|min:0|max:100000',
                 'date' => 'required|date|'.$prefix.':'.$prev,
                 'status'=> 'required',
                 'note'=> 'nullable'
@@ -70,8 +70,8 @@ class FuelController extends Controller
             $attributes= $request->validate([
                 'vid'=> 'required',
                 'fuelType'=>  'nullable|string',
-                'quantity'=> 'required|numeric',
-                'cost'=> 'nullable|numeric',
+                'quantity'=> 'required| numeric|min:0|max:100',
+                'cost'=> 'nullable|numeric|min:0|max:100000',
                 'date' => 'required|date',
                 'status'=> 'required',
                 'note'=> 'nullable|string'

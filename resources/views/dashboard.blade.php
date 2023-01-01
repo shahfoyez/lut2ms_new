@@ -389,7 +389,7 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-warning py-1">{{ $tripsData['avg_trips'] }} Liters</span>
+                                <span class="fw-bolder text-warning py-1">{{ $tripsData['avg_trips'] }} Trips</span>
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -712,27 +712,27 @@
         var map;
         var markers = [];
         var stoppageMarkers = [];
-        // Convert the Laravel object to a JSON string
+        var noVehiclemarkers = [];
         stoppages = {!! json_encode($stoppages) !!};
-        console.log(stoppages);
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 24.8949, lng: 91.8687},
                 zoom: 12
             });
+            markerInitialize();
             addStoppages();
         }
         // update marker position
         function addMarker(data) {
-            console.log("Add marker has called");
+            // console.log("Add marker has called");
             var newlat = parseFloat(data.vehicle.location['lat']);
             var newlong = parseFloat(data.vehicle.location['long']);
-            var driverName = data.trip.name ?? 'No Driver';
+            var driverName = data.trip.driver.name ?? 'No Driver';
             var route = 'Route '+data.rout.route ?? 'No Route';
             var from =  data.trip['from'] ?? 'No Data';
             var dest =  data.trip['dest'] ?? 'No Data';
             var vehName = data.vehicle.codeName ?? 'No Name';
-            var iconPath = '/assets/uploads/default/mapVehicle.png';
+            let iconPath = '/assets/uploads/default/mapVehicle.png';
             var marker = new google.maps.Marker({
                 position: {lat: newlat, lng: newlong},
                 map: map,
@@ -766,7 +766,7 @@
             }, 10);
 
             // Info window content
-            var infowindow = new google.maps.InfoWindow({
+            let infowindow = new google.maps.InfoWindow({
                 content: `<div class="foy_map_infoWindow"><p class='m-0 foy_infoWindow_heading'>${vehName}</p><p class='m-0'>${route}</p><p class='m-0'>${driverName}</p><p class='m-0'> <i class="fas fa-solid fa-plane-arrival"></i> ${dest}</p></div>`,
             });
             // All marker window open
@@ -785,15 +785,19 @@
             $.ajax({
                 url: '/api/vehicles/location',
                 success: function(allData) {
-                    let withLocationShow = allData.withLocationShow;
-                    let wlsLength = Object.keys(withLocationShow).length;
+                    let withLocationShow = allData.withLocationShow ?? null;
+                    var wlsLength = Object.keys(withLocationShow).length;
+                    console.log(withLocationShow);
+
+                    console.log("wlsLength "+wlsLength);
                     // refresh the page if new vehicle added to trip
                     if(wlsLength !== markers.length){
+                        console.log("wlsLength: "+wlsLength+"mar:"+markers.length);
                         return location.reload();
                     }
                     if(wlsLength > 0){
-                        console.log("Fetching after 5 sec");
-                        console.log(withLocationShow);
+                        // console.log("Fetching after 5 sec");
+                        // console.log(withLocationShow);
                         var i = 0;
                         for (const key in withLocationShow) {
                             var newlat = parseFloat(withLocationShow[key].vehicle.location['lat']);
@@ -814,21 +818,22 @@
                     }else{
                         noVehicle();
                     }
+
                 }
             });
         }, 5000);
 
         // Add new markers to the map and add a custom infowindow for each marker
         function markerInitialize(){
-            console.log("Marker Reset");
+            // console.log("Marker Reset");
             $.ajax({
                 url: '/api/vehicles/location',
                 success: function(allData) {
-                    let withLocationShow = allData.withLocationShow;
+                    let withLocationShow = allData.withLocationShow ?? null;
                     let wlsLength = Object.keys(withLocationShow).length;
                     if(wlsLength > 0){
+                        console.log("dbhsvfvfvfvfvfvfvfvfvfvf");
                         for (const key in withLocationShow) {
-                            console.log(withLocationShow[key]);
                             addMarker(withLocationShow[key]);
                         }
                     }else{
@@ -837,13 +842,12 @@
                 }
             });
         }
-        markerInitialize();
+
 
         function addStoppages(){
             for (const key in stoppages) {
-                var slat = parseFloat(stoppages[key].slat);
-                var slon = parseFloat(stoppages[key].slon);
-                console.log(stoppages[key].slat);
+                let slat = parseFloat(stoppages[key].slat);
+                let slon = parseFloat(stoppages[key].slon);
                 var stoppageMarker = new google.maps.Marker({
                     position: {lat: slat, lng: slon},
                     map: map,
@@ -851,36 +855,39 @@
                         url: "{{ asset('/assets/uploads/default/defaultMarker.png') }}",
                         scaledSize: new google.maps.Size(25, 25),
                     },
-
                 });
-
-                // // Info window content
-                // var s_infowindow = new google.maps.InfoWindow({
-                //     content: `<div class="foy_map_infoWindow"><p class='m-0 foy_infoWindow_heading'>Hello</p></div>`,
-                // });
-                // // All marker window open
-                // // infowindow.open(map, marker);
-                // // Click to open window
-                // stoppageMarker.addListener('click', function() {
-                //     // map.setZoom(15);
-                //     // map.setCenter(marker.getPosition());
-                //     s_infowindow.open(map, stoppageMarker);
-                // });
-                stoppageMarkers.push(stoppages[key]);
+                stoppageMarkers.push(stoppageMarker);
             }
         }
         function noVehicle(){
-            // Create a Marker object at the map center
-            var marker = new google.maps.Marker({
-                position: map.getCenter(),
-                map: map
-            });
-            // Create an InfoWindow object
-            var infowindow = new google.maps.InfoWindow({
-                content: '<h1>No vehicle available!</h1>'
-            });
-            // Open the InfoWindow on the Marker
-            infowindow.open(map, marker);
+            console.log("No VehicleMArker"+noVehiclemarkers.length);
+            // to stop marker blink every 5 seconds
+            if(noVehiclemarkers.length >0){
+                return;
+            }else{
+                // return location.reload();
+                 // Create a Marker object at the map center
+                let iconPath = '/assets/uploads/default/noVehicle.png';
+                noVehiclemarker = new google.maps.Marker({
+                    position: map.getCenter(),
+                    map: map,
+                    icon: {
+                        url: iconPath,
+                        scaledSize: new google.maps.Size(35, 35),
+                    },
+                });
+                // Create an InfoWindow object
+                var nvInfowindow = new google.maps.InfoWindow({
+                    content: `<div class="p-2"><h1 class="foy_vo_vehicle">No vehicle available!</h1></div>`
+                });
+                noVehiclemarker.addListener('click', function() {
+                    nvInfowindow.open(map, noVehiclemarker);
+                });
+                // Open the InfoWindow on the Marker
+                nvInfowindow.open(map, noVehiclemarker);
+                noVehiclemarkers.push(noVehiclemarker);
+                map.setZoom(14);
+            }
         }
         // remove all existing markers
         function removeAllMarkers(){
@@ -897,9 +904,12 @@
     <script src="{{ asset('/assets/js/charts/fuel.js') }}"></script>
     <script src="{{ asset('/assets/js/charts/trip.js') }}"></script> --}}
     <script>
-        let maintenanceStats ={!! json_encode($MaintenanceStats) !!};
-        var labels ={!! json_encode($labels) !!};
-        var costValues ={!! json_encode($costValues) !!};
+        let maintenanceData = {!! json_encode($maintenanceData) !!};
+        console.log("hell");
+
+        console.log(maintenanceData);
+        var labels =  maintenanceData.labels;
+        var costValues = maintenanceData.costValues;
         var options = {
           series: [
             {

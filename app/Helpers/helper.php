@@ -3,47 +3,58 @@ use Carbon\Carbon;
 use App\Models\Fuel;
 use App\Models\Trip;
 use App\Models\Maintenance;
+use Illuminate\Support\Facades\DB;
 function tripsData(){
-    $trips = Trip::selectRaw("DATE_FORMAT(`start`, '%M-%y') as monthYear, year(`start`) AS year, month(`start`) AS month, monthname(`start`) AS monthName, count(id) AS totalTrips")
+    date_default_timezone_set('Asia/Dhaka');
+    $currentMonthYear = Carbon::now()->format('F-y');
+    $previousMonthYear = Carbon::now()->subMonth()->format('F-y');
+
+    $trips = Trip::selectRaw("DATE_FORMAT(`start`, '%M-%y') as monthYear, year(`start`) AS year, month(`start`) AS month, count(id) AS totalTrips")
         ->where('status', 1)
-        ->groupByRaw("monthName")
         ->groupByRaw("monthYear")
         ->groupByRaw("year")
         ->groupByRaw("month")
         ->orderBy('year', "DESC")
         ->orderBy('month', "DESC")
         ->take(12)
-        ->get();
-
+        ->get()
+        ->map(function($trip) use ($currentMonthYear, $previousMonthYear) {
+            if ($trip->monthYear == $currentMonthYear) {
+                $trip->status = 1;
+            } elseif ($trip->monthYear == $previousMonthYear) {
+                $trip->status = 2;
+            } else {
+                $trip->status = 0;
+            }
+            return $trip;
+        });
     $trips_labels = array();
     $trips_count_values = array();
     $total_trips = 0;
     $avg_trips = 0;
     $cur_month_trips = 0;
     $last_month_trips = 0;
-    // for use in loop
-    $cur_month_trip_found = 0;
 
-    $curYear = date("Y");
-    $curMonth = date("m");
-    $trip_cur_month = '';
-    $trip_last_month = '';
+    $c1_Date = Carbon::parse($currentMonthYear);
+    $trip_cur_month =  $c1_Date->format('F');
+
+    $c2_Date = Carbon::parse($previousMonthYear);
+    $trip_last_month = $c2_Date->format('F');
 
     if($trips->count() > 0){
         foreach($trips as $trip){
-            if($curMonth == $trip->month && $curYear == $trip->year){
-                // calculate current month's trip and month name
+            // status 1 indicates current month & status 2 indicates previous month
+            if($trip->status === 1){
                 $cur_month_trips = $trip->totalTrips;
-                $trip_cur_month = $trip->monthName;
-                $cur_month_trip_found = 1;
-            }elseif($cur_month_trip_found == 1){
+                $curCarbonDate = Carbon::parse($trip->monthYear);
+                $trip_cur_month = $curCarbonDate->format('F');
+            }elseif($trip->status === 2){
                 $last_month_trips = $trip->totalTrips;
-                $cur_month_trip_found = 2;
-                $trip_last_month = $trip->monthName;
+                $lastCarbonDate = Carbon::parse($trip->monthYear);
+                $trip_last_month = $lastCarbonDate->format('F');
             }
-            $year = substr($trip->year, -2);
-            $month = substr($trip->monthName, 0, 3);
-            $trip_label = $month." ".$year;
+            $curCarbonDate = Carbon::parse($trip->monthYear);
+            $trip_label = $curCarbonDate->format('M y');
             $total_trips += $trip->totalTrips;
             array_push($trips_labels, $trip_label);
             array_push($trips_count_values, $trip->totalTrips);
@@ -51,7 +62,6 @@ function tripsData(){
         $avg_trips = $total_trips/sizeof($trips_labels);
     }
     $tripsData = array(
-        'f' => $trips,
         'trips_labels' => $trips_labels,
         'trips_count_values' => $trips_count_values,
         'total_trips' => $total_trips,
@@ -65,49 +75,61 @@ function tripsData(){
     return $tripsData;
 }
 function fuelsData(){
-    $fuels = Fuel::selectRaw("date_format(`date`, '%M-%y') As monthYear, year(`date`) AS year, month(`date`) AS month, monthname(`date`) AS monthName, count(id) as fuelEntries, sum(quantity) AS totalFuels, sum(cost) AS totalCosts")
-        ->groupByRaw("monthName")
+    date_default_timezone_set('Asia/Dhaka');
+    $currentMonthYear = Carbon::now()->format('F-y');
+    $previousMonthYear = Carbon::now()->subMonth()->format('F-y');
+
+    // map to check current month and previous month data
+    $fuels = Fuel::selectRaw("date_format(`date`, '%M-%y') As monthYear, year(`date`) AS year, month(`date`) AS month, count(id) as fuelEntries, sum(quantity) AS totalFuels, sum(cost) AS totalCosts")
         ->groupByRaw("monthYear")
         ->groupByRaw("year")
         ->groupByRaw("month")
         ->orderBy('year', "DESC")
         ->orderBy('month', "DESC")
         ->take(12)
-        ->get();
-
-    $curYear = date("Y");
-    $curMonth = date("m");
+        ->get()
+        ->map(function($fuel) use ($currentMonthYear, $previousMonthYear) {
+            if ($fuel->monthYear == $currentMonthYear) {
+                $fuel->status = 1;
+            } elseif ($fuel->monthYear == $previousMonthYear) {
+                $fuel->status = 2;
+            } else {
+                $fuel->status = 0;
+            }
+            return $fuel;
+        });
     $fuels_labels = array();
     $fuels_count_values = array();
     $fuels_cost_values = array();
 
     $total_fuels = 0;
     $avg_fuels = 0;
+    // fuel quantity
     $cur_month_fuels = 0;
     $last_month_fuels = 0;
-    // for use in loop
-    $cur_month_fuel_found = 0;
 
+    $c1_Date = Carbon::parse($currentMonthYear);
+    $fuel_cur_month =  $c1_Date->format('F');
 
-    $fuel_cur_month = '';
-    $fuel_last_month = '';
+    $c2_Date = Carbon::parse($previousMonthYear);
+    $fuel_last_month = $c2_Date->format('F');
 
     if($fuels->count() > 0){
         foreach($fuels as $fuel){
-            if($curMonth == $fuel->month && $curYear == $fuel->year){
-                // calculate current month's fuel and month name
+            // status 1 indicates current month & status 2 indicates previous month
+            if($fuel->status === 1){
                 $cur_month_fuels = $fuel->totalFuels;
-                $fuel_cur_month = $fuel->monthName;
-                $cur_month_fuel_found = 1;
-            }elseif($cur_month_fuel_found == 1){
+                $curCarbonDate = Carbon::parse($fuel->monthYear);
+                $fuel_cur_month = $curCarbonDate->format('F');
+            }elseif($fuel->status === 2){
                 $last_month_fuels = $fuel->totalFuels;
-                $cur_month_fuel_found = 0;
-                $fuel_last_month = $fuel->monthName;
+                $lastCarbonDate = Carbon::parse($fuel->monthYear);
+                $fuel_last_month = $lastCarbonDate->format('F');
             }
-            $year = substr($fuel->year, -2);
-            $month = substr($fuel->monthName, 0, 3);
-            $fuel_label = $month." ".$year;
+            $curCarbonDate = Carbon::parse($fuel->monthYear);
+            $fuel_label = $curCarbonDate->format('M y');
             $total_fuels += $fuel->totalFuels;
+
             array_push($fuels_labels, $fuel_label);
             array_push($fuels_count_values, $fuel->totalFuels);
             array_push( $fuels_cost_values, $fuel->totalCosts);
@@ -127,5 +149,74 @@ function fuelsData(){
     );
     // dd($fuelsData);
     return $fuelsData;
+}
+function maintenanceData(){
+    date_default_timezone_set('Asia/Dhaka');
+    $currentMonthYear = Carbon::now()->format('F-y');
+    $previousMonthYear = Carbon::now()->subMonth()->format('F-y');
+    $maintenanceStats = Maintenance::selectRaw("date_format(`from`, '%M-%y') As monthYear, year(`from`) AS year, month(`from`) AS month, sum(cost) AS totalCost")
+    ->groupByRaw("monthYear")
+    ->groupByRaw("year")
+    ->groupByRaw("month")
+    ->orderBy('year', "DESC")
+    ->orderBy('month', "DESC")
+    ->take(12)
+    ->get()
+    ->map(function($fuel) use ($currentMonthYear, $previousMonthYear) {
+        if ($fuel->monthYear == $currentMonthYear) {
+            $fuel->status = 1;
+        } elseif ($fuel->monthYear == $previousMonthYear) {
+            $fuel->status = 2;
+        } else {
+            $fuel->status = 0;
+        }
+        return $fuel;
+    });
+    // dd($maintenanceStats);
 
+    $labels = array();
+    $costValues = array();
+    $totalCost = 0;
+    $avgCost = 0;
+    $curCost = 0;
+    $lastCost = 0;
+
+    $c1_Date = Carbon::parse($currentMonthYear);
+    $thisMonth =  $c1_Date->format('F');
+
+    $c2_Date = Carbon::parse($previousMonthYear);
+    $lastMonth = $c2_Date->format('F');
+
+    if($maintenanceStats->count() > 0){
+        foreach($maintenanceStats as $stat){
+             // status 1 indicates current month & status 2 indicates previous month
+             if($stat->status === 1){
+                $curCost = $stat->totalCost;
+                $curCarbonDate = Carbon::parse($stat->monthYear);
+                $thisMonth = $curCarbonDate->format('F');
+            }elseif($stat->status === 2){
+                $lastCost = $stat->totalCost;
+                $lastCarbonDate = Carbon::parse($stat->monthYear);
+                $lastMonth = $lastCarbonDate->format('F');
+            }
+            $curCarbonDate = Carbon::parse($stat->monthYear);
+            $label = $curCarbonDate->format('M y');
+            $totalCost += $stat->totalCost;
+            array_push($labels, $label);
+            array_push($costValues, $stat->totalCost);
+        }
+        $avgCost = $totalCost/sizeof($labels);
+    }
+    $maintenanceData = array(
+        'labels' => $labels,
+        'costValues' => $costValues,
+        'totalCost' => (int)$totalCost,
+        'avgCost' =>  (int)$avgCost,
+        'curCost' => $curCost,
+        'lastCost' => $lastCost,
+        'thisMonth' => $thisMonth,
+        'lastMonth' => $lastMonth
+    );
+
+    return $maintenanceData;
 }
