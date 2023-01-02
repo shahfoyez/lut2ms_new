@@ -169,7 +169,7 @@
 <!--end::Content-->
 @endsection
 @section('modals')
-    @include('modals.deleteModal')
+    @include('modals.confirmation.deleteModal')
 @endsection
 @section('scripts')
     <!--start::Page Custom Javascript-->

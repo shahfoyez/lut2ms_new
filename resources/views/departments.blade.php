@@ -127,6 +127,6 @@
 <!--end::Content-->
 @endsection
 @section('modals')
-    @include('modals.deleteModal')
+    @include('modals.confirmation.deleteModal')
 @endsection
 

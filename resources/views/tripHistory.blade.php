@@ -156,7 +156,7 @@
 <!--end::Content-->
 @endsection
 @section('modals')
-    @include('modals.deleteModal')
+    @include('modals.confirmation.deleteModal')
 @endsection
 @section('scripts')
     <script src="{{ asset('/assets/js/custom/documentation/forms/daterangepicker.js') }}"></script>
