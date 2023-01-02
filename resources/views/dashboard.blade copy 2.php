@@ -229,7 +229,7 @@
                                 <!--end::Title-->
                                 <!--begin::Lable-->
                                 <span class="fw-bolder text-success py-1">{{ $fuelsData['cur_month_fuels'] }} Liters</span>
-                                @include('components.arrowIndicator.fuelArrowIndicator')
+                                @include('components.fuelArrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -415,7 +415,7 @@
                                 <!--end::Title-->
                                 <!--begin::Lable-->
                                 <span class="fw-bolder text-success py-1">{{ $tripsData['cur_month_trips'] }} Trips</span>
-                                @include('components.arrowIndicator.tripArrowIndicator')
+                                @include('components.fuelArrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -601,7 +601,7 @@
                                 <!--end::Title-->
                                 <!--begin::Lable-->
                                 <span class="fw-bolder text-success py-1">৳{{ $maintenanceData['curCost'] }}</span>
-                                @include('components.arrowIndicator.arrowIndicator')
+                                @include('components.arrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -725,13 +725,13 @@
         // update marker position
         function addMarker(data) {
             // console.log("Add marker has called");
-            var newlat = parseFloat(data.vehicle.location['lat']);
-            var newlong = parseFloat(data.vehicle.location['long']);
+            var newlat = parseFloat(data.trip.vehicle.location['lat']);
+            var newlong = parseFloat(data.trip.vehicle.location['long']);
             var driverName = data.trip.driver.name ?? 'No Driver';
             var route = 'Route '+data.trip.rout.route ?? 'No Route';
             var from =  data.trip['from'] ?? 'No Data';
             var dest =  data.trip['dest'] ?? 'No Data';
-            var vehName = data.vehicle.codeName ?? 'No Name';
+            var vehName = data.trip.vehicle.codeName ?? 'No Name';
 
             let iconPath = '/assets/uploads/default/mapVehicle.png';
             var marker = new google.maps.Marker({

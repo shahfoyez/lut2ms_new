@@ -122,9 +122,18 @@
                                                       Action
                                                     </button>
                                                     <ul class="dropdown-menu foy-req-action" aria-labelledby="dropdownMenuButton1">
-                                                      <li><a href="/requisition/edit/{{ $list->activeTrip->id }}" class="dropdown-item pt-2 pb-2" href="#">Edit</a></li>
+                                                        <li>
+                                                            <a href="/requisition/edit/{{ $list->activeTrip->id }}" class="dropdown-item pt-2 pb-2" href="#">Edit</a></li>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#reach_Modal" class="dropdown-item pt-2 pb-2 reach_modal" data-item="/requisition/reach/{{ $list->id }}">Reach</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#cancel_Modal" class="dropdown-item pt-2 pb-2 cancel_modal" data-item="/requisition/cancel/{{ $list->id }}">Cancel</a>
+                                                        </li>
+                                                      {{-- <li><a href="/requisition/edit/{{ $list->activeTrip->id }}" class="dropdown-item pt-2 pb-2" href="#">Edit</a></li>
                                                       <li><a href="/requisition/reach/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Reach</a></li>
-                                                      <li><a href="/requisition/cancel/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Cancel</a></li>
+                                                      <li><a href="/requisition/cancel/{{ $list->id }}" class="dropdown-item pt-2 pb-2" href="#">Cancel</a></li> --}}
                                                     </ul>
                                                 </div>
                                             @endif
@@ -160,5 +169,9 @@
     <!--end::Post-->
 </div>
 <!--end::Content-->
+@endsection
+@section('modals')
+    @include('modals.confirmation.reachModal')
+    @include('modals.confirmation.cancelModal')
 @endsection
 

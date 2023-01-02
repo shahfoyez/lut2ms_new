@@ -18,8 +18,4 @@ class OnTripVehicle extends Model
     {
         return $this->belongsTo(Vehicle::class, 'vid');
     }
-    public function rout()
-    {
-        return $this->belongsTo(Routex::class, 'route');
-    }
 }

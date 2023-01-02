@@ -22,7 +22,6 @@ class Trip extends Model
     public function driver()
     {
         return $this->belongsTo(Employee::class, 'driver');
-
     }
     public function rout()
     {
@@ -31,6 +30,10 @@ class Trip extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'driver');
+    }
+    public function onTripVehicle()
+    {
+        return $this->hasOne(OnTripVehicle::class, 'trip_id');
     }
 
     // Mutator for automatically be cast to Carbon instances

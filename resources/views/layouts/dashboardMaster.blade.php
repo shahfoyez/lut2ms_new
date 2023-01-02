@@ -87,11 +87,6 @@
 		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="{{ asset('/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
         <script src="{{ asset('/assets/js/deleteModal.js') }}"></script>
-		{{-- <script src="{{ asset('/assets/js/custom/widgets.js') }}"></script> --}}
-		{{-- <script src="{{ asset('/assets/js/custom/apps/chat/chat.js') }}"></script> --}}
-		{{-- <script src="{{ asset('/assets/js/custom/modals/create-app.js') }}"></script>
-		<script src="{{ asset('/assets/js/custom/modals/upgrade-plan.js') }}"></script>
-        <script src="{{ asset('/assets/js/custom/pages/company/contact.js') }}"></script> --}}
 
 		<script src="{{ asset('/assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 		<script src="{{ asset('/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>

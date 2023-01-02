@@ -50,14 +50,16 @@ class TripController extends Controller
             ->get();
         // dd($trips);
         return view('tripHistory', [
-                'trips' => $trips
+            'trips' => $trips
         ]);
     }
 
     public function edit($trip)
     {
         // dd($trip);
-        $trip = Trip::with('vehicle:id,id')->find($trip);
+        $trip = Trip::with('vehicle:id,codeName')
+        ->with('onTripVehicle:id,trip_id,show_map')
+        ->find($trip);
         // dd($trip);
         $vehicles = Vehicle::with('vehicleType:id,name')->latest()->get();
 
@@ -111,7 +113,6 @@ class TripController extends Controller
             $OnTripVehicle= OnTripVehicle::create([
                 'trip_id'=> $trip->id,
                 'vid'=> request()->input('vid'),
-                'route'=> request()->input('route'),
                 'show_map' => request()->input('show_map')
             ]);
             $vehicle = Vehicle::where('id', $trip->vid)->update([
@@ -180,6 +181,7 @@ class TripController extends Controller
 
     public function update($trip)
     {
+        // dd(request()->all());
         $start = request()->input('start');
         $attributes=request()->validate([
             'vid'=> 'required',
@@ -188,9 +190,11 @@ class TripController extends Controller
             'end'=> 'required|date|after:'.$start,
             'from'=> 'required|string',
             'dest'=> 'required|string',
-            'driver'=> 'required'
+            'driver'=> 'required',
+            'show_map'=> 'required'
+
         ]);
-        $update = Trip::where('id', $trip)
+        $tripUpdate = Trip::where('id', $trip)
             ->update([
                 'route'=> request()->input('route'),
                 'start'=> request()->input('start'),
@@ -200,7 +204,19 @@ class TripController extends Controller
                 'driver' =>request()->input('driver'),
                 'status' => 0
         ]);
-        return redirect('/requisition/vehicles')->with('success', 'Requisition information updated.');
+        if($tripUpdate){
+            $onTripVehicleupdate = OnTripVehicle::where('trip_id', $trip)
+                ->update([
+                    'show_map' =>request()->input('show_map'),
+            ]);
+        }
+        if($tripUpdate && $onTripVehicleupdate){
+            return redirect('/requisition/vehicles')->with('success', 'Requisition information updated.');
+        }else{
+            return redirect('/requisition/vehicles')->with('error', 'Something went wrong');
+
+        }
+
     }
 
     public function vehicleTrips($vehicle){

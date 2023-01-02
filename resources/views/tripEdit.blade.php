@@ -178,8 +178,8 @@
                                             <!--end::Label-->
                                             <!--begin::Select-->
                                             <?php
-                                                $oldMapShow = old('show_map') ?? 1;
-
+                                            $driverID = old('driver') ? old('driver') : $trip->driver;
+                                                $oldMapShow = old('show_map') ?? $trip->onTripVehicle->show_map;
                                             ?>
                                             <select class="form-select" name="show_map" data-control="select2" data-placeholder="Select a Driver" data-hide-search="true">
                                                 {{-- <option></option> --}}
