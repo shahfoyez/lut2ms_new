@@ -7,9 +7,36 @@ use App\Models\Vehicle;
 use App\Models\Employee;
 use App\Models\Stoppage;
 
+use GuzzleHttp\Client;
+
 class GeneralController extends Controller
 {
+    public function calculateDistance($origin, $destination)
+    {
+        $client = new Client();
+
+        $response = $client->get('https://graphhopper.com/api/1/route', [
+            'query' => [
+                'key' => 'f733740c-524a-4890-bcd6-fabc9d96b821',
+                'point' => $origin,
+                'point' => $destination,
+                'vehicle' => 'car',
+                'points_encoded' => 'false',
+                'calc_points' => 'true',
+                'instructions' => 'false'
+            ]
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+
+        $distance = $data['paths'][0]['distance'];
+
+        return $distance;
+    }
+
     public function index(){
+        // $distance =  $this->calculateDistance('New York, NY', 'Los Angeles, CA');
+        // dd($distance);
         $onRoad =  $vehicles = Vehicle::where('status', 'trip')
         ->latest()
         ->get()->count();
