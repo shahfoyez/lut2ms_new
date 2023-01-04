@@ -787,8 +787,9 @@
                 url: '/api/vehicles/location',
                 success: function(allData) {
                     let withLocationShow = allData.withLocationShow ?? null;
-                    console.log(withLocationShow);
-                    var wlsLength = Object.keys(withLocationShow).length;
+                    console.log("Double Checked: "+withLocationShow);
+                    var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
+                    // var wlsLength = Object.keys(withLocationShow).length;
                     console.log(withLocationShow);
 
                     console.log("wlsLength "+wlsLength);
@@ -832,9 +833,10 @@
                 url: '/api/vehicles/location',
                 success: function(allData) {
                     let withLocationShow = allData.withLocationShow ?? null;
-                    let wlsLength = Object.keys(withLocationShow).length;
+                    var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
+                    console.log("Checked: "+withLocationShow);
+
                     if(wlsLength > 0){
-                        console.log("dbhsvfvfvfvfvfvfvfvfvfvf");
                         for (const key in withLocationShow) {
                             addMarker(withLocationShow[key]);
                         }

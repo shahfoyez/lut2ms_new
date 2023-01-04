@@ -99,7 +99,6 @@ class VehicleLocationController extends Controller
         $withoutLocation = $trips->filter(function ($item) {
             return $item['vehicle']->location === null;
         });
-        $withLocationShow->pluck('vehicle.id');
 
 
         // without pluck(works), need to change view if implimented
