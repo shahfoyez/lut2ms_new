@@ -24,7 +24,7 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/vehicle/vehicleAdd" class="form mb-15" method="post" id="" enctype="multipart/form-data">
+                                <form action="/vehicle/vehicleAdd" class="form" method="post" id="" enctype="multipart/form-data">
                                     @csrf
                                     <h1 class="fw-bolder text-dark mb-9">Add Vehicle</h1>
                                     <!--begin::Input group-->
@@ -105,7 +105,7 @@
                                      <!--begin::Input group-->
                                      <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-4 fv-row">
                                             <!--begin::Label-->
                                             <label class="required form-label fs-6 mb-2">Type</label>
                                             <!--end::Label-->
@@ -114,7 +114,7 @@
                                             <select class="form-select" name="type" data-control="select2" data-placeholder="Type" data-hide-search="true">
                                                 <option></option>
                                                 @foreach ($types as $type )
-                                                    <option value="{{ $type->id }}">{{ ucfirst($type->name) }}</option>
+                                                    <option value="{{ $type->id }}" {{ old('type') == $type->id ? 'selected' : '' }}>{{ ucfirst($type->name) }}</option>
                                                 @endforeach
                                                 <option value="0">Others</option>
                                             </select>
@@ -127,7 +127,7 @@
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-4 fv-row">
                                             <!--begin::Label-->
                                             <label class="required form-label fs-6 mb-2">Status</label>
                                             <!--end::Label-->
@@ -138,6 +138,27 @@
                                                 <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
                                             </select>
                                             @error('status')
+                                                <p class="fv-plugins-message-container invalid-feedback">
+                                                    {{  $message }}
+                                                </p>
+                                            @enderror
+                                            <!--begin::Select2-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label fs-6 mb-2">GPS Device</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Select2-->
+                                            <select class="form-select" name="gps_id" data-control="select2" data-placeholder="GPS Device">
+                                                <option></option>
+                                                @foreach ($devices as $device )
+                                                    <option value="{{ $device->id }}" {{ old('gps_id') == $device->id ? 'selected' : '' }}>{{ ucfirst($device->code_name) }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('gps_id')
                                                 <p class="fv-plugins-message-container invalid-feedback">
                                                     {{  $message }}
                                                 </p>

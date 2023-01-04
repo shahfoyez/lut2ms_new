@@ -27,6 +27,14 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('No Action');
             $table->string('status');
+
+            $table->unsignedBigInteger('gps_id')->nullable();
+            $table->foreign('gps_id')
+            ->references('id')
+            ->on('gps_devices')
+            ->onDelete('cascade')
+            ->onUpdate('No Action');
+
             $table->unsignedBigInteger('added_by')->nullable();
             $table->foreign('added_by')
             ->references('id')

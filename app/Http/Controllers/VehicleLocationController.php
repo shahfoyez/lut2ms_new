@@ -33,6 +33,7 @@ class VehicleLocationController extends Controller
             ->where('route', $route)
             ->where('status', 0)
             ->latest()->get()->pluck('vehicle');
+
         if($trips->count() > 0) {
             return response()->json($trips);
         } else {
@@ -55,49 +56,22 @@ class VehicleLocationController extends Controller
 
     public function vehiclesLocation()
     {
-
-        // $trips = OnTripVehicle::with([
-        //     'vehicle' => function ($query) {
-        //         $query->select('id', 'codename', 'license', 'capacity');
-        //     },
-        //     'vehicle.location' => function ($query) {
-        //         $query->select('id', 'vid', 'long', 'lat', 'date');
-        //     },
-        //     'vehicle.activeTrip' => function ($query) {
-        //         $query->with('rout')->with(['driver'  => function ($query) {
-        //             $query->select('id', 'name', 'idNumber', 'phone', 'image');
-        //         }])->where('status', 0);
-        //     }])
-        //     ->where('show_map', 1)
-        //     ->latest()->get()->pluck('vehicle');
-
-        // $withLocationShow = $trips->filter(function ($item) {
-        //     return $item['location'] !== null ;
-        // });
-        // $withLocationHide = $trips->filter(function ($item) {
-        //     return $item['location'] !== null && $item['show_map'] === 0;
-        // });
-        // $withoutLocation = $trips->filter(function ($item) {
-        //     return $item['location'] === null;
-        // });
-        // return $withLocationShow;
-
         $trips = OnTripVehicle::with([
-                'vehicle' => function ($query) {
-                    $query->select('id', 'codeName');
-                },
-                'vehicle.location'
-            ])
-            ->with([
-                'trip',
-                'trip.rout' => function ($query) {
-                    $query->select('id', 'route');
-                },
-                'trip.driver' => function ($query) {
-                    $query->select('id', 'name');
-                },
-            ])
-            ->latest()->get();
+            'vehicle' => function ($query) {
+                $query->select('id', 'codeName');
+            },
+            'vehicle.location'
+        ])
+        ->with([
+            'trip',
+            'trip.rout' => function ($query) {
+                $query->select('id', 'route');
+            },
+            'trip.driver' => function ($query) {
+                $query->select('id', 'name');
+            },
+        ])
+        ->latest()->get();
         // return $trips;
 
         // return $trips;
@@ -109,35 +83,10 @@ class VehicleLocationController extends Controller
         $withoutLocationHide = $trips->filter(function ($item) {
             return $item['vehicle']->location == null || $item['show_map'] === 0;
         });
-
-        // return $withLocationShow;
-        // without pluck(works), need to change view if implimented
-        // $trips = OnTripVehicle::with([
-        //         'vehicle' => function ($query) {
-        //             $query->select('id', 'codename', 'license', 'capacity');
-        //         },
-        //         'vehicle.location' => function ($query) {
-        //             $query->select('id', 'vid', 'long', 'lat', 'date');
-        //         }
-
-        //     ])
-        //     ->with(['trip' => function($query){
-        //         $query->with(['driver'  => function ($query) {
-        //             $query->select('id', 'name', 'idNumber', 'phone', 'image');
-        //         }]);
-        //     }])
-        //     ->latest()->get(['id', 'vid', 'trip_id']);
-
-        if($trips->count()>0) {
-            return response()->json([
-                'withLocationShow' => $withLocationShow,
-                'withoutLocationHide' => $withoutLocationHide
-            ]);
-        } else {
-            throw new HttpResponseException(response()->json([
-                'error'   => true,
-            ]));
-        }
+        return response()->json([
+            'withLocationShow' => $withLocationShow,
+            'withoutLocationHide' => $withoutLocationHide
+        ]);
     }
 
 

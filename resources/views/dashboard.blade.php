@@ -724,7 +724,6 @@
         }
         // update marker position
         function addMarker(data) {
-            // console.log("Add marker has called");
             var newlat = parseFloat(data.vehicle.location['lat']);
             var newlong = parseFloat(data.vehicle.location['long']);
             var driverName = data.trip.driver.name ?? 'No Driver';
@@ -787,20 +786,16 @@
                 url: '/api/vehicles/location',
                 success: function(allData) {
                     let withLocationShow = allData.withLocationShow ?? null;
-                    console.log("Double Checked: "+withLocationShow);
-                    var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
+                    var wlsLength = Object.keys(withLocationShow).length;
                     // var wlsLength = Object.keys(withLocationShow).length;
+                    console.log("Double Checked");
                     console.log(withLocationShow);
-
-                    console.log("wlsLength "+wlsLength);
+                    console.log(wlsLength);
                     // refresh the page if new vehicle added to trip
                     if(wlsLength !== markers.length){
-                        console.log("wlsLength: "+wlsLength+"mar:"+markers.length);
                         return location.reload();
                     }
                     if(wlsLength > 0){
-                        // console.log("Fetching after 5 sec");
-                        // console.log(withLocationShow);
                         var i = 0;
                         for (const key in withLocationShow) {
                             var newlat = parseFloat(withLocationShow[key].vehicle.location['lat']);
@@ -828,14 +823,13 @@
 
         // Add new markers to the map and add a custom infowindow for each marker
         function markerInitialize(){
-            // console.log("Marker Reset");
             $.ajax({
                 url: '/api/vehicles/location',
                 success: function(allData) {
                     let withLocationShow = allData.withLocationShow ?? null;
-                    var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
-                    console.log("Checked: "+withLocationShow);
-
+                    console.log(withLocationShow);
+                    // var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
+                    var wlsLength =  Object.keys(withLocationShow).length ;
                     if(wlsLength > 0){
                         for (const key in withLocationShow) {
                             addMarker(withLocationShow[key]);
@@ -864,7 +858,6 @@
             }
         }
         function noVehicle(){
-            console.log("No VehicleMArker"+noVehiclemarkers.length);
             // to stop marker blink every 5 seconds
             if(noVehiclemarkers.length >0){
                 return;
@@ -909,9 +902,6 @@
     <script src="{{ asset('/assets/js/charts/trip.js') }}"></script> --}}
     <script>
         let maintenanceData = {!! json_encode($maintenanceData) !!};
-        console.log("hell");
-
-        console.log(maintenanceData);
         var labels =  maintenanceData.labels;
         var costValues = maintenanceData.costValues;
         var options = {
@@ -958,8 +948,6 @@
         let tripsData = {!! json_encode($tripsData) !!};
         var trips_labels = tripsData.trips_labels;
         var trips_count_values = tripsData.trips_count_values;
-        console.log(trips_count_values);
-
         var trips = {
           series: [
             {
@@ -1006,8 +994,6 @@
         var fuels_labels = fuelsData.fuels_labels;
         var fuels_count_values = fuelsData.fuels_count_values;
         var fuels_cost_values = fuelsData.fuels_cost_values;
-        console.log(fuels_count_values);
-
         var fuels = {
           series: [{
           name: 'Cost',

@@ -12,6 +12,7 @@ use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\GpsDeviceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StoppageController;
@@ -27,21 +28,6 @@ use App\Http\Controllers\MaintenanceController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/f', function(){
-    return view('feeds');
-});
-Route::get('/d', function(){
-    return view('charts');
-});
-Route::get('/a', function(){
-    return view('lists');
-});
-Route::get('/b', function(){
-    return view('mixed');
-});
-Route::get('/c', function(){
-    return view('statistics');
-});
 Route::get('/landing', function(){
     return view('landing');
 });
@@ -220,9 +206,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/maintenance/maintenanceVehicles/filter', 'maintenanceVehiclesFilter');
         Route::get('/maintenance/maintenanceRecords/filter', 'maintenanceRecordsFilter');
         // Route::get('/maintenance/vehicleMaintenanceRecords/{vehicle}', 'vehicleMaintenanceEntriesFilter');
-
-        Route::get('/ms', 'maintenanceStats');
-
     });
 
     // ReminderController Group
@@ -256,21 +239,30 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/notice/noticeEdit/{notice}', 'edit');
         Route::post('/notice/noticeUpdate/{notice}', 'update');
         Route::delete('/notice/delete/{notice}', 'destroy');
-
-        // Route::get('/notice/notices/filter', 'filter');
     });
     // ScheduleController Group
     Route::controller(ScheduleController::class)->group(function () {
         Route::get('/schedule/schedules', 'index');
         Route::get('/schedule/scheduleAdd', 'create');
         Route::post('/schedule/scheduleAdd', 'store');
-
         // EUD
         Route::get('/schedule/scheduleEdit/{schedule}', 'edit');
         Route::post('/schedule/scheduleUpdate/{schedule}', 'update');
         Route::delete('/schedule/delete/{schedule}', 'destroy');
-
         // Route::get('/notice/notices/filter', 'filter');
+    });
+
+     // GpsDeviceController Group
+     Route::controller(GpsDeviceController::class)->group(function () {
+        Route::get('/vehicle/devices', 'index');
+        Route::get('/vehicle/deviceAdd', 'deviceCreate');
+        Route::post('/vehicle/deviceAdd', 'deviceAdd');
+
+        // Employee EUD
+        // Route::get('/employee/employeeEdit/{employee}', 'edit');
+        // Route::post('/employee/employeeUpdate/{employee}', 'update');
+        Route::delete('/vehicle/deviceDelete/{device}', 'destroy');
+
     });
 
     // logout

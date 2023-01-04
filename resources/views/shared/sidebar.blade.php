@@ -174,6 +174,17 @@
                                 <span class="menu-title">Vehicle Type</span>
                             </a>
                         </div>
+                        <?php
+                            $routers = array('devices', 'deviceAdd', 'deviceEdit');
+                        ?>
+                        <div class="menu-item">
+                            <a class="menu-link {{ $segment_1 == 'vehicle' && $segment_2 == in_array($segment_2,  $routers) ? 'active' : '' }}" href="/vehicle/devices">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">GPS Device</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {{-- end::Vehicle Management --}}

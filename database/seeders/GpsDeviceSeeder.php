@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Stoppage;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
-class StoppageSeeder extends Seeder
+class GpsDeviceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class StoppageSeeder extends Seeder
      */
     public function run()
     {
-        Stoppage::factory()->times(5)->create();
+        //
     }
 }

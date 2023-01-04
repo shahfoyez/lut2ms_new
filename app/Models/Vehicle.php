@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\GpsDevice;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Vehicle extends Model
 {
@@ -50,6 +51,10 @@ class Vehicle extends Model
     public function location()
     {
         return $this->hasOne(VehicleLocation::class, 'vid');
+    }
+    public function gps()
+    {
+        return $this->hasOne(GpsDevice::class, 'gps_id');
     }
     // Casting for automatically be cast to Carbon instances
     protected $dates = [

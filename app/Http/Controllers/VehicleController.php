@@ -6,6 +6,7 @@ use App\Models\Trip;
 use App\Models\Routex;
 use App\Models\Vehicle;
 use App\Models\Employee;
+use App\Models\GpsDevice;
 use App\Models\VehicleType;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreVehicleRequest;
@@ -29,14 +30,19 @@ class VehicleController extends Controller
     public function vehicleAdd()
     {
         $types = VehicleType::latest()->get();
-        // dd($types);
+        $types = VehicleType::latest()->get();
+
+        $devices = GpsDevice::latest()->with('vehicle')->get();
+        dd($devices);
         return view('vehicleAdd', [
+            'devices' => $devices,
             'types' => $types
         ]);
     }
 
     public function store()
     {
+        // dd(request()->all());
         $added_by= auth()->user()->id;
         $attributes=request()->validate([
             'codeName'=> [
@@ -50,6 +56,7 @@ class VehicleController extends Controller
             'meter_start' => 'required||numeric',
             'type'=> 'required',
             'status'=> 'required',
+            'gps_id'=> ['nullable', Rule::unique('vehicles', 'gps_id')],
             'image' => 'max:150'
         ]);
 
@@ -68,6 +75,7 @@ class VehicleController extends Controller
             'image' => $imageName,
             'type'=> request()->input('type'),
             'status'=> request()->input('status'),
+            'gps_id'=> request()->input('gps_id'),
             'added_by' => $added_by
         ]);
         return redirect("/vehicle/vehicles")->with('success', 'Vehicle has been added');
