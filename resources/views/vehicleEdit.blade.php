@@ -105,7 +105,7 @@
                                      <!--begin::Input group-->
                                      <div class="row mb-6">
                                         <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-4 fv-row">
                                             <!--begin::Label-->
                                             <label class="form-label fs-6 mb-2">Type</label>
                                             <!--end::Label-->
@@ -128,7 +128,7 @@
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-4 fv-row">
                                             <!--begin::Label-->
                                             <label class="form-label fs-6 mb-2">Status</label>
                                             <!--end::Label-->
@@ -146,6 +146,30 @@
                                             <?php } ?>
                                             </select>
                                             @error('status')
+                                                <p class="fv-plugins-message-container invalid-feedback">
+                                                    {{  $message }}
+                                                </p>
+                                            @enderror
+                                            <!--begin::Select2-->
+                                        </div>
+                                        <!--end::Col-->
+                                         <!--begin::Col-->
+                                         <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label fs-6 mb-2">GPS Device</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Select2-->
+                                            <select class="form-select" name="gps_id" data-control="select2" data-placeholder="GPS Device">
+                                                <?php
+                                                    $deviceId = old('gps_id') ?? $vehicle->gps_id;
+                                                ?>
+                                                @foreach ($devices as $device )
+                                                    <option value="{{ $device->id }}" {{ $deviceId == $device->id ? 'selected' : '' }} {{ $device->vehicle ? 'disabled' : '' }}>{{ $device->code_name }}{{ $device->vehicle ? ' (Not Available)' : '' }}</option>
+                                                @endforeach
+
+                                            </select>
+                                            @error('gps_id')
                                                 <p class="fv-plugins-message-container invalid-feedback">
                                                     {{  $message }}
                                                 </p>

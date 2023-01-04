@@ -52,9 +52,9 @@ class Vehicle extends Model
     {
         return $this->hasOne(VehicleLocation::class, 'vid');
     }
-    public function gps()
+    public function gpsDevice()
     {
-        return $this->hasOne(GpsDevice::class, 'gps_id');
+        return $this->belongsTo(GpsDevice::class, 'gps_id');
     }
     // Casting for automatically be cast to Carbon instances
     protected $dates = [

@@ -30,10 +30,7 @@ class VehicleController extends Controller
     public function vehicleAdd()
     {
         $types = VehicleType::latest()->get();
-        $types = VehicleType::latest()->get();
-
-        $devices = GpsDevice::latest()->with('vehicle')->get();
-        dd($devices);
+        $devices = GpsDevice::with('vehicle')->latest()->get();
         return view('vehicleAdd', [
             'devices' => $devices,
             'types' => $types
@@ -89,10 +86,12 @@ class VehicleController extends Controller
     {
         // $vehicles = Vehicle::with('user:id,name,added_by')->find($vehicle->id); //added_by for Nested Eager Loading, id is necessary
         $types = VehicleType::latest()->withCount('vehicles')->get();
+        $devices = GpsDevice::with('vehicle')->latest()->get();
         $vehicle = Vehicle::with('user:id,name')->find($vehicle->id);
         return view('vehicleEdit', [
             'vehicle' => $vehicle,
-            'types' => $types
+            'types' => $types,
+            'devices' => $devices
         ]);
     }
 
@@ -110,7 +109,11 @@ class VehicleController extends Controller
             'license'=>  'required',
             'capacity'=> 'required|numeric',
             'meter_start' => 'required|numeric',
-            'image' => 'max:150'
+            'image' => 'max:150',
+            'gps_id'=> [
+                'nullable',
+                Rule::unique('vehicles', 'gps_id')->ignore($vehicle->gps_id, 'gps_id'),
+            ],
         ]);
 
         if (request()->has('image')) {
@@ -131,6 +134,7 @@ class VehicleController extends Controller
             'image' => $imageName,
             'type'=> request()->input('type'),
             'status'=> request()->input('status'),
+            'gps_id'=> request()->input('gps_id'),
             'added_by' => $added_by
         ]);
         return redirect('/vehicle/vehicles')->with('success', 'Vehicle information updated.');

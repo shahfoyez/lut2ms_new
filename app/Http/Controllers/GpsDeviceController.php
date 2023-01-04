@@ -12,10 +12,7 @@ class GpsDeviceController extends Controller
 {
     public function index()
     {
-        // $devices = GpsDevice::latest()->with('vehicle')->get();
-        $devices = Vehicle::latest()->with('gps')->get();
-
-        dd($devices);
+        $devices = GpsDevice::latest()->with('vehicle')->get();
         return view('devices',[
             'devices' => $devices
         ]);

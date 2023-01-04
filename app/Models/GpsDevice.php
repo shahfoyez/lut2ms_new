@@ -12,8 +12,8 @@ class GpsDevice extends Model
     // protected $with = (['vehicle']);
     protected $guarded = [];
 
-    // public function vehicle()
-    // {
-    //     return $this->belongsTo(Vehicle::class, 'gps_id');
-    // }
+    public function vehicle()
+    {
+        return $this->hasOne(Vehicle::class, 'gps_id');
+    }
 }
