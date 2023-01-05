@@ -16,6 +16,12 @@ return new class extends Migration
         Schema::create('gps_devices', function (Blueprint $table) {
             $table->id();
             $table->string('code_name')->unique();
+            $table->unsignedBigInteger('vid')->nullable();
+            $table->foreign('vid')
+            ->references('id')
+            ->on('vehicles')
+            ->onDelete('Set Null')
+            ->onUpdate('No Action');
             $table->timestamps();
         });
     }

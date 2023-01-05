@@ -153,8 +153,16 @@
 
                                             <!--begin::Select2-->
                                             <select class="form-select" name="gps_id" data-control="select2" data-placeholder="GPS Device">
+
+                                                <option value = "0">None</option>
                                                 @foreach ($devices as $device )
-                                                    <option value="{{ $device->id }}" {{ old('gps_id') == $device->id ? 'selected' : '' }} {{ $device->vehicle ? 'disabled' : '' }}>{{ ucfirst($device->code_name) }}{{ $device->vehicle ? ' (Not Available)' : '' }}</option>
+                                                    <option value="{{ $device->id }}"
+                                                        {{ old('gps_id') == $device->id ? 'selected' : '' }}
+                                                        {{ $device->vehicle ? 'disabled' : '' }}
+                                                    >
+                                                        {{ $device->code_name }}
+                                                        {{ $device->vehicle ? ' (Not Available)' : '' }}
+                                                    </option>
                                                 @endforeach
 
                                             </select>

@@ -21,7 +21,10 @@ class VehicleController extends Controller
 
     public function create()
     {
-        $vehicles = Vehicle::with('vehicleType:id,name')->latest()->get();
+        $vehicles = Vehicle::with('vehicleType:id,name')->with(['gpsDevice' => function($query){
+            $query->select(['id', 'code_name', 'vid'])->get();
+        }])->latest()->get();
+        // dd($vehicles);
         // dd($vehicles);
         return view('vehicles', [
             'lists' => $vehicles,
@@ -31,6 +34,7 @@ class VehicleController extends Controller
     {
         $types = VehicleType::latest()->get();
         $devices = GpsDevice::with('vehicle')->latest()->get();
+        // dd($devices);
         return view('vehicleAdd', [
             'devices' => $devices,
             'types' => $types
@@ -53,9 +57,12 @@ class VehicleController extends Controller
             'meter_start' => 'required||numeric',
             'type'=> 'required',
             'status'=> 'required',
-            'gps_id'=> ['nullable', Rule::unique('vehicles', 'gps_id')],
             'image' => 'max:150'
         ]);
+
+        // if()
+        $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
+        // dd($new);
 
         if (request()->has('image')) {
             $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.request()->image->extension();
@@ -64,7 +71,7 @@ class VehicleController extends Controller
         }else{
             $imageName = "";
         }
-        $employee= Vehicle::create([
+        $vehicle = Vehicle::create([
             'codeName'=> request()->input('codeName'),
             'license'=> request()->input('license'),
             'capacity'=> request()->input('capacity'),
@@ -72,9 +79,14 @@ class VehicleController extends Controller
             'image' => $imageName,
             'type'=> request()->input('type'),
             'status'=> request()->input('status'),
-            'gps_id'=> request()->input('gps_id'),
             'added_by' => $added_by
         ]);
+        if($gps_id != null && $vehicle){
+            $update = GpsDevice::where('id', $gps_id)
+            ->update([
+                'vid'=> $vehicle->id,
+            ]);
+        }
         return redirect("/vehicle/vehicles")->with('success', 'Vehicle has been added');
     }
 
@@ -98,6 +110,8 @@ class VehicleController extends Controller
     public function update(Vehicle $vehicle)
     {
         // dd(public_path($vehicle->image));
+        // dd(request()->all());
+
         $added_by= auth()->user()->id;
         $attributes=request()->validate([
             'codeName'=> [
@@ -115,7 +129,7 @@ class VehicleController extends Controller
                 Rule::unique('vehicles', 'gps_id')->ignore($vehicle->gps_id, 'gps_id'),
             ],
         ]);
-
+        $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
         if (request()->has('image')) {
             if ($vehicle->image) {
                 unlink(public_path($vehicle->image));
@@ -134,7 +148,7 @@ class VehicleController extends Controller
             'image' => $imageName,
             'type'=> request()->input('type'),
             'status'=> request()->input('status'),
-            'gps_id'=> request()->input('gps_id'),
+            'gps_id'=>  $gps_id,
             'added_by' => $added_by
         ]);
         return redirect('/vehicle/vehicles')->with('success', 'Vehicle information updated.');
@@ -192,8 +206,8 @@ class VehicleController extends Controller
              'name'=> 'required | min:3 | max:255',
          ]);
          $update = $type->update([
-                'name'=> request()->input('name')
-             ]);
+            'name'=> request()->input('name')
+        ]);
          return redirect('/vehicle/vehicleTypes')->with('success', 'Department information updated.');
     }
 
@@ -213,9 +227,9 @@ class VehicleController extends Controller
         // dd(request()->all());
         $status = request()->input('status');
         if($status){
-            $vehicles = Vehicle::where('status',  $status)
-                ->with('vehicleType:id,name')
-                ->latest()->get();
+        $vehicles = Vehicle::where('status',  $status)
+            ->with('vehicleType:id,name')
+            ->latest()->get();
         }
         return view('vehicles', [
             'lists' => $vehicles,

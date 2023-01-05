@@ -12,7 +12,8 @@ class GpsDeviceController extends Controller
 {
     public function index()
     {
-        $devices = GpsDevice::latest()->with('vehicle')->get();
+        $devices = GpsDevice::with('vehicle')->latest()->get();
+        // dd($devices);
         return view('devices',[
             'devices' => $devices
         ]);
@@ -20,19 +21,31 @@ class GpsDeviceController extends Controller
 
     public function deviceCreate()
     {
-        $vehicles = Vehicle::latest()->get();
+        $vehicles = Vehicle::with('gpsDevice')->latest()->get();
+        // dd($vehicles);
         return view('deviceAdd', [
             'vehicles' => $vehicles
-
         ]);
     }
     public function deviceAdd()
     {
         $attributes=request()->validate([
-            'code_name'=> ['required', 'min:3', 'max:255', Rule::unique('gps_devices', 'code_name')]
+            'code_name'=> [
+                'required',
+                'min:3',
+                'max:255',
+                Rule::unique('gps_devices', 'code_name')
+            ],
+            'vid' => [
+                'nullable',
+                Rule::unique('gps_devices', 'vid')
+            ]
         ]);
+        $vid = request()->input('vid') == 0 ? null : request()->input('vid');
+
         $create= GpsDevice::create([
-            'code_name'=> request()->input('code_name')
+            'code_name'=> request()->input('code_name'),
+            'vid'=>  $vid
         ]);
         return redirect('/vehicle/devices')->with('success', 'Router has been added');
     }

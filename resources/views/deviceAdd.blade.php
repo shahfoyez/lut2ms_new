@@ -42,6 +42,33 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Col-->
+                                         <!--begin::Col-->
+                                         <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label fs-6 mb-2">GPS Device</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Select2-->
+                                            <select class="form-select" name="vid" data-control="select2" data-placeholder="GPS Device">
+                                                <option value = "0">None</option>
+                                                @foreach ($vehicles as $vehicle )
+                                                    <option value="{{ $vehicle->id }}"
+                                                        {{ old('vid') == $vehicle->id ? 'selected' : '' }}
+                                                        {{ $vehicle->gpsDevice ? 'disabled' : '' }}
+                                                    >
+                                                        {{ $vehicle->codeName }}{{ $vehicle->gpsDevice ? ' (Not Available)' : '' }}
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
+                                            @error('vid')
+                                                <p class="fv-plugins-message-container invalid-feedback">
+                                                    {{  $message }}
+                                                </p>
+                                            @enderror
+                                            <!--begin::Select2-->
+                                        </div>
+                                        <!--end::Col-->
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Submit-->

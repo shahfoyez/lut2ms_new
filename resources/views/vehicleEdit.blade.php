@@ -118,6 +118,7 @@
                                                 @foreach ($types as $tp)
                                                     <option value="{{ $tp->id }}" {{ $typeID == $tp->id ? 'selected' : '' }}>{{ ucfirst($tp->name) }}</option>
                                                 @endforeach
+                                                <option value="0">Others</option>
                                             </select>
                                             @error('type')
                                                 <p class="fv-plugins-message-container invalid-feedback">
@@ -162,10 +163,17 @@
                                             <!--begin::Select2-->
                                             <select class="form-select" name="gps_id" data-control="select2" data-placeholder="GPS Device">
                                                 <?php
-                                                    $deviceId = old('gps_id') ?? $vehicle->gps_id;
+                                                    $deviceId = old('gps_id') ?? $vehicle->gps_id ?? '0';
                                                 ?>
+                                                <option value = "0" {{ $deviceId == 0 ? 'selected' : '' }}>None</option>
                                                 @foreach ($devices as $device )
-                                                    <option value="{{ $device->id }}" {{ $deviceId == $device->id ? 'selected' : '' }} {{ $device->vehicle ? 'disabled' : '' }}>{{ $device->code_name }}{{ $device->vehicle ? ' (Not Available)' : '' }}</option>
+                                                    <option value="{{ $device->id }}"
+                                                        {{ $deviceId == $device->id ? 'selected' : '' }}
+                                                        {{ $device->vehicle && $device->id != $vehicle->gps_id ? 'disabled' : '' }}
+                                                    >
+                                                        {{ $device->code_name }}
+                                                        {{ $device->vehicle ? ' (Not Available)' : '' }}
+                                                    </option>
                                                 @endforeach
 
                                             </select>

@@ -69,7 +69,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{ $device->vehicle ? $device->vehicle->codeName : "Not Added" }}</p>
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="{{  $device->vehicle ? '/vehicle/vehicleEdit/'.$device->vehicle->id : '' }}" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{  $device->vehicle ? $device->vehicle->codeName : "Not Added" }}</a>
+                                                <span class="text-muted fw-bold text-muted d-block fs-7">{{ $device->vehicle ? "License: ".$device->vehicle->license : '' }}</span>
+                                            </div>
+                                        </div>
                                             {{-- <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-50px me-5">
                                                     <img src="{{ $router->vehicle->image ? asset($router->vehicle->image) : asset('/assets/uploads/default/defaultVehicle.webp') }}" class="" alt="" />

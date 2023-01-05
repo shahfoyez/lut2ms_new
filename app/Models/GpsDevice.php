@@ -14,6 +14,6 @@ class GpsDevice extends Model
 
     public function vehicle()
     {
-        return $this->hasOne(Vehicle::class, 'gps_id');
+        return $this->belongsTo(Vehicle::class, 'vid');
     }
 }
