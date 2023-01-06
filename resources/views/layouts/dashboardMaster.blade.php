@@ -93,12 +93,10 @@
 		<script src="{{ asset('/assets/js/custom/documentation/documentation.js') }}"></script>
 		<script src="{{ asset('/assets/js/custom/documentation/search.js') }}"></script>
 		<script src="{{ asset('/assets/js/custom/documentation/general/datatables/advanced.js') }}"></script>
-		<!--end::Page Custom Javascript-->
+		<!--start::Page Custom Javascript-->
         @yield('scripts')
         @yield('mapScript')
-        @yield('fuelScript')
-        @yield('tripScript')
-        @yield('maintenanceScript')
+        <!--end::Page Custom Javascript-->
 	</body>
 	<!--end::Body-->
 </html

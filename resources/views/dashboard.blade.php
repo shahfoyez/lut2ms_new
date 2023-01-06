@@ -17,12 +17,8 @@
                     <p>{{ session('message') }}</p>
                 </div>
             @endif
-            @include('components.dashboard.vehicleMonitor');
-            @include('components.dashboard.drivers');
-            {{-- @include('components.dashboard.fuel');
-            @include('components.dashboard.maintenance');
-            @include('components.dashboard.trip'); --}}
-
+            @include('components.dashboard.vehicleMonitor')
+            @include('components.dashboard.drivers')
             <!--begin::fuel-->
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
@@ -63,8 +59,8 @@
                             <!--end::Item-->
 
 
-                              <!--begin::Item-->
-                              <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
                                 <!--begin::Icon-->
                                 <span class="svg-icon svg-icon-success me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
@@ -433,10 +429,8 @@
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
-
-
-                              <!--begin::Item-->
-                              <div class="d-flex align-items-center bg-light-danger rounded p-5 mb-7">
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center bg-light-danger rounded p-5 mb-7">
                                 <!--begin::Icon-->
                                 <span class="svg-icon svg-icon-danger me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
@@ -588,7 +582,7 @@
 @endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    {{-- Fuels Chart --}}
+    {{-- fuels chart --}}
     <script>
         let fuelsData = {!! json_encode($fuelsData) !!};
         var fuels_labels = fuelsData.fuels_labels;
@@ -608,8 +602,8 @@
           height: 350,
           type: 'line',
         },
-        stroke: {
-          width: [0, 4]
+            stroke: {
+                width: [0, 4]
         },
         dataLabels: {
           enabled: true,
@@ -635,7 +629,7 @@
         var fuelsChart = new ApexCharts(document.querySelector("#fuelsChart"), fuels);
         fuelsChart.render();
     </script>
-    {{-- Trips Chart --}}
+    {{-- trips chart --}}
     <script>
         let tripsData = {!! json_encode($tripsData) !!};
         var trips_labels = tripsData.trips_labels;
@@ -679,7 +673,7 @@
         var tripsChart = new ApexCharts(document.querySelector("#tripsChart"), trips);
         tripsChart.render();
     </script>
-
+    {{-- maintenance chart --}}
     <script>
         let maintenanceData = {!! json_encode($maintenanceData) !!};
         var labels =  maintenanceData.labels;
