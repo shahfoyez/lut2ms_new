@@ -28,6 +28,7 @@ function tripsData(){
             }
             return $trip;
         });
+        // dd($trips);
     $trips_labels = array();
     $trips_count_values = array();
     $total_trips = 0;
@@ -54,11 +55,13 @@ function tripsData(){
                 $trip_last_month = $lastCarbonDate->format('F');
             }
             $curCarbonDate = Carbon::parse($trip->monthYear);
+
             $trip_label = $curCarbonDate->format('M y');
             $total_trips += $trip->totalTrips;
             array_push($trips_labels, $trip_label);
             array_push($trips_count_values, $trip->totalTrips);
         }
+        // dd($curCarbonDate);
         $avg_trips = $total_trips/sizeof($trips_labels);
     }
     $tripsData = array(

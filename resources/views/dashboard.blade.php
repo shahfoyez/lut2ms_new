@@ -83,7 +83,7 @@
                             </div>
                             <!--end::Item-->
                             <?php
-                                $fuelTMC = $fuelsData['cur_month_fuels'] < $fuelsData['last_month_fuels'] ? 'success' : 'danger';
+                                $fuelTMC = $fuelsData['cur_month_fuels'] <= $fuelsData['last_month_fuels'] ? 'success' : 'danger';
                                 $fuelLMC = $fuelsData['last_month_fuels'] < $fuelsData['cur_month_fuels'] ? 'success' : 'danger';
                             ?>
                             <!--begin::Item-->
@@ -108,7 +108,7 @@
                                 <!--end::Title-->
                                 <!--begin::Lable-->
                                 <span class="fw-bolder text-{{$fuelTMC}} py-1">{{ $fuelsData['cur_month_fuels'] }} Liters</span>
-                                @include('components.arrowIndicator.fuelArrowIndicator')
+                                @include('components.dashboard.arrowIndicator.fuelArrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -272,7 +272,7 @@
                             </div>
                             <!--end::Item-->
                             <?php
-                                $tripTMC = $tripsData['cur_month_trips'] < $tripsData['last_month_trips'] ? 'success' : 'danger';
+                                $tripTMC = $tripsData['cur_month_trips'] <= $tripsData['last_month_trips'] ? 'success' : 'danger';
                                 $tripLMC = $tripsData['last_month_trips'] < $tripsData['cur_month_trips'] ? 'success' : 'danger';
                             ?>
                             <!--begin::Item-->
@@ -297,7 +297,7 @@
                                 <!--end::Title-->
                                 <!--begin::Lable-->
                                 <span class="fw-bolder text-{{ $tripTMC }} py-1">{{ $tripsData['cur_month_trips'] }} Trips</span>
-                                @include('components.arrowIndicator.tripArrowIndicator')
+                                @include('components.dashboard.arrowIndicator.tripArrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -460,7 +460,7 @@
                             </div>
                             <!--end::Item-->
                             <?php
-                                $maintenanceTMC = $maintenanceData['curCost'] < $maintenanceData['lastCost'] ? 'success' : 'danger';
+                                $maintenanceTMC = $maintenanceData['curCost'] <= $maintenanceData['lastCost'] ? 'success' : 'danger';
                                 $maintenanceLMC = $maintenanceData['lastCost'] < $maintenanceData['curCost'] ? 'success' : 'danger';
                             ?>
                             <!--begin::Item-->
@@ -485,7 +485,7 @@
                                 <!--end::Title-->
                                 <!--begin::Lable-->
                                 <span class="fw-bolder text-{{ $maintenanceTMC }} py-1">৳{{ $maintenanceData['curCost'] }}</span>
-                                @include('components.arrowIndicator.arrowIndicator')
+                                @include('components.dashboard.arrowIndicator.arrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
