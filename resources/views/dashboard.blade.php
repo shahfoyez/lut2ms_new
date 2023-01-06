@@ -57,8 +57,6 @@
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
-
-
                             <!--begin::Item-->
                             <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
                                 <!--begin::Icon-->
@@ -84,10 +82,14 @@
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
+                            <?php
+                                $fuelTMC = $fuelsData['cur_month_fuels'] < $fuelsData['last_month_fuels'] ? 'success' : 'danger';
+                                $fuelLMC = $fuelsData['last_month_fuels'] < $fuelsData['cur_month_fuels'] ? 'success' : 'danger';
+                            ?>
                             <!--begin::Item-->
-                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                            <div class="d-flex align-items-center bg-light-{{ $fuelTMC }} rounded p-5 mb-7">
                                 <!--begin::Icon-->
-                                <span class="svg-icon svg-icon-success me-5">
+                                <span class="svg-icon svg-icon-{{$fuelTMC}} me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -105,16 +107,15 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-success py-1">{{ $fuelsData['cur_month_fuels'] }} Liters</span>
+                                <span class="fw-bolder text-{{$fuelTMC}} py-1">{{ $fuelsData['cur_month_fuels'] }} Liters</span>
                                 @include('components.arrowIndicator.fuelArrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
-
                             <!--begin::Item-->
-                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                            <div class="d-flex align-items-center rounded p-5 mb-7 bg-light-{{ $fuelLMC }}">
                                 <!--begin::Icon-->
-                                <span class="svg-icon svg-icon-success me-5">
+                                <span class="svg-icon svg-icon-{{ $fuelLMC }} me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -132,7 +133,7 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-success py-1">{{ $fuelsData['last_month_fuels'] }} Liters</span>
+                                <span class="fw-bolder text-{{ $fuelLMC }} py-1">{{ $fuelsData['last_month_fuels'] }} Liters</span>
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -245,8 +246,8 @@
                             <!--end::Item-->
 
 
-                              <!--begin::Item-->
-                              <div class="d-flex align-items-center bg-light-warning rounded p-5 mb-7">
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center bg-light-warning rounded p-5 mb-7">
                                 <!--begin::Icon-->
                                 <span class="svg-icon svg-icon-warning me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
@@ -270,10 +271,14 @@
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
+                            <?php
+                                $tripTMC = $tripsData['cur_month_trips'] < $tripsData['last_month_trips'] ? 'success' : 'danger';
+                                $tripLMC = $tripsData['last_month_trips'] < $tripsData['cur_month_trips'] ? 'success' : 'danger';
+                            ?>
                             <!--begin::Item-->
-                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                            <div class="d-flex align-items-center bg-light-{{ $tripTMC }} rounded p-5 mb-7">
                                 <!--begin::Icon-->
-                                <span class="svg-icon svg-icon-success me-5">
+                                <span class="svg-icon svg-icon-{{ $tripTMC }} me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -291,16 +296,16 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-success py-1">{{ $tripsData['cur_month_trips'] }} Trips</span>
+                                <span class="fw-bolder text-{{ $tripTMC }} py-1">{{ $tripsData['cur_month_trips'] }} Trips</span>
                                 @include('components.arrowIndicator.tripArrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
 
                             <!--begin::Item-->
-                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                            <div class="d-flex align-items-center bg-light-{{ $tripLMC }} rounded p-5 mb-7">
                                 <!--begin::Icon-->
-                                <span class="svg-icon svg-icon-success me-5">
+                                <span class="svg-icon svg-icon-{{ $tripLMC }} me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -318,7 +323,7 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-success py-1">{{ $tripsData['last_month_trips'] }} Trips</span>
+                                <span class="fw-bolder text-{{ $tripLMC }} py-1">{{ $tripsData['last_month_trips'] }} Trips</span>
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
@@ -454,10 +459,14 @@
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
+                            <?php
+                                $maintenanceTMC = $maintenanceData['curCost'] < $maintenanceData['lastCost'] ? 'success' : 'danger';
+                                $maintenanceLMC = $maintenanceData['lastCost'] < $maintenanceData['curCost'] ? 'success' : 'danger';
+                            ?>
                             <!--begin::Item-->
-                            <div class="d-flex align-items-center bg-light-danger rounded p-5 mb-7">
+                            <div class="d-flex align-items-center bg-light-{{ $maintenanceTMC }} rounded p-5 mb-7">
                                 <!--begin::Icon-->
-                                <span class="svg-icon svg-icon-success me-5">
+                                <span class="svg-icon svg-icon-{{ $maintenanceTMC }} me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -475,16 +484,15 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-success py-1">৳{{ $maintenanceData['curCost'] }}</span>
+                                <span class="fw-bolder text-{{ $maintenanceTMC }} py-1">৳{{ $maintenanceData['curCost'] }}</span>
                                 @include('components.arrowIndicator.arrowIndicator')
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
-
                             <!--begin::Item-->
-                            <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                            <div class="d-flex align-items-center bg-light-{{ $maintenanceLMC }} rounded p-5 mb-7">
                                 <!--begin::Icon-->
-                                <span class="svg-icon svg-icon-success me-5">
+                                <span class="svg-icon svg-icon-{{ $maintenanceLMC }} me-5">
                                     <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -502,7 +510,7 @@
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Lable-->
-                                <span class="fw-bolder text-success py-1">৳{{ $maintenanceData['lastCost'] }}</span>
+                                <span class="fw-bolder text-{{ $maintenanceLMC }} py-1">৳{{ $maintenanceData['lastCost'] }}</span>
                                 <!--end::Lable-->
                             </div>
                             <!--end::Item-->
