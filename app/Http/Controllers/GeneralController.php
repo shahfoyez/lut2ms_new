@@ -33,7 +33,7 @@ class GeneralController extends Controller
 
         return $distance;
     }
-
+    // index
     public function index(){
         // $distance =  $this->calculateDistance('New York, NY', 'Los Angeles, CA');
         // dd($distance);
@@ -75,6 +75,7 @@ class GeneralController extends Controller
             'fuelsData' =>  $fuelsData
         ]);
     }
+    // logbook
     public function logbook(){
         $vehicles = Vehicle::with('vehicleType')
             ->withSum('fuels', 'quantity')
@@ -91,6 +92,7 @@ class GeneralController extends Controller
             'vehicles' => $vehicles
         ]);
     }
+    // summeryFilter
     public function summeryFilter()
     {
         $date = explode("-", request()->input('date'));
