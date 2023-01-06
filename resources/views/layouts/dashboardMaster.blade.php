@@ -95,6 +95,10 @@
 		<script src="{{ asset('/assets/js/custom/documentation/general/datatables/advanced.js') }}"></script>
 		<!--end::Page Custom Javascript-->
         @yield('scripts')
+        @yield('mapScript')
+        @yield('fuelScript')
+        @yield('tripScript')
+        @yield('maintenanceScript')
 	</body>
 	<!--end::Body-->
 </html

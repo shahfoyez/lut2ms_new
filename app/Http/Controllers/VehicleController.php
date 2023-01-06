@@ -111,7 +111,6 @@ class VehicleController extends Controller
     {
         // dd(public_path($vehicle->image));
         // dd(request()->all());
-
         $added_by= auth()->user()->id;
         $attributes=request()->validate([
             'codeName'=> [
@@ -151,6 +150,7 @@ class VehicleController extends Controller
             'gps_id'=>  $gps_id,
             'added_by' => $added_by
         ]);
+
         return redirect('/vehicle/vehicles')->with('success', 'Vehicle information updated.');
     }
 
