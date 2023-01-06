@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\GpsDevice;
 use App\Models\VehicleType;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreVehicleRequest;
 use App\Http\Requests\UpdateVehicleRequest;
 
@@ -43,6 +44,14 @@ class VehicleController extends Controller
 
     public function store()
     {
+        $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
+        if($gps_id){
+            $gps = GpsDevice::find($gps_id);
+            // $gps = request()->input('gps_id');
+            if($gps->vid != null){
+                return back()->with('error', 'Sorry! GPS can not be added.');
+            }
+        }
         // dd(request()->all());
         $added_by= auth()->user()->id;
         $attributes=request()->validate([
@@ -59,11 +68,6 @@ class VehicleController extends Controller
             'status'=> 'required',
             'image' => 'max:150'
         ]);
-
-        // if()
-        $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
-        // dd($new);
-
         if (request()->has('image')) {
             $imageName='IMG_'.md5(date('d-m-Y H:i:s')).'.'.request()->image->extension();
             request()->image->move(public_path('assets/uploads/vehicle'),$imageName);
@@ -94,12 +98,18 @@ class VehicleController extends Controller
     {
         //
     }
-    public function edit(Vehicle $vehicle)
+    public function edit($vehicle)
     {
         // $vehicles = Vehicle::with('user:id,name,added_by')->find($vehicle->id); //added_by for Nested Eager Loading, id is necessary
         $types = VehicleType::latest()->withCount('vehicles')->get();
-        $devices = GpsDevice::with('vehicle')->latest()->get();
-        $vehicle = Vehicle::with('user:id,name')->find($vehicle->id);
+        $devices = GpsDevice::with('vehicle:id,codeName')->latest()->get();
+        $vehicle = Vehicle::with('user:id,name')->find($vehicle);
+        $vehicles = Vehicle::with(['gpsDevice' => function($query){
+            $query->select('id', 'vid')->get();
+        }])->find($vehicle);
+        // dd( $vehicle);
+
+        // dd($vehicle);
         return view('vehicleEdit', [
             'vehicle' => $vehicle,
             'types' => $types,
@@ -107,12 +117,25 @@ class VehicleController extends Controller
         ]);
     }
 
-    public function update(Vehicle $vehicle)
+    public function update($vid)
     {
         // dd(public_path($vehicle->image));
         // dd(request()->all());
+        // request()->merge([
+        //     'vid' => $vid,
+        // ]);
+        $vehicle = Vehicle::with('gpsDevice')->find($vid);
+        $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
+
+        if($gps_id){
+            $gps = GpsDevice::find($gps_id);
+            // $gps = request()->input('gps_id');
+            if($gps->vid != null && ($gps->vid != $vehicle->id)){
+                return back()->with('error', 'Sorry! GPS can not be added.');
+            }
+        }
         $added_by= auth()->user()->id;
-        $attributes=request()->validate([
+        $attributes = request()->validate([
             'codeName'=> [
                 'required',
                 Rule::unique('vehicles', 'codeName')->ignore($vehicle->codeName, 'codeName'),
@@ -123,12 +146,8 @@ class VehicleController extends Controller
             'capacity'=> 'required|numeric',
             'meter_start' => 'required|numeric',
             'image' => 'max:150',
-            'gps_id'=> [
-                'nullable',
-                Rule::unique('vehicles', 'gps_id')->ignore($vehicle->gps_id, 'gps_id'),
-            ],
+            'gps_id'=> 'nullable',
         ]);
-        $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
         if (request()->has('image')) {
             if ($vehicle->image) {
                 unlink(public_path($vehicle->image));
@@ -139,7 +158,7 @@ class VehicleController extends Controller
         }else{
             $imageName =  $vehicle->image;
         }
-        $update= $vehicle->update([
+        $vehicleUpdate = $vehicle->update([
             'codeName'=> request()->input('codeName'),
             'license'=> request()->input('license'),
             'capacity'=> request()->input('capacity'),
@@ -147,10 +166,24 @@ class VehicleController extends Controller
             'image' => $imageName,
             'type'=> request()->input('type'),
             'status'=> request()->input('status'),
-            'gps_id'=>  $gps_id,
             'added_by' => $added_by
         ]);
-
+        // dd( $gps_id);
+        if($vehicleUpdate){
+            // dd($gps_id);
+            if($gps_id == null){
+                $update = GpsDevice::where('vid', $vid)
+                ->update([
+                    'vid'=> null,
+                ]);
+            }
+            else{
+                $update = GpsDevice::where('id', $gps_id)
+                ->update([
+                    'vid'=> $vid,
+                ]);
+            }
+        }
         return redirect('/vehicle/vehicles')->with('success', 'Vehicle information updated.');
     }
 

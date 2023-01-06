@@ -39,7 +39,7 @@
                                             <input type="text" name="codeName" class="form-control mb-3 mb-lg-0" placeholder="Code Name" value="{{ old('codeName') ? old('codeName') : $vehicle->codeName}}" />
                                             @error('codeName')
                                                 <p class="fv-plugins-message-container invalid-feedback">
-                                                    {{  $message }}
+                                                    {{ $message }}
                                                 </p>
                                             @enderror
                                             <!--end::Input-->
@@ -163,13 +163,13 @@
                                             <!--begin::Select2-->
                                             <select class="form-select" name="gps_id" data-control="select2" data-placeholder="GPS Device">
                                                 <?php
-                                                    $deviceId = old('gps_id') ?? $vehicle->gps_id ?? '0';
+                                                    $deviceId = old('gps_id') ?? $vehicle->gpsDevice->id ?? '0';
                                                 ?>
                                                 <option value = "0" {{ $deviceId == 0 ? 'selected' : '' }}>None</option>
                                                 @foreach ($devices as $device )
                                                     <option value="{{ $device->id }}"
                                                         {{ $deviceId == $device->id ? 'selected' : '' }}
-                                                        {{ $device->vehicle && $device->id != $vehicle->gps_id ? 'disabled' : '' }}
+                                                        {{ $device->vehicle && ($device->vid != $vehicle->id) ? 'disabled' : '' }}
                                                     >
                                                         {{ $device->code_name }}
                                                         {{ $device->vehicle ? ' (Not Available)' : '' }}
