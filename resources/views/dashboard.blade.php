@@ -588,51 +588,6 @@
 @endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    {{-- Trips Chart --}}
-    <script>
-        let tripsData = {!! json_encode($tripsData) !!};
-        var trips_labels = tripsData.trips_labels;
-        var trips_count_values = tripsData.trips_count_values;
-        var trips = {
-          series: [
-            {
-            name: 'Trips',
-            type: 'column',
-            data: trips_count_values
-            },
-            {
-            name: 'Trips',
-            type: 'line',
-            data: trips_count_values
-            }
-        ],
-          chart: {
-          height: 350,
-          type: 'line',
-        },
-        stroke: {
-          width: [0, 4]
-        },
-        dataLabels: {
-          enabled: true,
-          enabledOnSeries: [1]
-        },
-        labels: trips_labels,
-        xaxis: {
-          type: 'text'
-        },
-        yaxis: [
-            {
-                title: {
-                    text: 'Number of Trips',
-                },
-            },
-        ]
-        };
-        var tripsChart = new ApexCharts(document.querySelector("#tripsChart"), trips);
-        tripsChart.render();
-    </script>
-
     {{-- Fuels Chart --}}
     <script>
         let fuelsData = {!! json_encode($fuelsData) !!};
@@ -680,7 +635,52 @@
         var fuelsChart = new ApexCharts(document.querySelector("#fuelsChart"), fuels);
         fuelsChart.render();
     </script>
-     <script>
+    {{-- Trips Chart --}}
+    <script>
+        let tripsData = {!! json_encode($tripsData) !!};
+        var trips_labels = tripsData.trips_labels;
+        var trips_count_values = tripsData.trips_count_values;
+        var trips = {
+          series: [
+            {
+            name: 'Trips',
+            type: 'column',
+            data: trips_count_values
+            },
+            {
+            name: 'Trips',
+            type: 'line',
+            data: trips_count_values
+            }
+        ],
+          chart: {
+          height: 350,
+          type: 'line',
+        },
+        stroke: {
+          width: [0, 4]
+        },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1]
+        },
+        labels: trips_labels,
+        xaxis: {
+          type: 'text'
+        },
+        yaxis: [
+            {
+                title: {
+                    text: 'Number of Trips',
+                },
+            },
+        ]
+        };
+        var tripsChart = new ApexCharts(document.querySelector("#tripsChart"), trips);
+        tripsChart.render();
+    </script>
+
+    <script>
         let maintenanceData = {!! json_encode($maintenanceData) !!};
         var labels =  maintenanceData.labels;
         var costValues = maintenanceData.costValues;

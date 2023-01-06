@@ -676,7 +676,6 @@
           }
         }]
         };
-
         var fuelsChart = new ApexCharts(document.querySelector("#fuelsChart"), fuels);
         fuelsChart.render();
     </script>
