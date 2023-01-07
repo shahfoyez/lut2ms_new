@@ -227,14 +227,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/chat/reply', 'reply');
         // search
         Route::get('/chat/chatSearch', 'search');
-
     });
     // NoticeController Group
     Route::controller(NoticeController::class)->group(function () {
         Route::get('/notice/notices', 'index');
         Route::get('/notice/noticeAdd', 'create');
         Route::post('/notice/noticeAdd', 'store');
-
         // EUD
         Route::get('/notice/noticeEdit/{notice}', 'edit');
         Route::post('/notice/noticeUpdate/{notice}', 'update');
@@ -262,7 +260,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/vehicle/deviceEdit/{gpsDevice}', 'edit');
         Route::post('/vehicle/deviceUpdate/{gpsDevice}', 'update');
         Route::delete('/vehicle/deviceDelete/{gpsDevice}', 'destroy');
-
     });
 
     // logout
