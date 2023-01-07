@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Routers
+    GPS Devices
 @endsection
 @section('content')
 <!--begin::Content-->

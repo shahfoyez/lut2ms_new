@@ -92,7 +92,7 @@ class MaintenanceController extends Controller
 
     public function destroy(Maintenance $maintenance)
     {
-        // $data = Fuel::find($fuel);
+        // $data = Fuel::findOrFail($fuel);
         // // dd($data);
         // if($data){
         //     $data->delete();

@@ -156,7 +156,7 @@ class UserController extends Controller
         if(auth()->user()->role != 1){
             abort(404);
         }
-        $data = User::find($user);
+        $data = User::findOrFail($user);
         // dd($data);
         if($data){
             if($data->image){

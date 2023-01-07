@@ -96,11 +96,11 @@ class FuelController extends Controller
                 'fuels' => $fuels
         ]);
     }
-    public function vehicleFuels($vehicle){
+    public function vehicleFuels($vid){
+        $vehicle = Vehicle::findOrFail($vid);
         $fuels = Fuel::latest('date')
-            ->where('vid', $vehicle)
+            ->where('vid', $vid)
             ->get();
-        $vehicle = Vehicle::find($vehicle);
         return view('vehicleFuels',[
             'fuels' => $fuels,
             'vehicle' => $vehicle
@@ -109,8 +109,7 @@ class FuelController extends Controller
 
     public function edit($fuel)
     {
-        $fuel = Fuel::with('vehicle:id,id,codeName')->find($fuel);
-        // dd($fuel);
+        $fuel = Fuel::with('vehicle:id,id,codeName')->findOrFail($fuel);
         return view('fuelEdit', [
             'fuel' => $fuel
         ]);
@@ -199,8 +198,9 @@ class FuelController extends Controller
          ]);
     }
 
-    public function vehicleFuelsFilter($vehicle)
+    public function vehicleFuelsFilter($vid)
     {
+        $vehicle = Vehicle::findOrFail($vid);
         // dd(request()->all());
         $date = explode("-", request()->input('date'));
         $start = trim($date[0]);
@@ -213,11 +213,10 @@ class FuelController extends Controller
         if(request()->input('date')){
             $fuels = $query->latest()
             ->whereBetween('date', [$start, $end])
-            ->where('vid', $vehicle)
+            ->where('vid', $vid)
             ->get();
         }
         // dd($fuels);
-        $vehicle = Vehicle::find($vehicle);
         $start =  Carbon::parse($start)->format('d M Y');
         $end =  Carbon::parse($end)->format('d M Y');
         //  dd($fuels);
@@ -231,7 +230,7 @@ class FuelController extends Controller
 
     public function destroy($fuel)
     {
-        $data = Fuel::find($fuel);
+        $data = Fuel::findOrFail($fuel);
         // dd($data);
         if($data){
             $data->delete();

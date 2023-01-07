@@ -69,9 +69,9 @@ class EmployeeController extends Controller
 
     public function edit($employee)
     {
+        $employee = Employee::with('departmentR','designationR')->findOrFail($employee);
         $departments = Department::latest()->get();
         $designations = Designation::latest()->get();
-        $employee = Employee::with('departmentR','designationR')->find($employee);
         // dd( $employee);
         return view('employeeEdit', [
             'departments' => $departments,
@@ -119,7 +119,7 @@ class EmployeeController extends Controller
 
     public function destroy($employee)
     {
-        $data = Employee::find($employee);
+        $data = Employee::findOrFail($employee);
         if($data->image){
             unlink(public_path($data->image));
         }
@@ -186,8 +186,7 @@ class EmployeeController extends Controller
     }
     public function designationDestroy($designation)
     {
-        // dd("hell");
-        $data = Designation::find($designation);
+        $data = Designation::findOrFail($designation);
         // dd($data);
         if($data){
             $data->delete();
@@ -198,8 +197,7 @@ class EmployeeController extends Controller
     }
     public function departmentDestroy($department)
     {
-        // dd("hell");
-        $data = Department::find($department);
+        $data = Department::findOrFail($department);
         // dd($data);
         if($data){
             if($data->image){
@@ -251,15 +249,4 @@ class EmployeeController extends Controller
             ]);
         return redirect('/employee/designations')->with('success', 'Designation information updated.');
     }
-
-
-    public function departments1()
-    {
-        $departments = Department::withCount('employees')->orderBy('created_at', 'DESC')->get();
-        // dd( $departments);
-        return view('tests', [
-            'departments' => $departments
-        ]);
-    }
-
 }

@@ -1,6 +1,6 @@
 @extends('layouts.dashboardMaster')
 @section('title')
-    Edit Department
+    Edit GPS
 @endsection
 @section('content')
     <!--begin::Content-->
@@ -23,24 +23,56 @@
                             <!--begin::Col-->
                             <div class="col-md-12 pe-lg-10">
                                 <!--begin::Form-->
-                                <form action="/employee/departmentUpdate/{{ $department->id }}" class="form mb-15" method="post" id="">
+                                <form action="/vehicle/deviceUpdate/{{ $gpsDevice->id }}" class="form mb-15" method="post" id="">
                                     @csrf
-                                    <h1 class="fw-bolder text-dark mb-9">Edit Department</h1>
+                                    <h1 class="fw-bolder text-dark mb-9">Edit GPS</h1>
                                     <!--begin::Input group-->
                                     <div class="row mb-6">
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Department</label>
+                                            <label class="required fw-bold fs-6 mb-2">GPS</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="text" name="name" class="form-control mb-3 mb-lg-0" placeholder="Department" value="{{ $department->name }}" />
-                                            @error('name')
+                                            <input type="text" name="code_name" class="form-control mb-3 mb-lg-0" placeholder="Department" value="{{ old('code_name') ?? $gpsDevice->code_name }}" />
+                                            @error('code_name')
                                                 @include('components.validation')
                                             @enderror
                                             <!--end::Input-->
                                         </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-4 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label fs-6 mb-2">Vehicle</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Select2-->
+                                            <select class="form-select" name="vid" data-control="select2" data-placeholder="GPS Device">
+                                                <?php
+                                                    $vid = old('vid') ?? $gpsDevice->vehicle->id ?? '0';
+                                                ?>
+                                                <option value = "0" {{ $vid == 0 ? 'selected' : '' }}>None</option>
+                                                @foreach ($vehicles as $vehicle )
+                                                    <option value="{{ $vehicle->id }}"
+                                                        {{ $vid == $vehicle->id ? 'selected' : '' }}
+                                                        {{ $vehicle->gpsDevice && ($vehicle->id != $gpsDevice->vid) ? 'disabled' : '' }}
+                                                    >
+                                                        {{ $vehicle->codeName }}
+                                                        {{ $vehicle->gpsDevice ? ' (Not Available)' : '' }}
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
+                                            @error('vid')
+                                                <p class="fv-plugins-message-container invalid-feedback">
+                                                    {{  $message }}
+                                                </p>
+                                            @enderror
+                                            <!--begin::Select2-->
+                                        </div>
+                                        <!--end::Col-->
 
                                     </div>
                                     <!--end::Input group-->

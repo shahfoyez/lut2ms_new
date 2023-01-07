@@ -67,10 +67,10 @@ class MaintenanceController extends Controller
             'maintenanceRecords' => $maintenanceRecords
         ]);
     }
-    public function  vehicleMaintenanceEntries($vehicle)
+    public function  vehicleMaintenanceEntries($vid)
     {
-        $maintenanceRecords = Maintenance::where('vid', $vehicle)->latest('from')->get();
-        $vehicle = Vehicle::find($vehicle)->codeName;
+        $vehicle = Vehicle::findOrFail($vid)->codeName;
+        $maintenanceRecords = Maintenance::where('vid', $vid)->latest('from')->get();
         // dd( $vehicle);
         // dd($maintenanceRecords);
         return view('vehicleMaintenanceRecords', [
@@ -79,11 +79,12 @@ class MaintenanceController extends Controller
         ]);
     }
 
-
-    public function edit($maintenance)
+    public function edit(Maintenance $maintenance)
     {
-        $maintenance = Maintenance::with('vehicle')->find($maintenance);
-        // dd($maintenance);
+        $maintenance = $maintenance->load(['vehicle' => function($query){
+            $query->select('id', 'codeName')->get();
+        }]);
+
         return view('maintenanceEdit', [
             'maintenance' => $maintenance
         ]);
@@ -193,7 +194,7 @@ class MaintenanceController extends Controller
 
     public function destroy($maintenance)
     {
-        $data = Maintenance::find($maintenance);
+        $data = Maintenance::findOrFail($maintenance);
         if($data){
             $data->delete();
             return back()->with('success', 'Maintenance  Record has been deleted.');

@@ -53,6 +53,7 @@
                                 <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                     <th >Sl</th>
                                     <th>vehicle</th>
+                                    <th>GPS</th>
                                     <th>Capacity</th>
                                     <th>Type</th>
                                     <th>Meter Starts</th>
@@ -80,6 +81,13 @@
                                                     <span class="text-muted fw-bold text-muted d-block fs-7">License: {{ $list->license ? $list->license : 'no data' }}</span>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td>
+                                            @if ($list->gpsDevice)
+                                                <a href="/vehicle/deviceEdit/{{ $list->gpsDevice->id }}" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{ $list->gpsDevice->code_name }}</a>
+                                            @else
+                                                <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-muted">Not Added</p>
+                                            @endif
                                         </td>
                                         <td>
                                             @php

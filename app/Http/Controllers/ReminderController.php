@@ -63,9 +63,8 @@ class ReminderController extends Controller
     }
 
 
-    public function edit($reminder)
+    public function edit(Reminder $reminder)
     {
-        $reminder = Reminder::find($reminder);
         return view('reminderEdit', [
              'reminder' => $reminder
         ]);
@@ -113,7 +112,7 @@ class ReminderController extends Controller
     }
     public function destroy($reminder)
     {
-        $data = Reminder::find($reminder);
+        $data = Reminder::findorFail($reminder);
         // dd($data);
         if($data){
             $data->delete();

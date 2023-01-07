@@ -105,7 +105,7 @@ class ScheduleController extends Controller
 
     public function destroy($schedule)
     {
-        $data = Schedule::find($schedule);
+        $data = Schedule::findOrFail($schedule);
         if($data){
             if ($data->image) {
                 unlink(public_path($data->image));

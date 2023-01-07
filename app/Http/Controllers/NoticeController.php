@@ -132,7 +132,7 @@ class NoticeController extends Controller
      */
     public function destroy($notice)
     {
-        $data = Notice::find($notice);
+        $data = Notice::findorFail($notice);
         // dd($data);
         if($data){
             if ($data->image) {

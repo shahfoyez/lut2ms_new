@@ -86,7 +86,7 @@ class RoutexController extends Controller
 
     public function destroy($route)
     {
-        $data = Routex::find($route);
+        $data = Routex::findOrFail($route);
         // dd($data);
         if($data){
             $data->delete();

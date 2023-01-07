@@ -34,6 +34,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Select2-->
+                                            {{-- <input type="text" class="form-control" placeholder="Cost(Taka)" name="cost" value="{{ old('cost') ? old('cost') : $maintenance->cost  }}"/> --}}
                                             <select class="form-select" name="vid" data-control="select2" data-placeholder="Select Vehicle" disabled>
                                                 <option value="{{ $maintenance->vehicle->id }}" selected>{{ $maintenance->vehicle->codeName }}</option>
                                             </select>

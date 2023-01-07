@@ -22,10 +22,12 @@ class VehicleController extends Controller
 
     public function create()
     {
-        $vehicles = Vehicle::with('vehicleType:id,name')->with(['gpsDevice' => function($query){
-            $query->select(['id', 'code_name', 'vid'])->get();
-        }])->latest()->get();
-        // dd($vehicles);
+        $vehicles = Vehicle::with('vehicleType:id,name')
+            ->with(['gpsDevice' => function($query){
+                $query->select(['id', 'code_name', 'vid'])->get();
+            }])
+            ->with('gpsDevice:id,code_name,vid')
+            ->latest()->get();
         // dd($vehicles);
         return view('vehicles', [
             'lists' => $vehicles,
@@ -46,8 +48,7 @@ class VehicleController extends Controller
     {
         $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
         if($gps_id){
-            $gps = GpsDevice::find($gps_id);
-            // $gps = request()->input('gps_id');
+            $gps = GpsDevice::findOrFail($gps_id);
             if($gps->vid != null){
                 return back()->with('error', 'Sorry! GPS can not be added.');
             }
@@ -100,16 +101,13 @@ class VehicleController extends Controller
     }
     public function edit($vehicle)
     {
-        // $vehicles = Vehicle::with('user:id,name,added_by')->find($vehicle->id); //added_by for Nested Eager Loading, id is necessary
+        // $vehicles = Vehicle::with('user:id,name,added_by')->find($vehicle->id);
         $types = VehicleType::latest()->withCount('vehicles')->get();
         $devices = GpsDevice::with('vehicle:id,codeName')->latest()->get();
-        $vehicle = Vehicle::with('user:id,name')->find($vehicle);
-        $vehicles = Vehicle::with(['gpsDevice' => function($query){
+        $vehicle = Vehicle::with(['gpsDevice' => function($query){
             $query->select('id', 'vid')->get();
-        }])->find($vehicle);
-        // dd( $vehicle);
+        }])->findOrFail($vehicle);
 
-        // dd($vehicle);
         return view('vehicleEdit', [
             'vehicle' => $vehicle,
             'types' => $types,
@@ -120,15 +118,11 @@ class VehicleController extends Controller
     public function update($vid)
     {
         // dd(public_path($vehicle->image));
-        // dd(request()->all());
-        // request()->merge([
-        //     'vid' => $vid,
-        // ]);
-        $vehicle = Vehicle::with('gpsDevice')->find($vid);
+        $vehicle = Vehicle::with('gpsDevice')->findOrFail($vid);
         $gps_id = request()->input('gps_id') == 0 ? null : request()->input('gps_id');
 
         if($gps_id){
-            $gps = GpsDevice::find($gps_id);
+            $gps = GpsDevice::findOrFail($gps_id);
             // $gps = request()->input('gps_id');
             if($gps->vid != null && ($gps->vid != $vehicle->id)){
                 return back()->with('error', 'Sorry! GPS can not be added.');
@@ -187,9 +181,9 @@ class VehicleController extends Controller
         return redirect('/vehicle/vehicles')->with('success', 'Vehicle information updated.');
     }
 
-    public function destroy($stoppage)
+    public function destroy($vehicle)
     {
-        $data = Vehicle::find($stoppage);
+        $data = Vehicle::findOrFail($vehicle);
         if($data){
             if($data->image){
                 unlink(public_path($data->image));
@@ -246,7 +240,7 @@ class VehicleController extends Controller
 
     public function typeDestroy($type)
     {
-        $data = VehicleType::find($type);
+        $data = VehicleType::findOrFail($type);
         // dd($data);
         if($data){
             $data->delete();

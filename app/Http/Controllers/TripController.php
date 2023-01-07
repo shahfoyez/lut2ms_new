@@ -59,7 +59,7 @@ class TripController extends Controller
         // dd($trip);
         $trip = Trip::with('vehicle:id,codeName')
         ->with('onTripVehicle:id,trip_id,show_map')
-        ->find($trip);
+        ->findorFail($trip);
         // dd($trip);
         $vehicles = Vehicle::with('vehicleType:id,name')->latest()->get();
 
@@ -74,7 +74,7 @@ class TripController extends Controller
 
     public function vehicleCreate($vehicle)
     {
-        $vehicle = Vehicle::with('vehicleType:id,name')->find($vehicle);
+        $vehicle = Vehicle::with('vehicleType:id,name')->findorFail($vehicle);
         $routes = Routex::get();
         $drivers = Employee::get()->where('designation', 1);
         $stoppages = Stoppage::latest()->get();
@@ -129,7 +129,7 @@ class TripController extends Controller
     }
     public function vehicleReach($vid)
     {
-        $vehicle = Vehicle::find($vid);
+        $vehicle = Vehicle::findOrFail($vid);
         $trip = Trip::orderBy('created_at', 'desc')->where('vid', $vid)->first();
         if($vehicle && $trip){
             $vehicleUpdate = Vehicle::where('id', $vid)->update([
@@ -155,8 +155,17 @@ class TripController extends Controller
 
     public function vehicleCancel($vid)
     {
-        $vehicle = Vehicle::find($vid);
-        $trip = Trip::orderBy('created_at', 'desc')->where('vid', $vid)->first();
+        // $vehicle = Vehicle::findorFail($vid);
+        $vehicle = Vehicle::with(['activeTrip' => function($query) use($vid){
+            $query->orderBy('created_at', 'desc')
+            ->where('vid', $vid)
+            ->where('status', '0')
+            ->firstOrFail();
+        }])->findorFail($vid);
+
+        // $trip = Trip::orderBy('created_at', 'desc')->where('vid', $vid)->first();
+        $trip = $vehicle->activeTrip;
+
         if($vehicle && $trip){
             $vehicleUpdate = Vehicle::where('id', $vid)->update([
                 'status' => 'available'
@@ -219,12 +228,12 @@ class TripController extends Controller
 
     }
 
-    public function vehicleTrips($vehicle){
+    public function vehicleTrips($vid){
+        $vehicle = Vehicle::findOrFail($vid);
         $trips = Trip::latest()
-            ->where('vid', $vehicle)
+            ->where('vid', $vid)
             ->where('status', '!=', 0)
             ->get();
-        $vehicle = Vehicle::find($vehicle);
         return view('vehicleTrips',[
             'trips' => $trips,
             'vehicle' => $vehicle
@@ -280,7 +289,7 @@ class TripController extends Controller
     }
 
 
-    public function vehicleTripsFilter($vehicle)
+    public function vehicleTripsFilter(Vehicle $vehicle)
     {
         // dd(request()->all());
         $date = explode("-", request()->input('date'));
@@ -294,14 +303,14 @@ class TripController extends Controller
         if(request()->input('date')){
             $trips = Trip::latest()
                 ->whereBetween('start', [$start, $end])
-                ->where('vid', $vehicle)
+                ->where('vid', $vehicle->id)
                 ->where('status', '!=', 0)
                 ->get();
         }
         $start =  Carbon::parse($start)->format('d M Y');
         $end =  Carbon::parse($end)->format('d M Y');
 
-        $vehicle = Vehicle::find($vehicle);
+        // $vehicle = Vehicle::findorFail($vehicle);
         return view('vehicleTrips',[
             'trips' => $trips,
             'vehicle' => $vehicle,
@@ -312,7 +321,7 @@ class TripController extends Controller
 
     public function destroy($trip)
     {
-        $data = Trip::find($trip);
+        $data = Trip::findOrFail($trip);
         // dd($data);
         if($data){
             $data->delete();

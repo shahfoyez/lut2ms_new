@@ -259,9 +259,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/vehicle/deviceAdd', 'deviceAdd');
 
         // Employee EUD
-        // Route::get('/employee/employeeEdit/{employee}', 'edit');
-        // Route::post('/employee/employeeUpdate/{employee}', 'update');
-        Route::delete('/vehicle/deviceDelete/{device}', 'destroy');
+        Route::get('/vehicle/deviceEdit/{gpsDevice}', 'edit');
+        Route::post('/vehicle/deviceUpdate/{gpsDevice}', 'update');
+        Route::delete('/vehicle/deviceDelete/{gpsDevice}', 'destroy');
 
     });
 

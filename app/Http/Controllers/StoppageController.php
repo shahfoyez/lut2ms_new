@@ -81,7 +81,7 @@ class StoppageController extends Controller
 
     public function destroy($stoppage)
     {
-        $data = Stoppage::find($stoppage);
+        $data = Stoppage::findOrFail($stoppage);
         if($data){
             $data->delete();
             return back()->with('success', 'Stoppage has been deleted.');

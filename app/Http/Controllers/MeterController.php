@@ -26,10 +26,10 @@ class MeterController extends Controller
 
     public function create($vehicle)
     {
-        $vehicles = Vehicle::get();
         $selVehicle = Vehicle::withMax('meterEntries', 'meter_entry')
-            ->withMax('meterEntries', 'date')
-            ->find($vehicle);
+        ->withMax('meterEntries', 'date')
+        ->findOrFail($vehicle);
+        $vehicles = Vehicle::get();
         // dd($selVehicle);
         return view('meterEntryAdd', [
             'vehicles' => $vehicles,
@@ -97,10 +97,9 @@ class MeterController extends Controller
         ]);
     }
 
-    public function vehicleMeterEntries( $vehicle)
+    public function vehicleMeterEntries(Vehicle $vehicle)
     {
-        $meterEntries = Meter::latest('date')->Where('vid', $vehicle)->get();
-        $vehicle = Vehicle::find($vehicle);
+        $meterEntries = Meter::latest('date')->Where('vid', $vehicle->id)->get();
         return view('vehicleMeterEntries', [
             'meterEntries' => $meterEntries,
             'vehicle'=>  $vehicle
@@ -109,7 +108,7 @@ class MeterController extends Controller
     }
     public function edit($meter)
     {
-        $meter = Meter::with('vehicle:id,id,codeName,meter_start')->find($meter);
+        $meter = Meter::with('vehicle:id,id,codeName,meter_start')->findOrFail($meter);
         // dd($meter->vehicle);
 
         $min = Meter::where('vid', $meter->vid)
@@ -131,7 +130,7 @@ class MeterController extends Controller
 
     public function update($meter)
     {
-        $meter = Meter::with('vehicle:id,meter_start')->find($meter);
+        $meter = Meter::with('vehicle:id,meter_start')->findOrFail($meter);
         // dd($meter);
         // dd(request()->all());
         $min = Meter::where('vid', $meter->vid)
@@ -246,7 +245,7 @@ class MeterController extends Controller
         ]);
     }
 
-    public function vehicleMeterEntriesFilter( $vehicle)
+    public function vehicleMeterEntriesFilter(Vehicle $vehicle)
     {
         // dd(request()->all());
         $date = explode("-", request()->input('date'));
@@ -260,13 +259,12 @@ class MeterController extends Controller
         if(request()->input('date')){
             $meterEntries = $query->latest()
             ->whereBetween('date', [$start, $end])
-            ->where('vid', $vehicle)
+            ->where('vid', $vehicle->id)
             ->get();
         }
         $start =  Carbon::parse($start)->format('d M Y');
         $end =  Carbon::parse($end)->format('d M Y');
 
-        $vehicle = Vehicle::find($vehicle);
         return view('vehicleMeterEntries', [
             'meterEntries' => $meterEntries,
             'vehicle'=>  $vehicle,
@@ -279,7 +277,7 @@ class MeterController extends Controller
 
     public function destroy($meter)
     {
-        $data = Meter::find($meter);
+        $data = Meter::findOrFail($meter);
         // dd($data);
         if($data){
             $data->delete();
