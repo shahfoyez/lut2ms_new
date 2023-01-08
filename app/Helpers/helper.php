@@ -64,7 +64,7 @@ function fuelsData(){
             array_push($fuels_count_values, $fuel->totalFuels);
             array_push( $fuels_cost_values, $fuel->totalCosts);
         }
-        $avg_fuels = $total_fuels/sizeof($fuels_labels);
+        $avg_fuels = number_format($total_fuels/sizeof($fuels_labels), 2);
     }
     $fuelsData = array(
         'fuels_labels' => $fuels_labels,
@@ -137,7 +137,9 @@ function tripsData(){
             array_push($trips_labels, $trip_label);
             array_push($trips_count_values, $trip->totalTrips);
         }
-        $avg_trips = $total_trips/sizeof($trips_labels);
+        $trip_avg = $total_trips/sizeof($trips_labels);
+        $avg_trips = is_float($trip_avg) ? number_format($trip_avg, 2) : $trip_avg;
+
     }
     $tripsData = array(
         'trips_labels' => $trips_labels,

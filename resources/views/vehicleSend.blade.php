@@ -77,21 +77,19 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <?php
-                                                $mindate = date("Y-m-d");
-                                                $mintime = date("H:i");
-                                                $min = $mindate."T".$mintime;
+                                                date_default_timezone_set('Asia/Dhaka');
+                                                $date = new DateTime();
+                                                $min = $date->format('Y-m-d\TH:i');
 
-                                                $maxdate = date("Y-m-d", strtotime("+7 Days"));
-                                                $maxtime = date("h:i");
-                                                $max = $maxdate."T".$maxtime;
+                                                $maxInputModify = $date->modify('+1 hour');
+                                                $maxInput = $maxInputModify->format('Y-m-d\TH:i');
 
-                                                $maxInputDate = date("Y-m-d");
-                                                $maxInputTime= date("h:i", strtotime("+1 hour"));
-                                                $maxInput = $maxInputDate."T".$maxInputTime;
+                                                $maxModify = $date->modify('+7 days');
+                                                $max = $maxModify->format('Y-m-d\TH:i');
                                             ?>
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">Start date and time</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="start" min="{{  $min }}" max="{{ $max }}" value="{{ old('start') ??  $min  }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="start" min="{{  $min  }}" max="{{ $max }}" value="{{ old('start') ??  $min  }}"/>
                                             @error('start')
                                                 @include('components.validation')
                                             @enderror
@@ -99,6 +97,11 @@
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
+                                        <?php
+                                            // $current_time = new DateTime();
+                                            // $new_time = $current_time->modify('+1 hour');
+                                            // echo $new_time->format('Y-m-d H:i:s');
+                                        ?>
                                         <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">End date and time</label>

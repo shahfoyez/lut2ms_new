@@ -58,8 +58,9 @@ class TripController extends Controller
     {
         // dd($trip);
         $trip = Trip::with('vehicle:id,codeName')
-        ->with('onTripVehicle:id,trip_id,show_map')
-        ->findorFail($trip);
+            ->with('onTripVehicle:id,trip_id,show_map')
+            ->findorFail($trip);
+        $stoppages = Stoppage::latest()->get();
         // dd($trip);
         $vehicles = Vehicle::with('vehicleType:id,name')->latest()->get();
 
@@ -68,7 +69,8 @@ class TripController extends Controller
         return view('tripEdit', [
             'trip' => $trip,
             'routes' => $routes,
-            'drivers' => $drivers
+            'drivers' => $drivers,
+            'stoppages' => $stoppages
         ]);
     }
 

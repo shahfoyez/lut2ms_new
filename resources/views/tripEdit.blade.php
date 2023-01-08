@@ -78,18 +78,19 @@
                                         <!--begin::Col-->
                                         <div class="col-md-6 fv-row">
                                             <?php
-                                                $mindate = date("Y-m-d");
-                                                $mintime = date("H:i");
-                                                $min = $mindate."T".$mintime;
+                                                // date_default_timezone_set('Asia/Kolkata');
+                                                // $date = new DateTime();
+                                                // $min = $date->format('Y-m-d\TH:i');
 
-                                                $maxdate = date("Y-m-d", strtotime("+7 Days"));
-                                                $maxtime = date("h:i");
-                                                $max = $maxdate."T".$maxtime;
-                                                $ds = date("d-m-Y, h:i:a");
+                                                // $maxInputModify = $date->modify('+1 hour');
+                                                // $maxInput = $maxInputModify->format('Y-m-d\TH:i');
+
+                                                // $maxModify = $date->modify('+7 days');
+                                                // $max = $maxModify->format('Y-m-d\TH:i');
                                             ?>
                                             <!--begin::Label-->
                                             <label for="" class="form-label required">Start date and time</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="start" value="{{ old('start') ? old('start') : $trip->start }}"/>
+                                            <input type="datetime-local" class="form-control" placeholder="Pick date & time" id="kt_datepicker_3" name="start" value="{{ old('start') ?? $trip->start }}"/>
                                             @error('start')
                                                 @include('components.validation')
                                             @enderror
