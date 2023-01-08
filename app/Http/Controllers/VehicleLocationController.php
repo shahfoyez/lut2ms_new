@@ -63,7 +63,9 @@ class VehicleLocationController extends Controller
             'vehicle.location'
         ])
         ->with([
-            'trip',
+            'trip' => function($query){
+                $query->selectRaw("*, DATE_FORMAT(`start`, '%d %b, %h:%i %p') as tripStart")->get();
+            },
             'trip.rout' => function ($query) {
                 $query->select('id', 'route');
             },
@@ -71,14 +73,13 @@ class VehicleLocationController extends Controller
                 $query->select('id', 'name');
             },
         ])
-        ->latest()->get();
+        ->oldest()->get();
         // return $trips;
 
         // return $trips;
         $withLocationShow = $trips->filter(function ($item) {
             // return $item['vehicle']->location !== null && $item['show_map'] === 1;
             return $item['vehicle']->location !== null && $item['show_map'] === 1;
-
         });
         $withoutLocationHide = $trips->filter(function ($item) {
             return $item['vehicle']->location == null || $item['show_map'] === 0;

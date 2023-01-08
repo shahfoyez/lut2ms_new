@@ -64,10 +64,68 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 24.8949, lng: 91.8687},
-                zoom: 12
+                zoom: 12,
             });
             markerInitialize();
             addStoppages();
+        }
+        // Add new markers to the map and add a custom infowindow for each marker
+        function markerInitialize(){
+            $.ajax({
+                url: '/api/vehicles/location',
+                success: function(allData) {
+                    console.log(allData);
+                    console.log(allData.withoutLocationHide);
+                    let withLocationShow = allData.withLocationShow ?? null;
+                    let withoutLocationHide = allData.withoutLocationHide ?? null;
+
+                    // var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
+                    var wlsLength =  Object.keys(withLocationShow).length;
+                    var wlhLength =  Object.keys(withLocationShow).length;
+                    if(wlsLength > 0 || wlhLength > 0){
+                        if(wlsLength > 0){
+                            for (const key in withLocationShow) {
+                                addMarker(withLocationShow[key]);
+                            }
+                        }else{
+                            noVehicle();
+                        }
+                        if(wlhLength > 0){
+                            for (const num in withoutLocationHide) {
+                                console.log("Inside");
+                                console.log(withoutLocationHide[num]);
+                                addButton(withoutLocationHide[num], num);
+                            }
+                        }
+                    }else{
+                        noVehicle();
+                    }
+
+                    // if(wlsLength > 0){
+                    //     for (const key in withLocationShow) {
+                    //         addMarker(withLocationShow[key]);
+                    //     }
+                    //     for (var i = 1; i <= 5; i++) {
+                    //         var button = document.createElement('button')
+                    //         button.innerHTML = 'Click me';
+                    //         button.addEventListener('click', function(){
+                    //             alert('Hello');
+                    //         })
+                    //         map.controls[google.maps.ControlPosition.TOP_LEFT].push(button);
+                    //         // var button = document.createElement('button');
+                    //         // button.innerHTML = 'Button ' + i;
+
+                    //         // button.addEventListener('click', function() {
+                    //         //     alert('Button was clicked!'+i);
+                    //         // });
+
+                    //         // map.controls[google.maps.ControlPosition.TOP_LEFT].push(button);
+                    //     }
+                    // }else{
+                    //     noVehicle();
+                    // }
+                }
+            });
         }
         // update marker position
         function addMarker(data) {
@@ -126,7 +184,21 @@
             });
             markers.push(marker);
         }
+        function addButton(buttonData){
+            var busName = buttonData.vehicle.codeName;
+            var tripRoute = buttonData.trip.rout['route'];
+            var tripStart = buttonData.trip['tripStart'];
 
+
+            console.log(buttonData);
+            var button = document.createElement('button');
+            button.classList.add('foy_wlh_button');
+            button.innerHTML = `<div class="foy_wlh_button_contents"><p>${ busName }</p><p>Route: ${ tripRoute }</p><p>${ tripStart }</p></div>`;
+            button.addEventListener('click', function(){
+                alert('Hello');
+            })
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(button);
+        }
         // Fetch the location data and update the map every 5 seconds
         setInterval(function() {
             $.ajax({
@@ -167,28 +239,6 @@
                 }
             });
         }, 5000);
-
-        // Add new markers to the map and add a custom infowindow for each marker
-        function markerInitialize(){
-            $.ajax({
-                url: '/api/vehicles/location',
-                success: function(allData) {
-                    let withLocationShow = allData.withLocationShow ?? null;
-                    console.log(withLocationShow);
-                    // var wlsLength = withLocationShow != null ? Object.keys(withLocationShow).length : 0;
-                    var wlsLength =  Object.keys(withLocationShow).length ;
-                    if(wlsLength > 0){
-                        for (const key in withLocationShow) {
-                            addMarker(withLocationShow[key]);
-                        }
-                    }else{
-                        noVehicle();
-                    }
-                }
-            });
-        }
-
-
         function addStoppages(){
             for (const key in stoppages) {
                 let slat = parseFloat(stoppages[key].slat);

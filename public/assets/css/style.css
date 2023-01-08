@@ -109,3 +109,12 @@ table.dataTable>thead .sorting:after, table.dataTable>thead .sorting:before, tab
     -webkit-box-shadow: #000000;
     background-color: #009ef7;
 }
+.foy_wlh_button_contents p{
+    margin: 0px;
+    text-align: left;
+}
+.foy_wlh_button{
+    border-radius: 6px;
+    margin-right: 2px;
+    padding: 5px 10px;
+}
