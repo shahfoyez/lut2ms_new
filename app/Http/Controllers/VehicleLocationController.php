@@ -84,6 +84,13 @@ class VehicleLocationController extends Controller
         $withoutLocationHide = $trips->filter(function ($item) {
             return $item['vehicle']->location == null || $item['show_map'] === 0;
         });
+        $grouped = $withoutLocationHide->groupBy(function ($trips) {
+            return $trips->trip->rout->route;
+        })->map(function($routeGroup){
+            return $routeGroup->sortByDesc(function($trips){
+                return $trips->trip->start;
+            });
+        });
         return response()->json([
             'withLocationShow' => $withLocationShow,
             'withoutLocationHide' => $withoutLocationHide
